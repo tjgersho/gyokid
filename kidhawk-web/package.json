@@ -1,0 +1,11 @@
+{
+  "name": "kidhawk",
+  "version": "1.0.0",
+  "description": "GPS Kid Tracking Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tjgersho",
+  "license": "BSD-2-Clause"
+}
