@@ -5,16 +5,20 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
+import { ServerComponent } from './server/server.component'
+import { ServersComponent } from './servers/servers.component';
 import { PostsComponent } from './posts/posts.component';
 
 import { PostsService } from './posts.service';
+
 
 // Define the routes
 const ROUTES = [
   {
     path: '',
-    redirectTo: 'posts',
-    pathMatch: 'full'
+   // redirectTo: 'posts',
+    pathMatch: 'full',
+    component: ServersComponent
   },
   {
     path: 'posts',
@@ -25,11 +29,14 @@ const ROUTES = [
 @NgModule({
   declarations: [
     AppComponent,
-    PostsComponent
+    ServerComponent,
+    PostsComponent,
+    ServersComponent,
+    ServerComponent
   ],
   imports: [
     BrowserModule,
-   FormsModule,
+    FormsModule,
     HttpModule,
     RouterModule.forRoot(ROUTES) // Add routes to the app
   ],
