@@ -5,9 +5,12 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { ServerComponent } from './server/server.component'
+import { ServerComponent } from './server/server.component';
 import { ServersComponent } from './servers/servers.component';
 import { PostsComponent } from './posts/posts.component';
+
+
+import {TrackerComponent } from './tracker/tracker.component';
 
 import { PostsService } from './posts.service';
 
@@ -23,7 +26,11 @@ const ROUTES = [
   {
     path: 'posts',
     component: PostsComponent
-  }
+  },
+  {
+     path: 'tracker',
+     component: TrackerComponent
+   }
 ];
 
 @NgModule({
@@ -32,7 +39,8 @@ const ROUTES = [
     ServerComponent,
     PostsComponent,
     ServersComponent,
-    ServerComponent
+    ServerComponent,
+    TrackerComponent
   ],
   imports: [
     BrowserModule,

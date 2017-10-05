@@ -1,7 +1,33 @@
 <div class="container">
 	<div class="row">
-<h2>Fun</h2>
-<app-server></app-server>	
-<app-server></app-server>	
+<!--<input type="text" class="form-control"  (input)="onUpdateServerName($event)" /> -->
+<input type="text" class="form-control"  [(ngModel)]="serverName" />
+<p> {{serverName}} </p>
+<button class="btn btn-info" [disabled]="!allowNewServer" (click)="onCreateServer()"> Add Server </button>
+<!-- <p [innerText]="serverCreationStatus" ></p> -->
+<p [hidden]="!serverCreated">Server was created, server name is {{ serverName}}</p>
+
+<h2>Server Status: </h2>
+
+<app-server *ngFor="let server of servers"></app-server>
+
+	
 	</div>
 </div>	
+<hr>
+<input type="text" class="form-control"  [(ngModel)]="userName" />
+<p> {{userName}} </p>
+<button class="btn btn-info" [disabled]="!allowUsernameReset()" (click)="onResetUsername()"> Rest Username </button>
+<hr>
+
+
+<button (click)="displayDetailsClick($event)">Display Details</button>
+
+<p *ngFor="let d of details; let i = index" > 
+	<b [ngStyle]="styleDetail(d)" [ngClass]="classDetail(d)">{{d}}. <i [hidden]="i%2 === 0" >Neet information </i> </b>
+	<br />
+		
+
+ </p>
+
+
