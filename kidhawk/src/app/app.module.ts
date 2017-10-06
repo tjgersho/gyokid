@@ -5,27 +5,30 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { ServerComponent } from './server/server.component';
-import { ServersComponent } from './servers/servers.component';
-import { PostsComponent } from './posts/posts.component';
 
 
-import {TrackerComponent } from './tracker/tracker.component';
 
-import { PostsService } from './posts.service';
+import { HeaderComponent } from './header/header.component';
+import { TrackerComponent } from './tracker/tracker.component';
+import { FooterComponent } from './footer/footer.component';
+import { DevicesComponent } from './tracker/devices/devices.component';
+import { DeviceComponent } from './tracker/devices/device/device.component';
+import { DeviceSelectorComponent } from './tracker/device-selector/device-selector.component';
+import { CountryComponent } from './tracker/device-selector/country/country.component';
+import { StateComponent } from './tracker/device-selector/country/state/state.component';
+import { DistrictComponent } from './tracker/device-selector/country/state/district/district.component';
+import { SchoolComponent } from './tracker/device-selector/country/state/district/school/school.component';
+import { IndexComponent } from './index/index.component';
+
+
 
 
 // Define the routes
 const ROUTES = [
   {
     path: '',
-   // redirectTo: 'posts',
     pathMatch: 'full',
-    component: ServersComponent
-  },
-  {
-    path: 'posts',
-    component: PostsComponent
+    component: IndexComponent
   },
   {
      path: 'tracker',
@@ -36,11 +39,17 @@ const ROUTES = [
 @NgModule({
   declarations: [
     AppComponent,
-    ServerComponent,
-    PostsComponent,
-    ServersComponent,
-    ServerComponent,
-    TrackerComponent
+    HeaderComponent,
+    TrackerComponent,
+    FooterComponent,
+    IndexComponent,
+    DevicesComponent,
+    DeviceComponent,
+    DeviceSelectorComponent,
+    CountryComponent,
+    StateComponent,
+    DistrictComponent,
+    SchoolComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +57,7 @@ const ROUTES = [
     HttpModule,
     RouterModule.forRoot(ROUTES) // Add routes to the app
   ],
-  providers: [PostsService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
