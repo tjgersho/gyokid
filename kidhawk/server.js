@@ -38,5 +38,38 @@ const server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+
+
+
+
+const Sequelize = require('sequelize');
+
+var sequelize;
+
+
+
+var dbConnect = require('./server/dbConnect.json');
+
+
+sequelize = new Sequelize(dbConnect.database, dbConnect.username, dbConnect.password, {
+			host: dbConnect.host,
+			port: dbConnect.port,
+			dialect: dbConnect.dialect,
+			logging: false
+		});
+
+
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
+
 server.listen(port, () => console.log(`API running on localhost:${port}`));
+
+
 
