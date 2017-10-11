@@ -27,6 +27,7 @@
     "core-js": "^2.4.1",
     "express": "^4.16.0",
     "jquery": "^3.2.1",
+    "jquery-touch-events": "^1.0.7",
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
     "rxjs": "^5.4.2",
