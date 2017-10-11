@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var jquery:any;
+declare var $ :any;
+
 
 @Component({
   selector: 'app-index',
@@ -15,6 +18,10 @@ export class IndexComponent implements OnInit {
     }
 
   ngOnInit() {
+
+    $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="popover"]').popover();
+
   }
 
 

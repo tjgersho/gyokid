@@ -28,22 +28,46 @@ You should see:
 var net = require('net');
 
 var server = net.createServer();  
+
+server.on('login', function(data){
+
+console.log('Something is trying to login');
+console.log(data);
+
+
+});
+
+
 server.on('connection', handleConnection);
 
 server.listen(8083, '127.0.0.1', function() {  
   console.log('server listening to %j', server.address());
 });
 
+
 function handleConnection(conn) {  
+  console.log(conn);
+  
+
   var remoteAddress = conn.remoteAddress + ':' + conn.remotePort;
   console.log('new client connection from %s', remoteAddress);
 
+
+  conn.on('V1', onVONE);
   conn.on('data', onConnData);
   conn.once('close', onConnClose);
   conn.on('error', onConnError);
 
+
+  function onVONE(d){
+
+	console.log('V1 connect');
+	console.log(d);
+
+  }
   function onConnData(d) {
-    console.log('connection data from %s: %j', remoteAddress, d);
+    console.log('connection data from %j: %j', remoteAddress, d);
+    console.log(conn);
     conn.write(d);
   }
 
