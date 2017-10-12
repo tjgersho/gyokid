@@ -12,6 +12,7 @@ declare var $ :any;
 export class IndexComponent implements OnInit {
 
 
+
   constructor() { 
 	
 
@@ -23,6 +24,10 @@ export class IndexComponent implements OnInit {
     $('[data-toggle="popover"]').popover();
 
   }
+
+
+  
+
 
 
 

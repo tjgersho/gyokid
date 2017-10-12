@@ -11,17 +11,16 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { TrackerComponent } from './tracker/tracker.component';
 import { FooterComponent } from './footer/footer.component';
-import { DevicesComponent } from './tracker/devices/devices.component';
-import { DeviceComponent } from './tracker/devices/device/device.component';
+import { DeviceComponent } from './tracker/device-selector/device/device.component';
 import { DeviceSelectorComponent } from './tracker/device-selector/device-selector.component';
-import { CountryComponent } from './tracker/device-selector/country/country.component';
-import { StateComponent } from './tracker/device-selector/state/state.component';
-import { DistrictComponent } from './tracker/device-selector/district/district.component';
-import { SchoolComponent } from './tracker/device-selector/school/school.component';
 import { IndexComponent } from './index/index.component';
+import { RegisterComponent } from './register/register.component';
 
 
 
+import { UserService } from './services/user.service';
+
+import { AuthGuardService } from './services/auth-guard.service';
 
 // Define the routes
 const ROUTES = [
@@ -32,7 +31,13 @@ const ROUTES = [
   },
   {
      path: 'tracker',
-     component: TrackerComponent
+     component: TrackerComponent,
+     canActivate: [AuthGuardService]
+   },
+   {
+	path: 'register',
+	component: RegisterComponent
+
    }
 ];
 
@@ -43,13 +48,9 @@ const ROUTES = [
     TrackerComponent,
     FooterComponent,
     IndexComponent,
-    DevicesComponent,
     DeviceComponent,
     DeviceSelectorComponent,
-    CountryComponent,
-    StateComponent,
-    DistrictComponent,
-    SchoolComponent
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +58,7 @@ const ROUTES = [
     HttpModule,
     RouterModule.forRoot(ROUTES) // Add routes to the app
   ],
-  providers: [],
+  providers: [UserService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

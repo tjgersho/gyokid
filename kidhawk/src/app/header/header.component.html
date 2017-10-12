@@ -49,8 +49,11 @@
       <a class="navbar-brand" routerLink="/">KidHawk</a>
     </div>
     <div class="navbar-header pull-right" style="margin-right:15px;">
-      <a role="btn" class="btn btn-default btn-md navbar-btn" routerLink="/tracker">Track</a>
+      <a class="navbar-text" routerLink="/register"  *ngIf="!user.isLoggedIn && !atRegister">Register</a>
+      <a class="navbar-text" (click)="login()"  *ngIf="!user.isLoggedIn && !atRegister">Login</a>
+      <a class="navbar-text" (click)="logout()"  *ngIf="user.isLoggedIn && !atRegister">Logout</a>
+      <a role="btn" class="btn btn-default btn-md navbar-btn" routerLink="/tracker" *ngIf="user.isLoggedIn && !atTrack">Track</a>
     </div>
-     <p class="navbar-text navbar-right"  style="margin-right:15px;">Signed in as <a href="#" class="navbar-link">Mark PP</a></p>
+     <p class="navbar-text navbar-right"  style="margin-right:15px;"  *ngIf="user.isLoggedIn">User: <a href="#" class="navbar-link">{{user.username}}</a></p>
       
 </div>
