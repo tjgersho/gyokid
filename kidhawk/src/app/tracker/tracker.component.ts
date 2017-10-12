@@ -44,20 +44,32 @@ export class TrackerComponent implements OnInit {
 
           $('#selectParamsModal').css('padding', 0);
           $('#selectParamsModal').css('margin', 0);
-     
+
+             if($(window).height() < $(window).width()){
+                $(this).css('height', $(window).height() + 'px');
+                $(this).css('width', 'auto');
+            }else{
+                $(this).css('width', $(window).width() + 'px');
+                $(this).css('height', 'auto');
+            }
         });
 
 
             $('#usa').on('load',  function() {
 
 	        console.log('image load');
-		console.log($(this).width());
-		console.log($(window).height());
+		     console.log($(this).width());
+		    console.log($(window).height());
                  console.log($(window).width());
-        		
-            $(this).css('height', $(window).height() + 'px');
-            $(this).css('width',  $(window).width() + 'px');
-     
+        		if($(window).height() < $(window).width()){
+                $(this).css('height', $(window).height() + 'px');
+                $(this).css('width', 'auto');
+            }else{
+                $(this).css('width', $(window).width() + 'px');
+                $(this).css('height', 'auto');
+            }
+          
+         
          });
 
 
@@ -74,7 +86,7 @@ export class TrackerComponent implements OnInit {
                  console.log('touch move'); 
                   console.log(e);
 		console.log(self);
-                self.stateHover = "assets/usa/maryland.svg";
+                self.stateHover = "assets/usa/california.png";
 
 		console.log(this.stateHover);
 

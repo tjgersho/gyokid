@@ -15,9 +15,9 @@ import { DevicesComponent } from './tracker/devices/devices.component';
 import { DeviceComponent } from './tracker/devices/device/device.component';
 import { DeviceSelectorComponent } from './tracker/device-selector/device-selector.component';
 import { CountryComponent } from './tracker/device-selector/country/country.component';
-import { StateComponent } from './tracker/device-selector/country/state/state.component';
-import { DistrictComponent } from './tracker/device-selector/country/state/district/district.component';
-import { SchoolComponent } from './tracker/device-selector/country/state/district/school/school.component';
+import { StateComponent } from './tracker/device-selector/state/state.component';
+import { DistrictComponent } from './tracker/device-selector/district/district.component';
+import { SchoolComponent } from './tracker/device-selector/school/school.component';
 import { IndexComponent } from './index/index.component';
 
 
