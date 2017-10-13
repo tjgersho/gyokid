@@ -1,10 +1,8 @@
-'use strict';
-
 // Get dependencies
-var express = require('express');
-var path = require('path');
-var http = require('http');
-var bodyParser = require('body-parser');
+const express = require('express');
+const path = require('path');
+const http = require('http');
+const bodyParser = require('body-parser');
 var db = require('./server/util/db.js');
 
 var cryptojs = require('crypto-js');
@@ -15,7 +13,9 @@ var moment = require("moment");
 // Get our API routes
 
 
-var app = express();
+
+
+const app = express();
 
 // Parsers for POST data
 app.use(bodyParser.json());
@@ -24,22 +24,24 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));
 
+
 // dynamically include routes (Controller)
 fs.readdirSync('./server/routes').forEach(function (file) {
-  console.log(file);
+ console.log(file);
 
-  if (file.substr(-3) == '.js') {
-    var api = require('./server/routes/' + file);
-    app.use('/api/v1', api);
-  }
+ if(file.substr(-3) == '.js') {
+        const api = require('./server/routes/' + file);
+	app.use('/api/v1',   api);
+ }
 });
+
 
 // Set our api routes
 //app.use('/api', api);
 
 
 // Catch all other routes and return the index file
-app.get('*', function (req, res) {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
@@ -47,26 +49,33 @@ app.get('*', function (req, res) {
  * Get port from environment and store in Express.
  */
 //const port = process.env.PORT || '3000';
-var port = 8080;
+const port = 8080;
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-var server = http.createServer(app);
+const server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-db.sequelize.authenticate().then(function () {
-  console.log('Connection has been established successfully.');
-}).catch(function (err) {
-  console.error('Unable to connect to the database:', err);
+
+
+
+ db.sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connection has been established successfully.');
+  })
+  .catch(err => {
+    console.error('Unable to connect to the database:', err);
+  });
+
+db.sequelize.sync({force:true}).then(function() { 
+    server.listen(port, () => console.log(`API running on localhost:${port}`));
 });
 
-db.sequelize.sync({ force: true }).then(function () {
-  server.listen(port, function () {
-    return console.log('API running on localhost:' + port);
-  });
-});
+
+

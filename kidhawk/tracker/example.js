@@ -23,16 +23,41 @@ const net = require('net');
 const server = net.createServer((c) => {
   // 'connection' listener
   console.log('client connected');
+  console.log(c);
+
+  var clientAddr = c.remoteAddress + ":" + c.remotePort;
+
+  console.log('Report Device');
+  console.log(clientAddr);
+
+  console.log('Socket Address');
+  console.log(c.address());
+
+  console.log('Bytes Read');
+  console.log(c.bytesRead);
+  console.log('socket bytes written');
+  console.log(c.bytesWritten);
+
+
   c.on('end', () => {
     console.log('client disconnected');
   });
+ 
+
+
   c.on('data', (data) => {
    console.log(data.toString());
 //   c.end();
   });
   
-  c.write('hello\r\n');
- // c.pipe(c);
+
+  c.write('$');
+
+  console.log('socket bytes written');
+  console.log(c.bytesWritten);
+
+
+  c.pipe(c);
 });
 
 server.on('error', (err) => {
