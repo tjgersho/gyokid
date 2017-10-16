@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 var db = require('./server/util/db.js');
 
 var cryptojs = require('crypto-js');
-var jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');var moment = require("moment");
 var fs = require('fs');
 var moment = require("moment");
 

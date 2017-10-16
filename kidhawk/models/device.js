@@ -53,27 +53,6 @@ return sequelize.define('device', {
 	listOrder: {
 		type: DataTypes.INTEGER,
 		allowNull: true
-	},
-	status: {
-		type: DataTypes.INTEGER,
-		defaultValue: 0,
-		validate: {
-          isInt: true,
-          max: 3,
-          min: 0
-		}
-	},
-     	mfgcode: {
-		type: DataTypes.STRING,
-		allowNull: true
-	},
-      	appcode: {
-		type: DataTypes.STRING,
-		allowNull: true
-	},
-      	devid: {
-		type: DataTypes.STRING,
-		allowNull: true
 	}
 });
 };
