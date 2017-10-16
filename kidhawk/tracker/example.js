@@ -16,7 +16,10 @@ Save the following server in example.js:
 
 //server.listen(8083, '127.0.0.1');
 
+function getTime(){
 
+
+}
 
 
 const net = require('net');
@@ -46,12 +49,22 @@ const server = net.createServer((c) => {
 
 
   c.on('data', (data) => {
-   console.log(data.toString());
+
+    console.log('Data');
+    console.log(data);
+    console.log(data.toString());
+
+	
+    c.write("*HQ,865205030993330,D1,225022,10,#");
+
+
 //   c.end();
   });
   
+  getTime();
 
-  c.write('$');
+
+  c.write("*HQ,865205030993330,D1,225022,100,#");
 
   console.log('socket bytes written');
   console.log(c.bytesWritten);
