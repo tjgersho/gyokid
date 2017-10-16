@@ -17,6 +17,21 @@ Save the following server in example.js:
 //server.listen(8083, '127.0.0.1');
 
 function getTime(){
+    var date = new Date();
+
+    var hour = date.getHours();
+    hour = (hour < 10 ? "0" : "") + hour;
+
+    var min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+
+    var sec  = date.getSeconds();
+    sec = (sec < 10 ? "0" : "") + sec;
+ console.log('Get Time');
+ console.log(hour + min + sec);
+
+return hour + min + sec;
+
 
 
 }
@@ -55,16 +70,15 @@ const server = net.createServer((c) => {
     console.log(data.toString());
 
 	
-    c.write("*HQ,865205030993330,D1,225022,10,#");
+   // c.write("*HQ,865205030993330,D1,"+getTime()+",10,#");
 
 
 //   c.end();
   });
-  
-  getTime();
+   
 
 
-  c.write("*HQ,865205030993330,D1,225022,100,#");
+  c.write("*HQ,865205030993330,D1,"+getTime()+",100,#");
 
   console.log('socket bytes written');
   console.log(c.bytesWritten);
