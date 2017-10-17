@@ -1,4 +1,4 @@
-<div style="background-color:#aaa; position:fixed; top:0; left:0; right:0; bottom:0; z-index: 8000;">
+<div id="deviceSelectorBackground"  style="position:fixed; top:0; left:0; right:0; bottom:0; z-index: 8000;">
   <div style="overflow-y: scroll; overflow-x: hidden; height: 100%; min-height: 100%;">
 
 
@@ -21,7 +21,7 @@
       <div class="col-md-6">
               <div class="row" >
 		 <div class="col-xs-12">
-		  <span class="label label-default" style="float:left;margin:5px;" *ngFor="let selDev of deviceSelectedList; let i = index">
+		  <span class="label label-default devlabel" style="float:left;margin:5px;" *ngFor="let selDev of deviceSelectedList; let i = index">
  			<p>DEV: {{selDev.id}} <i *ngIf="selDev.tag !== ''">- TAG: {{selDev.tag}}</i>
 			<button class="btn btn-xs btn-danger" (click)="removeDev(i)"><span class="glyphicon glyphicon-remove"></span></button>
                         </p>
@@ -40,7 +40,7 @@
     <hr>
   
        <div class="col-xs-4 col-xs-offset-4">
-		<button class="btn btn-success btn-block" (click)="goTrack()">Track</button>
+		<button class="btn btn-info btn-block" (click)="goTrack()">Track</button>
        </div>
            <div class="col-xs-4 center">
               <a role="btn" class="btn" (click)="cancelTrack()">Cancel</a>

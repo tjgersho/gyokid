@@ -14,3 +14,41 @@
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(32, 32, 32, 0.05);
 }
+
+#deviceSelectorBackground {
+background: -moz-linear-gradient(top, rgba(89,106,114,0.73) 0%, rgba(98,126,138,0.73) 18%, rgba(138,216,247,0.85) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(89,106,114,0.73) 0%,rgba(98,126,138,0.73) 18%,rgba(138,216,247,0.85) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(89,106,114,0.73) 0%,rgba(98,126,138,0.73) 18%,rgba(138,216,247,0.85) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ba596a72', endColorstr='#d98ad8f7',GradientType=0 ); /* IE6-9 */
+}
+
+a {
+  color: #3e4042;
+  text-shadow: 2px 2px 4px #fff;
+}
+
+input {
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+h2 {
+
+ color: white;
+    text-shadow: 2px 2px 4px #000000;
+
+}
+
+
+.devlabel {
+ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+
+
+.btn-info {
+    background-color: #2199bd;
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.btn-info:hover {
+background-color:  #60b1ca;
+}

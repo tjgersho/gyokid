@@ -73,7 +73,7 @@ const server = http.createServer(app);
     console.error('Unable to connect to the database:', err);
   });
 
-db.sequelize.sync({force:true}).then(function() { 
+db.sequelize.sync().then(function() { 
     server.listen(port, () => console.log(`API running on localhost:${port}`));
 });
 

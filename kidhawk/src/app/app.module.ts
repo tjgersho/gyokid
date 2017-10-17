@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+
+
+
 import { AppComponent } from './app.component';
 
 
@@ -15,7 +18,7 @@ import { DeviceComponent } from './tracker/device-selector/device/device.compone
 import { DeviceSelectorComponent } from './tracker/device-selector/device-selector.component';
 import { IndexComponent } from './index/index.component';
 import { RegisterComponent } from './register/register.component';
-
+import { LoginComponent } from './login/login.component';
 
 
 import { UserService } from './services/user.service';
@@ -38,6 +41,11 @@ const ROUTES = [
 	path: 'register',
 	component: RegisterComponent
 
+   },
+   {
+	path: 'login',
+	component: LoginComponent
+
    }
 ];
 
@@ -50,7 +58,8 @@ const ROUTES = [
     IndexComponent,
     DeviceComponent,
     DeviceSelectorComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

@@ -137,93 +137,17 @@ router.post('/users/findByToken',  bodyParser.json(),  function(req, res){
       });
 });
 
-router.get('/userxbit',  [bodyParser.json(), middleware.requireAuthentication], function(req, res) {
-	 res.status(200).json(req.user);
-    });
 
-router.get('/userNumXnum', [middleware.requireAuthentication], function(req, res){
-	
- var where = {userId: req.user.id};
-  db.xnum.findAndCountAll({
-    where: where
-   }).then(function(xnum) {
-    res.json(xnum.count);
-   }, function(e) {
-    res.status(500).json(e);
-  });
 
-});
-
-router.get('/userValXnum', [middleware.requireAuthentication], function(req, res){
-	
-var where = {userId: req.user.id};
-  db.xnum.findAll({
-    where: where
-  }).then(function(xnum) {
-	var val = 0;
-
-    xnum.forEach(function(x){
-		val += x.valDollar;
-	});
-
-	res.json(val);
-  }, function(e) {
-    res.status(500).json(e);
-  });
-
-});
-
-router.get('/userAvailValXnum', [middleware.requireAuthentication], function(req, res){
-	
-var where = {userId: req.user.id, payRequested: false, paid: false};
-  db.xnum.findAll({
-    where: where
-  }).then(function(xnum) {
-	var val = 0;
-
-    xnum.forEach(function(x){
-		val += x.valDollar;
-	});
-
-	res.json(val);
-  }, function(e) {
-    res.status(500).json(e);
-  });
-
-});
-
-router.get('/userCurrentSkin',  [bodyParser.json(), middleware.requireAuthentication], function(req, res) {
-
-  db.skin.findById(req.user.skinId).then(function(skin){
-	
-            if(skin){
-		 var ext = path.extname(skin.img);
-		 var fileName = path.basename(skin.img, ext);
-		 var file = fileName + '_O' + ext;
-			 skin.dataValues.imgO = file;
-         	 file = fileName + '_SKIN.png';  
-			 skin.dataValues.imgSKIN = file;    
-
-		res.status(200).json(skin);
-		}else{
-		 res.status(200).json(skin);
-
-		}
-	},function(err){
-		res.status(400).json(err);
-	});
-
-  });
 
 router.post('/users',  bodyParser.json(),  function(req, res){
 ///Signup Endpoint...
+console.log('Sign Up Endpoint');
+console.log(req.body);
 
  var body = _.pick(req.body, 'username', 'email', 'password', 'referralUserId', 'referralCode');
 
-    
-    
 
-   
       body.role = 0;
 
       body.email = body.email.toLowerCase();
@@ -233,7 +157,7 @@ router.post('/users',  bodyParser.json(),  function(req, res){
 
         db.user.create(body).then(function(user){   
 		user.setReferralToken();
-		sendEmailConfirmationEmail(user);
+		//sendEmailConfirmationEmail(user);
 
 
 	  if(body.referralUserId !== null &&  body.referralUserId !== undefined){
@@ -263,8 +187,6 @@ router.post('/users',  bodyParser.json(),  function(req, res){
 
 			 res.status(400).json(err);
 		}
-
-
 
 	
           }else{

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 
@@ -20,9 +20,10 @@ export class HeaderComponent implements OnInit, OnChanges{
  atIndex: boolean = true;
  atTrack: boolean = false;
  atRegister: boolean = false;
+ atLogin: boolean = false;
 
- constructor(private route:ActivatedRoute, private user: UserService){
-	console.log(route.snapshot.url);
+ constructor(private route: ActivatedRoute, private user: UserService){
+	console.log(route.url);
 
 	if(route.snapshot.url.length > 0){
 		this.atIndex = false;
@@ -31,6 +32,9 @@ export class HeaderComponent implements OnInit, OnChanges{
                 }
 		if(route.snapshot.url[0].path === 'register'){
                    this.atRegister = true;
+                }
+		if(route.snapshot.url[0].path === 'login'){
+                   this.atLogin = true;
                 }
 	
 	}
@@ -74,9 +78,7 @@ $('[data-spy="affix"]').affix({
 
 }
 
-login(){
-  this.user.login();
-}
+
 
 logout(){
  this.user.logout();

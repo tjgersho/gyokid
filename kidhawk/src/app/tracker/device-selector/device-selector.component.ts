@@ -23,14 +23,6 @@ export class DeviceSelectorComponent implements OnInit {
 		new Device("5", {lat: 100, lon: 100}, "T"), 
 		new Device("6", {lat: 100, lon: 100}, "G"),
 		new Device("7", {lat: 100, lon: 100}, ""), 
-		new Device("8", {lat: 100, lon: 100}, "T"), 
-		new Device("9", {lat: 100, lon: 100}, "G"),
-		new Device("10", {lat: 100, lon: 100}, ""), 
-		new Device("11", {lat: 100, lon: 100}, "T"), 
-		new Device("12", {lat: 100, lon: 100}, "G"),
-		new Device("13", {lat: 100, lon: 100}, ""), 
-		new Device("14", {lat: 100, lon: 100}, "T"), 
-		new Device("15", {lat: 100, lon: 100}, "G")
 		];
  
   _deviceList: Device[] = [
@@ -41,14 +33,6 @@ export class DeviceSelectorComponent implements OnInit {
 		new Device("5", {lat: 100, lon: 100}, "T"), 
 		new Device("6", {lat: 100, lon: 100}, "G"),
 		new Device("7", {lat: 100, lon: 100}, ""), 
-		new Device("8", {lat: 100, lon: 100}, "T"), 
-		new Device("9", {lat: 100, lon: 100}, "G"),
-		new Device("10", {lat: 100, lon: 100}, ""), 
-		new Device("11", {lat: 100, lon: 100}, "T"), 
-		new Device("12", {lat: 100, lon: 100}, "G"),
-		new Device("13", {lat: 100, lon: 100}, ""), 
-		new Device("14", {lat: 100, lon: 100}, "T"), 
-		new Device("15", {lat: 100, lon: 100}, "G")
 		];
 
 

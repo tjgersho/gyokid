@@ -56,14 +56,14 @@
       <a routerLink="/register"  *ngIf="!user.isLoggedIn && !atRegister">Register</a>
      </li>
      <li>
-      <a (click)="login()"  *ngIf="!user.isLoggedIn && !atRegister">Login</a>
+      <a routerLink="/login" *ngIf="!user.isLoggedIn && !atRegister && !atLogin">Login</a>
      </li>
      <li>
       <a  (click)="logout()" *ngIf="user.isLoggedIn && !atRegister">Logout</a>
      </li>
-     <li>
-      <a role="btn" routerLink="/tracker" *ngIf="user.isLoggedIn && !atTrack">Track</a>
-     </li>
     </ul>
+<p class="navbar-btn">
+   <a role="btn" class="btn btn-default" routerLink="/tracker" *ngIf="user.isLoggedIn && !atTrack">Track</a>
+</p>
 
  </div>
