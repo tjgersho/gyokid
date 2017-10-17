@@ -31,6 +31,8 @@ db.user = sequelize.import('../../models/user.js');
 db.device = sequelize.import('../../models/device.js');
 db.token = sequelize.import('../../models/token.js');
 db.transaction = sequelize.import('../../models/transaction.js');
+db.gps = sequelize.import('../../models/gps.js');
+db.runningdev = sequelize.import('../../models/runningdev.js');
 
 //////////////////////////////////
 

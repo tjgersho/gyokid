@@ -106,7 +106,8 @@ db.gps.create({imei: imei, lat: latitude, lon: longitude}).then(function(gps){
 function updateRunningDev(imei, status){
 
 return new Promise(function(resolve, reject){
-"*HQ,865205030993330,V1,025109,A,3935.4775,N,10504.9935,W,0.00,52,171017,FFFFFBFF#"
+
+
 var cmd = 0;
 
  var alarmOn = false;
@@ -115,9 +116,12 @@ if(status[3] === "B"){
   var alarmOn = true;
 }
 
-db.runningdev.find({where:{imei: imei}}).then(fuction(dev){
+db.runningdev.find({where:{imei: imei}}).then(function(dev){
   console.log('Yeah We have a running device.. check for SOS..');
   console.log(dev);
+
+if(dev !== null){
+
   if(dev.watchStatus === 0){
 
       if(lastCmdConfirmed && lastCmd === "setToSleep"){
@@ -167,6 +171,11 @@ db.runningdev.find({where:{imei: imei}}).then(fuction(dev){
  
  }
 
+}else{
+	cmd = 0;
+	 resolve(cmd);
+}
+
   },function(err){
      console.log('Device was not found in the running device query..');
      reject(err);
@@ -188,7 +197,7 @@ switch (cmd){
     db.runningdev.find({where:{imei: imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
-        dev.update({lastCmdTimeStamp: getTimeString, lastCmdConfirmed: false, , lastCmd: "setToRunning"});
+        dev.update({lastCmdTimeStamp: getTimeString, lastCmdConfirmed: false, lastCmd: "setToRunning"});
 
     },function(err){
         console.log('Couldnt find dev to update time cmd');
@@ -204,7 +213,7 @@ switch (cmd){
     db.runningdev.find({where:{imei: imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
-        dev.update({lastCmdTimeStamp: getTimeString, lastCmdConfirmed: false, , lastCmd: "resetDevice"});
+        dev.update({lastCmdTimeStamp: getTimeString, lastCmdConfirmed: false,  lastCmd: "resetDevice"});
 
     },function(err){
         console.log('Couldnt find dev to update time cmd');
@@ -282,6 +291,9 @@ const server = net.createServer((socc) => {
 
   });
    
+
+  
+
   socc.pipe(socc);
 });
 
