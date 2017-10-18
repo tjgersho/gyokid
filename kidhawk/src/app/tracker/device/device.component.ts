@@ -1,6 +1,6 @@
 import { Component, OnInit, Input , EventEmitter, Output} from '@angular/core';
 
-import { Device } from './Device';
+import { Device } from './device.model';
 
 @Component({
   selector: 'app-device',

@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 var db = require('./server/util/db.js');
 
 var cryptojs = require('crypto-js');
-var jwt = require('jsonwebtoken');
+var jwt = require('jsonwebtoken');var moment = require("moment");
 var fs = require('fs');
 var moment = require("moment");
 
@@ -65,7 +65,7 @@ db.sequelize.authenticate().then(function () {
   console.error('Unable to connect to the database:', err);
 });
 
-db.sequelize.sync({ force: true }).then(function () {
+db.sequelize.sync().then(function () {
   server.listen(port, function () {
     return console.log('API running on localhost:' + port);
   });

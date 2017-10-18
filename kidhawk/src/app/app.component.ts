@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HostListener } from '@angular/core';
+import { GlobalService } from './services/global.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'KidHawk';
+
+	constructor(private global: GlobalService){}
+	@HostListener('window:resize', ['$event'])
+	 onResize(event) {
+  		this.global.updateWindowDimensions()
+	 }
+
 }

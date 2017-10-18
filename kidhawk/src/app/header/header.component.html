@@ -48,22 +48,34 @@
     <div class="navbar-header pull-left">
       <a class="navbar-brand" routerLink="/">KidHawk</a>
     </div>
-    <p class="navbar-text navbar-right"  style="margin-right:15px;"  *ngIf="user.isLoggedIn">User: <a href="#" class="navbar-link">{{user.username}}</a></p>
+
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navCollapse" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+     <div class="collapse navbar-collapse" id="navCollapse">
+	
+
+        <p class="navbar-text navbar-right"  style="margin-right:15px;"  *ngIf="user.isLoggedIn">User: <a href="#" class="navbar-link">{{user.username}}</a></p>
       
 
-   <ul class="nav navbar-nav navbar-right">
-     <li>
-      <a routerLink="/register"  *ngIf="!user.isLoggedIn && !atRegister">Register</a>
-     </li>
-     <li>
-      <a routerLink="/login" *ngIf="!user.isLoggedIn && !atRegister && !atLogin">Login</a>
-     </li>
-     <li>
-      <a  (click)="logout()" *ngIf="user.isLoggedIn && !atRegister">Logout</a>
+       <ul class="nav navbar-nav navbar-right">
+         <li  *ngIf="!user.isLoggedIn && !atRegister">
+          <a routerLink="/register" >Register</a>
+       </li>
+        <li *ngIf="!user.isLoggedIn && !atRegister && !atLogin">
+         <a routerLink="/login" >Login</a>
+       </li>
+        <li *ngIf="user.isLoggedIn && !atRegister">
+      <a  (click)="logout()" >Logout</a>
      </li>
     </ul>
-<p class="navbar-btn">
-   <a role="btn" class="btn btn-default" routerLink="/tracker" *ngIf="user.isLoggedIn && !atTrack">Track</a>
-</p>
+    <div style="margin-left: auto; margin-right: auto; text-align: center; max-width: 300px !important;">
+            <a role="btn" class="navbar-btn btn btn-success btn-block;" routerLink="/tracker" *ngIf="user.isLoggedIn && !atTrack">Track</a>
+     </div>
+
+  </div>
 
  </div>

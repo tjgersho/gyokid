@@ -12,9 +12,9 @@ nav {
 }
 
 
-.navbar-collapse.collapse {
+/*.navbar-collapse.collapse {
   display: block!important;
-}
+}*/
 
 .navbar-nav>li, .navbar-nav {
   float: left !important;

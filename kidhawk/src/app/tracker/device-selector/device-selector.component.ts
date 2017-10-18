@@ -1,6 +1,6 @@
 import { Component, OnInit , Output, EventEmitter} from '@angular/core';
 
-import { Device } from './device/Device';
+import { Device } from '../device/device.model';
 
 
 

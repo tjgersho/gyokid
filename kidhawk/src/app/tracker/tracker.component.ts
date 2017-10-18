@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Device } from './device-selector/device/Device';
+import { Device } from './device/device.model';
 
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 declare var google: any;
