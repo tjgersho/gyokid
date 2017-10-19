@@ -54,7 +54,9 @@
 
 <div class="navbar navbar-default" style="z-index: 1000;" data-spy="affix">
     <div class="navbar-header pull-left">
-      <a routerLink="/"><img style="position:absolute; height:80px;" src="assets/gyokidlogo.png"></a>
+      <a routerLink="/"><img style="position:absolute; height:80px; left: -20px; " src="assets/gyokidicon.png">
+<h2 style="position:absolute; color: #00954a; font-weight:900; margin-left:40px;">gYoKid</h2>
+      </a>
     </div>
 
     <button type="button" *ngIf="!atRegister" class="navbar-toggle collapsed" (click)="onHamburgerClick()" data-toggle="collapse" data-target="#navCollapse" aria-expanded="false">
@@ -83,8 +85,8 @@
       <a  (click)="logout()" >Logout</a>
      </li>
     </ul>
-    <div style="margin-left: auto; margin-right: auto; text-align: center; max-width: 300px !important;">
-            <a role="btn" class="navbar-btn btn btn-default btn-block;" style="color: #fff;" routerLink="/tracker" *ngIf="user.isLoggedIn && !atTrack">Track</a>
+    <div style="margin-left: auto; margin-right: auto; text-align: right; max-width: 75px !important;">
+            <button class="navbar-btn btn btn-default" (click)="goTrack()" *ngIf="user.isLoggedIn && !atTrack">Track</button>
      </div>
 
   </div>

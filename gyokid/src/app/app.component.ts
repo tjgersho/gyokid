@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-//import { HostListener } from '@angular/core';
-//import { GlobalService } from './services/global.service';
+import { HostListener } from '@angular/core';
+import { GlobalService } from './services/global.service';
 
 @Component({
   selector: 'app-root',
@@ -10,10 +10,10 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'GyoKid';
 
-	//constructor(private global: GlobalService){}
-	//@HostListener('window:resize', ['$event'])
-	// onResize(event) {
-  	//	this.global.updateWindowDimensions()
-	// }
+	constructor(private global: GlobalService){}
+	@HostListener('window:resize', ['$event'])
+	 onResize(event) {
+  		this.global.updateWindowDimensions()
+	 }
 
 }

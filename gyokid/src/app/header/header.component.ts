@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 
 
@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit, OnChanges{
  
  mobileNavOpen: boolean = false;
 
- constructor(private route: ActivatedRoute, private user: UserService){
+ constructor(private route: ActivatedRoute, private user: UserService, private router: Router){
 	console.log(route.url);
 
 	if(route.snapshot.url.length > 0){
@@ -93,5 +93,11 @@ logout(){
  this.user.logout();
 
 }
+
+goTrack(){
+ this.router.navigate(['/tracker']);
+}
+
+
 
 }

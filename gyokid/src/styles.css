@@ -1,5 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Audiowide');
+@import url('https://fonts.googleapis.com/css?family=Neucha');
 html{
 	width: 100%;
         height: 100%;
@@ -15,7 +16,8 @@ body {
         margin: 0;
         padding: 0;
        /* font-family: 'Audiowide', cursive; */
-      font-family: "Comic Sans MS", cursive, sans-serif;
+        font-family: "Comic Sans MS", "Comic Sans", 'Neucha', cursive;
+
 	font-weight: 600;
 color: #00954a;
 
@@ -56,6 +58,7 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .btn-default {
  background-color: #00954a;
+ color:#fff;
 
 }
 
@@ -67,3 +70,4 @@ color: #00954a;
 clear:both;
 
 }
+
