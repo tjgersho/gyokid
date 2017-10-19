@@ -30,10 +30,11 @@
           ngModel
           class="form-control" />
       </div>
-      <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Sign Up</button>
-      <a class="btn pull-right" style="font-size:11px;" (click)="gotoLogin()">Login-></a>
+      <button class="btn btn-default" type="submit" [disabled]="!f.valid">Sign Up</button>
+      <a class="btn pull-right" (click)="gotoLogin()">Login-></a>
     </form>
 </div>
   </div>
 </div>
 </div>
+<app-footer></app-footer>

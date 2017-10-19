@@ -1,0 +1,69 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css?family=Audiowide');
+html{
+	width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+
+
+}
+
+body {
+	width: 100%;
+        height: 100%;
+        margin: 0;
+        padding: 0;
+       /* font-family: 'Audiowide', cursive; */
+      font-family: "Comic Sans MS", cursive, sans-serif;
+	font-weight: 600;
+color: #00954a;
+
+}
+
+
+#holder {
+    min-height: 100%;
+    position:relative;
+    overflow-x:hidden;
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#feccb1+0,fb955e+100&0.43+1,0.4+100 */
+background: -moz-linear-gradient(top, rgba(254,204,177,0.43) 0%, rgba(254,203,176,0.43) 1%, rgba(251,149,94,0.4) 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top, rgba(254,204,177,0.43) 0%,rgba(254,203,176,0.43) 1%,rgba(251,149,94,0.4) 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom, rgba(254,204,177,0.43) 0%,rgba(254,203,176,0.43) 1%,rgba(251,149,94,0.4) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6efeccb1', endColorstr='#66fb955e',GradientType=0 ); /* IE6-9 */
+
+ /* background-attachment: fixed; */
+ 
+}
+
+p{
+ font-size:16px;
+}
+
+
+.formCard{
+
+background-color: #fcfcfc;
+
+
+padding:20px 40px;  
+
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+
+}
+.btn{
+ border-radius: 0;
+}
+.btn-default {
+ background-color: #00954a;
+
+}
+
+a{
+color: #00954a;
+}
+
+.clr{
+clear:both;
+
+}

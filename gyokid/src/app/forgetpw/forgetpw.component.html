@@ -8,19 +8,12 @@
         <label for="usernameoremail">Username or Email:</label>
         <input type="usernameoremail" id="usernameoremail" name="usernameoremail" ngModel class="form-control" />
       </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          ngModel
-          class="form-control" />
-      </div>
-      <button class="btn btn-primary" type="submit" [disabled]="!f.valid">Login</button>
-      <a class="btn pull-right" style="font-size:11px;" (click)="gotoRegister()">Signup-></a>
+      <button class="btn btn-default" type="submit" [disabled]="!f.valid">New Password</button>
+      <a class="btn pull-right" (click)="gotoRegister()">Signup-></a>
+      <div class="clr"></div>
     </form>
 </div>
   </div>
 </div>
 </div>
+<app-footer></app-footer>

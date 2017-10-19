@@ -21,6 +21,8 @@ export class HeaderComponent implements OnInit, OnChanges{
  atTrack: boolean = false;
  atRegister: boolean = false;
  atLogin: boolean = false;
+ 
+ mobileNavOpen: boolean = false;
 
  constructor(private route: ActivatedRoute, private user: UserService){
 	console.log(route.url);
@@ -75,6 +77,13 @@ $('[data-spy="affix"]').affix({
     }
   }
 }) 
+
+}
+
+
+onHamburgerClick(){
+
+	this.mobileNavOpen ? this.mobileNavOpen = false : this.mobileNavOpen = true;
 
 }
 

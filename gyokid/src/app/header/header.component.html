@@ -9,15 +9,23 @@
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
     <div class="item active">
-      <img src="" alt="">
-	 <div style="width:100%; height:380px; background-color:#ff00ff;"></div>
+
+     <div style="width:100%; height:380px; background-color:#fcfcfc;">
+		<div style="position: relative; margin:auto; padding-top: 30px; max-width:300px;">
+    			  <img src="assets/gyokidlogo.png" alt="" style="width:100%;"/>
+		</div>
+     </div>
       <div class="carousel-caption">
         <h1> Slide 1</h1>
       </div>
     </div>
     <div class="item">
-      <img src="" alt="">
-        <div style="width:100%; height:380px; background-color:#ff0000;"></div>
+
+        <div style="width:100%; height:380px; background-color:#fcfcfc;">
+		<div style="position: relative; margin:auto; padding-top: 30px; max-width:300px;">
+      			<img src="assets/gyokidlogo.png" alt="" style="width:100%;"/>
+		</div>
+	</div>
       <div class="carousel-caption">
        <h1> Slide 2</h1>
       </div>
@@ -44,24 +52,27 @@
 </div>
 
 
-<div class="navbar navbar-default" style="z-index: 2000;" data-spy="affix">
+<div class="navbar navbar-default" style="z-index: 1000;" data-spy="affix">
     <div class="navbar-header pull-left">
-      <a class="navbar-brand" routerLink="/">KidHawk</a>
+      <a routerLink="/"><img style="position:absolute; height:80px;" src="assets/gyokidlogo.png"></a>
     </div>
 
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navCollapse" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
+    <button type="button" *ngIf="!atRegister" class="navbar-toggle collapsed" (click)="onHamburgerClick()" data-toggle="collapse" data-target="#navCollapse" aria-expanded="false">
+        <!--<span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+        <span class="icon-bar"></span> -->
+	<span class="glyphicon" [ngClass]="{'glyphicon-menu-hamburger': !mobileNavOpen, 'glyphicon-remove': mobileNavOpen}"></span>
+     </button>
      <div class="collapse navbar-collapse" id="navCollapse">
 	
 
-        <p class="navbar-text navbar-right"  style="margin-right:15px;"  *ngIf="user.isLoggedIn">User: <a href="#" class="navbar-link">{{user.username}}</a></p>
-      
+   
+       <ul class="nav navbar-nav navbar-right" style="text-align:right;">
+	  <li  *ngIf="user.isLoggedIn">
+         	 <a routerLink="/dashboard" >Dashboard</a>
+      	  </li>
 
-       <ul class="nav navbar-nav navbar-right">
          <li  *ngIf="!user.isLoggedIn && !atRegister">
           <a routerLink="/register" >Register</a>
        </li>
@@ -73,7 +84,7 @@
      </li>
     </ul>
     <div style="margin-left: auto; margin-right: auto; text-align: center; max-width: 300px !important;">
-            <a role="btn" class="navbar-btn btn btn-success btn-block;" routerLink="/tracker" *ngIf="user.isLoggedIn && !atTrack">Track</a>
+            <a role="btn" class="navbar-btn btn btn-default btn-block;" style="color: #fff;" routerLink="/tracker" *ngIf="user.isLoggedIn && !atTrack">Track</a>
      </div>
 
   </div>
