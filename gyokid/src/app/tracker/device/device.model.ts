@@ -1,16 +1,26 @@
+import { Injectable } from '@angular/core';
+import { Gps } from '../gps.model';
+
+
 export class Device{
+ imei: string;
  id: string;
- location: any;
  tag: string;
+ watching: boolean;
+ gpsdata: Gps[] = [];
 
- constructor(id: string, location: any, tag: string){
+ constructor(imei: string, tag: string, watching: boolean){
 
-	this.id = id;
-
-	this.location = location;
+	this.imei = imei;
+	
+	this.id = imei.substring(imei.length-5, imei.length-1);
 
         this.tag = tag;
 
+	this.watching = watching;
  }
+
+ 
+ 
 
 }

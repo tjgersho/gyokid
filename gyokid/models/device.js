@@ -1,58 +1,37 @@
-//Merchandise
+//xoemail
 module.exports = function(sequelize, DataTypes){
 return sequelize.define('device', {
-	sku: {
-		type: DataTypes.STRING,
-		allowNull: false,
-		unique: true
-	},
-	name: {
-		type: DataTypes.STRING,
-		allowNull: false
-	},
-	cost: {
-		type: DataTypes.FLOAT,
-		defaultValue: 0.0,
-		validate: {
-			isFloat: true,
-			max: 999999,
-			min: 0
-		}
-	},
-	price: {
-		type: DataTypes.FLOAT,
-		defaultValue: 0.0,
-		validate: {
-			isFloat: true,
-			max: 999999,
-			min: 0
-		}
-	},
-	wholesaleprice: {
-		type: DataTypes.FLOAT,
-		defaultValue: 0.0,
-		validate: {
-			isFloat: true,
-			max: 999999,
-			min: 0
-		}
-	},
-	prodinfo: {
+	imei: {
 		type: DataTypes.STRING,
 		allowNull: true
 	},
-	inventory: {
-		type: DataTypes.INTEGER,
-		defaultValue: 0,
-		validate: {
-          isInt: true,
-          max: 9999999,
-          min: 0
-		}
+	interval: {
+		type: DataTypes.INTEGER,  
+		allowNull: true
 	},
-	listOrder: {
-		type: DataTypes.INTEGER,
+	alarm:{
+		type: DataTypes.BOOLEAN,
+		allowNull: false,
+		defaultValue: false
+	},
+	watchStatus:{
+		type: DataTypes.INTEGER,  //0 => OFF, 1=>active, 2=>VeryActive
+		allowNull: false,
+		defaultValue: 0
+	},
+	lastCmdTimeStamp: {
+	   type: DataTypes.STRING,
+		allowNull: true
+	},
+	lastCmdConfirmed: {
+		type: DataTypes.BOOLEAN,
+		allowNull: false,
+		defaultValue: false
+	},
+	lastCmd: {
+		 type: DataTypes.STRING,
 		allowNull: true
 	}
+
 });
 };

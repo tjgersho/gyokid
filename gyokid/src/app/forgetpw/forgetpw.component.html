@@ -6,10 +6,10 @@
     <form (ngSubmit)="onSignup(f)" #f="ngForm">
       <div class="form-group">
         <label for="usernameoremail">Username or Email:</label>
-        <input type="usernameoremail" id="usernameoremail" name="usernameoremail" ngModel class="form-control" />
+        <input type="usernameoremail" id="usernameoremail" name="usernameoremail" ngModel class="form-control" required/>
       </div>
       <button class="btn btn-default" type="submit" [disabled]="!f.valid">New Password</button>
-      <a class="btn pull-right" (click)="gotoRegister()">Signup-></a>
+      <a class="btn pull-right" routerLink="/register">Signup-></a>
       <div class="clr"></div>
     </form>
 </div>

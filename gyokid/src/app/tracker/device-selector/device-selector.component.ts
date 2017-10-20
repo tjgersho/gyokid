@@ -1,7 +1,10 @@
 import { Component, OnInit , Output, EventEmitter} from '@angular/core';
 
+import { UserService } from '../../services/user.service';
+
 import { Device } from '../device/device.model';
 
+import { GlobalService } from '../../services/global.service';
 
 
 @Component({
@@ -11,67 +14,65 @@ import { Device } from '../device/device.model';
 })
 export class DeviceSelectorComponent implements OnInit {
 
-  @Output() onTrackGo = new EventEmitter<Device[]>();
+  @Output() onTrackGo = new EventEmitter<null>();
   @Output() onTrackCancel = new EventEmitter<null>();
 
-  
-  deviceList: Device[] = [
-		new Device("1", {lat: 100, lon: 100}, ""), 
-		new Device("2", {lat: 100, lon: 100}, "T"), 
-		new Device("3", {lat: 100, lon: 100}, "G"), 
-		new Device("4", {lat: 100, lon: 100}, ""), 
-		new Device("5", {lat: 100, lon: 100}, "T"), 
-		new Device("6", {lat: 100, lon: 100}, "G"),
-		new Device("7", {lat: 100, lon: 100}, ""), 
-		];
- 
-  _deviceList: Device[] = [
-		new Device("1", {lat: 100, lon: 100}, ""), 
-		new Device("2", {lat: 100, lon: 100}, "T"), 
-		new Device("3", {lat: 100, lon: 100}, "G"), 
-		new Device("4", {lat: 100, lon: 100}, ""), 
-		new Device("5", {lat: 100, lon: 100}, "T"), 
-		new Device("6", {lat: 100, lon: 100}, "G"),
-		new Device("7", {lat: 100, lon: 100}, ""), 
-		];
+  formCenter: number = 0;
 
-
-
-   deviceSelectedList: Device[] = [];
-
-
-  constructor() { }
+  constructor(private user: UserService, private global: GlobalService) { }
 
   ngOnInit() {
+
+
+   	this.formCenter = this.calculateFormCenter();
+
+	this.global.onWindowChange.subscribe((data: object) => {
+		console.log(data);
+		this.formCenter = this.calculateFormCenter();
+	});
+
+
   }
+
+   calculateFormCenter(){
+	var offset = (this.global.screenHeight-200)/2 - 70;
+	if(offset < 0){
+		offset = 0;
+         }
+	return offset;
+  }
+
 
   onDeviceSelected(dev, tagVal, index){
 
-	console.log('onDevice Select');
+      	console.log('onDevice Select');
 	console.log(tagVal);
 
+
+	dev.watching = true;
 	dev.tag = tagVal;
 	
-	this.deviceSelectedList.push(dev);
-
-       this.deviceList.splice(index,1);
+	this.user.deviceWatchingUpdate(dev);
 
   }
 
 
-  removeDev(index){
-   var dev = this.deviceSelectedList[index];
-	this.deviceSelectedList.splice(index,1);
+  removeDev(dev){
+        dev.watching = false;
+	dev.tag = '';
 
-       this.deviceList.push(dev);
-  }
+        this.user.deviceWatchingUpdate(dev);
+
+
+     }
 
 
   goTrack(){
-	this.onTrackGo.emit(this.deviceSelectedList);
+	this.onTrackGo.emit();
   }
+
   cancelTrack(){
-       this.onTrackCancel.emit(null);
+       this.onTrackCancel.emit();
 
   }
 

@@ -25,7 +25,15 @@ import { DeviceSelectorComponent } from './tracker/device-selector/device-select
 import { UserService } from './services/user.service';
 
 import { AuthGuardService } from './services/auth-guard.service';
+import { AdminGuardService } from './services/admin-guard.service';
+
+
 import { GlobalService } from './services/global.service';
+import { MapComponent } from './tracker/map/map.component';
+import { AdminComponent } from './admin/admin.component';
+import { BuyCreditsComponent } from './buy-credits/buy-credits.component';
+import { RegisterDeviceComponent } from './register-device/register-device.component';
+import { BuyDeviceComponent } from './buy-device/buy-device.component';
 
 
 @NgModule({
@@ -40,7 +48,12 @@ import { GlobalService } from './services/global.service';
     RegisterComponent,
     LoginComponent,
     ForgetpwComponent,
-    DashboardComponent
+    DashboardComponent,
+    MapComponent,
+    AdminComponent,
+    BuyCreditsComponent,
+    RegisterDeviceComponent,
+    BuyDeviceComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +61,7 @@ import { GlobalService } from './services/global.service';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [UserService, AuthGuardService, GlobalService],
+  providers: [UserService, AuthGuardService, AdminGuardService, GlobalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

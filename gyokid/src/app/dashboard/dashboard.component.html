@@ -1,5 +1,66 @@
 <app-header></app-header>
-<p>
-  dashboard works!
-</p>
+
+<div class="container">
+  
+ <div *ngIf="user.devices.length<1">
+  <div class="formCard" style="position:relative;">
+	<h2  style="text-align:center;">You don't have any registered Devices</h2>
+	<div class="row">
+		
+	 <div  class="col-md-6">
+		<app-register-device></app-register-device>
+
+	 </div>
+
+
+ 	 <div  class="col-md-6">
+	   <app-buy-device></app-buy-device>
+	</div>
+
+     </div>
+  </div>
+
+ </div>
+
+ <div *ngIf="user.devices.length>0">
+
+	<div class="row">
+
+	 <div  class="col-md-6">
+		<h2> Data Credits: </h2>
+		{{user.cellularCredits}}
+	 </div>
+
+
+ 	 <div  class="col-md-6">
+
+	  <div class="row"  *ngFor="let dev of user.devices">
+	      
+		<div class="col-xs-6">
+			<h3>Device: {{ dev.imei }} </h3>
+		</div>
+		<div class="col-xs-6">
+			<p> Watching: {{ dev.watching }} </p>
+		</div>
+	  </div>
+
+	</div>
+
+	  
+
+	</div>
+
+
+
+
+	<div class="row">
+		<div class="col-xs-6 col-xs-offset-6">
+			<app-buy-credits></app-buy-credits>
+		</div>
+
+	</div>
+
+ </div>
+
+</div>
 <app-footer></app-footer>

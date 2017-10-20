@@ -58,12 +58,6 @@ var imei = dataArray[1];
 
 
 
-  var lat = dataArray[5];
-  var latH = dataArray[6];
-
-  var lon = dataArray[7];
-  var lonH = dataArray[8];
-
 var latFloat = parseFloat(lat)/100;
 
 var latDeg = Math.round(latFloat);

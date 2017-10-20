@@ -71,3 +71,15 @@ clear:both;
 
 }
 
+
+input.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.modal.in .modal-dialog {
+ -webkit-transform: none;
+ -ms-transform: none; 
+ transform: none;
+}
+
+

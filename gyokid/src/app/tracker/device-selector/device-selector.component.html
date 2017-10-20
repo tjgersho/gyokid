@@ -1,15 +1,45 @@
-<div id="deviceSelectorBackground"  style="position:fixed; top:0; left:0; right:0; bottom:0; z-index: 8000;">
+<div id="deviceSelectorBackground"  style="position:fixed; top:0; left:0; right:0; bottom:0; z-index: 1000;">
   <div style="overflow-y: scroll; overflow-x: hidden; height: 100%; min-height: 100%;">
 
-
   <div class="container">
+
+
+ <div *ngIf="user.devices.length<1">
+ 	
+	<div class="formCard"  [ngStyle]="{'top': formCenter + 'px'}" style="position:relative; margin-top: 15px; margin-bottom:30px;">
+
+	<h2  style="text-align:center;">You don't have any registered Devices</h2>
+	<div class="row">
+		
+	 <div  class="col-md-6">
+
+
+<app-register-device></app-register-device>
+
+	
+
+	 </div>
+
+
+ 	 <div  class="col-md-6">
+
+<app-buy-device></app-buy-device>
+
+	</div>
+
+     </div>
+   </div>
+ </div>
+
+ <div *ngIf="user.devices.length>0">
 
     <h2 style="text-align:center;"> Select Your Devices to Track </h2>
 
     <div class="row">
       <div class="col-md-6">
-   
-            <div class="row" *ngFor="let dev of deviceList; let i = index" style="margin-bottom:5px;">
+   	 <div *ngFor="let dev of user.devices; let i = index">
+            <div class="row"  style="margin-bottom:5px;" *ngIf="!dev.watching">
+	     
 		<div class="col-xs-4">
 		 <input type="text" #devTag class="form-control" placeholder="Tag:"/>
                 </div>
@@ -17,14 +47,17 @@
                  <app-device  [device]="dev" (deviceSelected)="onDeviceSelected(dev, devTag.value, i)"></app-device>
                 </div>
              </div>
+        </div>
       </div>
       <div class="col-md-6">
               <div class="row" >
 		 <div class="col-xs-12">
-		  <span class="label label-default devlabel" style="float:left;margin:5px;" *ngFor="let selDev of deviceSelectedList; let i = index">
- 			<p>DEV: {{selDev.id}} <i *ngIf="selDev.tag !== ''">- TAG: {{selDev.tag}}</i>
-			<button class="btn btn-xs btn-danger" (click)="removeDev(i)"><span class="glyphicon glyphicon-remove"></span></button>
-                        </p>
+		  <span class="label label-default devlabel" style="float:left;margin:5px;" *ngFor="let dev of user.devices">
+			<div *ngIf="dev.watching">
+ 			   <p>DEV: {{dev.id}} <i *ngIf="dev.tag !== ''">- TAG: {{dev.tag}}</i>
+			     <button class="btn btn-xs btn-danger" (click)="removeDev(dev)"><span class="glyphicon glyphicon-remove"></span></button>
+                           </p>
+			 </div>
                   </span>
 	           
                  </div>
@@ -35,7 +68,7 @@
 
      </div>
 
-   </div>
+
    <div class="row" style="margin-top:20px; margin-bottom:50px;">
     <hr>
   
@@ -47,5 +80,10 @@
        </div>
    </div>
 
+ 
+ </div>
+
+
+ </div>
  </div>
 </div>

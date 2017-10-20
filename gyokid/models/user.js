@@ -74,6 +74,12 @@ module.exports = function(sequelize, DataTypes){
 		shippingAddress:{
 			type: DataTypes.TEXT			
 		},
+
+                cellularCredits: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
+                  	defaultValue: 500
+		},
 		referralWins: {
 		    type: DataTypes.INTEGER,
 		     allowNull: false,

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
@@ -11,10 +11,9 @@ import { GlobalService } from '../services/global.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
- 
-
+   
   formCenter: number = 0;
-
+   password;
 
   constructor(private router: Router, private userService: UserService,  private global: GlobalService) { }
 
@@ -31,7 +30,7 @@ export class RegisterComponent implements OnInit {
   }
 
   calculateFormCenter(){
-	var offset = (this.global.screenHeight-430)/2 - 70;
+	var offset = (this.global.screenHeight-430)/2 - 100;
 	if(offset < 0){
 		offset = 0;
          }
@@ -40,28 +39,33 @@ export class RegisterComponent implements OnInit {
 
 
    onSignup(form: NgForm) {
-    const username = form.value.username;
-    const email = form.value.email;
-    const password = form.value.password;
-    const password2 = form.value.password2;
 
-    if(password === password2){
-      this.userService.signup(username, email, password).subscribe((res) => {
+	console.log(form);
+	console.log('password');
+console.log(this.password);
 
-		console.log('Response from subscribe to user server signup method');
-		console.log(res);
+   // const username = form.value.username;
+   // const email = form.value.email;
+   // const password = form.value.password;
+   // const password2 = form.value.password2;
 
-		if( res.status === 200){
-			this.userService.login(username, password);
+   // if(password === password2){
+    //  this.userService.signup(username, email, password).subscribe((res) => {
+
+	//	console.log('Response from subscribe to user server signup method');
+	//	console.log(res);
+
+	//	if( res.status === 200){
+	//		this.userService.login(username, password);
                		//this.router.navigate(['/tracker']);
-                 }else{
-			alert('An error occured while signing up.');
+          //       }else{
+	//		alert('An error occured while signing up.');
 
-                }
+          //      }
 		
-      });
+     // });
 
-    }
+    //}
   }
 
 

@@ -1,14 +1,22 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+
+import { AuthGuardService } from './services/auth-guard.service';
+import { AdminGuardService } from './services/admin-guard.service';
+
+
 import { IndexComponent } from './index/index.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { TrackerComponent } from './tracker/tracker.component';
-import { AuthGuardService } from './services/auth-guard.service';
+
 
 import { ForgetpwComponent } from './forgetpw/forgetpw.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+
+import { AdminComponent } from './admin/admin.component';
+
 
 const appRoutes: Routes = [
 {
@@ -38,7 +46,14 @@ const appRoutes: Routes = [
    },
    {
 	path: 'dashboard',
-	component: DashboardComponent
+	component: DashboardComponent,
+        canActivate: [AuthGuardService]
+   },
+   {
+	path: 'admin',
+	component: AdminComponent,
+	canActivate: [AdminGuardService]
+
    }
 ];
 

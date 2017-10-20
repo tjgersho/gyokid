@@ -54,16 +54,11 @@
 
 <div class="navbar navbar-default" style="z-index: 1000;" data-spy="affix">
     <div class="navbar-header pull-left">
-      <a routerLink="/"><img style="position:absolute; height:80px; left: -20px; " src="assets/gyokidicon.png">
-<h2 style="position:absolute; color: #00954a; font-weight:900; margin-left:40px;">gYoKid</h2>
+      <a routerLink="/"><img style="position:absolute; height:80px;" src="assets/gyokidlogo.png">
       </a>
     </div>
 
     <button type="button" *ngIf="!atRegister" class="navbar-toggle collapsed" (click)="onHamburgerClick()" data-toggle="collapse" data-target="#navCollapse" aria-expanded="false">
-        <!--<span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span> -->
 	<span class="glyphicon" [ngClass]="{'glyphicon-menu-hamburger': !mobileNavOpen, 'glyphicon-remove': mobileNavOpen}"></span>
      </button>
      <div class="collapse navbar-collapse" id="navCollapse">
@@ -71,19 +66,25 @@
 
    
        <ul class="nav navbar-nav navbar-right" style="text-align:right;">
-	  <li  *ngIf="user.isLoggedIn">
-         	 <a routerLink="/dashboard" >Dashboard</a>
-      	  </li>
+        <li *ngIf="user.isAdmin">
+            <a  routerLink="/admin" >Admin</a>
+        </li>
+
+        <li *ngIf="!user.isLoggedIn && !atRegister && !atLogin">
+         <a routerLink="/login" >Login</a>
+       </li>
+          <li *ngIf="user.isLoggedIn && !atRegister">
+          <a  (click)="logout()" >Logout</a>
+       </li>
 
          <li  *ngIf="!user.isLoggedIn && !atRegister">
           <a routerLink="/register" >Register</a>
        </li>
-        <li *ngIf="!user.isLoggedIn && !atRegister && !atLogin">
-         <a routerLink="/login" >Login</a>
-       </li>
-        <li *ngIf="user.isLoggedIn && !atRegister">
-      <a  (click)="logout()" >Logout</a>
-     </li>
+	  <li  *ngIf="user.isLoggedIn">
+         	 <a routerLink="/dashboard" >Dashboard</a>
+      	  </li>
+
+
     </ul>
     <div style="margin-left: auto; margin-right: auto; text-align: right; max-width: 75px !important;">
             <button class="navbar-btn btn btn-default" (click)="goTrack()" *ngIf="user.isLoggedIn && !atTrack">Track</button>
