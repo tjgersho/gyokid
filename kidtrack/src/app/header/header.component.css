@@ -27,6 +27,14 @@ margin-right: 15px;
 
 }
 
+
+.navbar-default {
+ border: 0;
+ background-color: #FDFFC7;
+
+}
+
+
 .navbar-default .navbar-toggle {
   color: #00954a;
   font-size: 25px;

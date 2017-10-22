@@ -8,7 +8,7 @@ import { GlobalService } from './services/global.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'GyoKid';
+  title = 'KidTrack';
 
 	constructor(private global: GlobalService){}
 	@HostListener('window:resize', ['$event'])
