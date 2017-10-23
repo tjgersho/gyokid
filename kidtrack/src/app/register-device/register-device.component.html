@@ -1,5 +1,57 @@
+<app-header></app-header>
 
-		<button type="button" class="btn btn-primary btn-lg btn-block" >
-  			Register Device
-		</button>
+<div class="container">
 
+<div style="position: relative; margin-top: 15px; margin-bottom:30px;">
+<div class="row">
+  <div class="col-xs-10 col-sm-8 col-md-6 col-xs-offset-1 col-sm-offset-2 col-md-offset-3">
+   <div class="formCard">
+
+	<h3> Register Devices </h3>
+      <div class="form-group">
+        <label for="imei">IMEI #:</label>
+
+     <div class="input-group">
+    <input type="text" id="imei" name="imei" [(ngModel)]="imeinumber" class="form-control"/>
+    <div class="input-group-btn">
+      <button class="btn btn-default" (click)="addToDeviceRegistration()" [disabled]="imeinumber === '' || imeinumber.length < 15">
+        <i class="glyphicon glyphicon-plus"></i>
+      </button>
+    </div>
+  </div>
+	<br />
+   <div class="form-group">
+        <button class="btn">Upload CSV <span class="glyphicon glyphicon-upload"></span></button>
+   </div>
+      </div>
+      <div class="clr"></div>
+
+  </div>
+ </div>
+</div>
+
+</div>
+
+
+<div class="row" *ngFor="let newdev of newlyRegisteredDevices;">
+	<div class="col-xs-12" > 
+
+		<p style="text-align:center;"> 
+
+			{{newdev.imei}} 
+
+			<img [src]="getDevRegistrationStatusImage()" />
+		</p>
+
+	</div>
+</div>
+
+
+  
+
+</div>
+<br />
+<br />
+<br />
+<br />
+<app-footer></app-footer>

@@ -1,5 +1,16 @@
 <app-header></app-header>
 
-	{{user.token}}
+<div class="container">
+  <ul class="nav nav-tabs">
+    <li [routerLinkActive]="'active'" [routerLinkActiveOptions] ="{exact: true}"><a routerLink="./home">Admin Home</a></li>
+    <li [routerLinkActive]="'active'"><a routerLink="users">Users</a></li>
+    <li [routerLinkActive]="'active'"><a routerLink="devices">Devices</a></li>
+  </ul>
+  <br>
+ 
+  <router-outlet></router-outlet>
+
+</div>
+
 
 <app-footer></app-footer>

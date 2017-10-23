@@ -1,2 +1,2 @@
-# G-Yo-Kid 
+# KidTrack
 GPS Kid Tracking Application

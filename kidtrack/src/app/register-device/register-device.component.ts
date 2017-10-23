@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Device } from '../tracker/device/device.model';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-register-device',
@@ -7,9 +11,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterDeviceComponent implements OnInit {
 
-  constructor() { }
+  
+  newlyRegisteredDevices: Device[] = [];
+  imeinumber:string = '';
+
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
+
+
+ addToDeviceRegistration(){
+
+	console.log('imei..');
+	console.log(this.imeinumber);
+	this.newlyRegisteredDevices.push(new Device(this.imeinumber));
+
+     // this.router.navigate(['/dashboard']);
+
+
+  }
+
+
+getDevRegistrationStatusImage(){
+	
+	return 'assets/loader.gif';
+
+
+}
+
+
 
 }

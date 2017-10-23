@@ -27,13 +27,21 @@ import { UserService } from './services/user.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AdminGuardService } from './services/admin-guard.service';
 
+import { BuyCreditsComponent } from './buy-credits/buy-credits.component';
+import { RegisterDeviceComponent } from './register-device/register-device.component';
+import { BuyDeviceComponent } from './buy-device/buy-device.component';
+
+
 
 import { GlobalService } from './services/global.service';
 import { MapComponent } from './tracker/map/map.component';
 import { AdminComponent } from './admin/admin.component';
-import { BuyCreditsComponent } from './buy-credits/buy-credits.component';
-import { RegisterDeviceComponent } from './register-device/register-device.component';
-import { BuyDeviceComponent } from './buy-device/buy-device.component';
+
+
+import { LoaderComponent } from './loader/loader.component';
+import { UsersComponent } from './admin/users/users.component';
+import { DevicesComponent } from './admin/devices/devices.component';
+import { HomeComponent } from './admin/home/home.component';
 
 
 @NgModule({
@@ -50,10 +58,14 @@ import { BuyDeviceComponent } from './buy-device/buy-device.component';
     ForgetpwComponent,
     DashboardComponent,
     MapComponent,
-    AdminComponent,
     BuyCreditsComponent,
     RegisterDeviceComponent,
-    BuyDeviceComponent
+    BuyDeviceComponent,
+    AdminComponent,
+    LoaderComponent,
+    UsersComponent,
+    DevicesComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

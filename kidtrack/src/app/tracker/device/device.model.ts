@@ -9,7 +9,7 @@ export class Device{
  watching: boolean;
  gpsdata: Gps[] = [];
 
- constructor(imei: string, tag: string, watching: boolean){
+ constructor(imei: string, tag: string = "", watching: boolean = false){
 
 	this.imei = imei;
 	

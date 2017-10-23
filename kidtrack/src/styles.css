@@ -85,10 +85,35 @@ input.ng-invalid.ng-touched {
   border: 1px solid red;
 }
 
-.modal.in .modal-dialog {
- -webkit-transform: none;
- -ms-transform: none; 
- transform: none;
+
+
+
+.overlayLoaderDiv {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgb(0, 0, 0); /* Fallback for older browsers without RGBA-support */
+    background: rgba(0, 0, 0, 0.7);
+    display:none;
+  z-index:9999;
+
 }
+
+.overlayLoaderImg {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin: -55px 0 0 -55px;
+ z-index:10000;
+
+}
+
+
+
+
 
 

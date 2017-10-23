@@ -67,7 +67,7 @@
    
        <ul class="nav navbar-nav navbar-right" style="text-align:right;">
         <li *ngIf="user.isAdmin">
-            <a  routerLink="/admin" >Admin</a>
+            <a  routerLink="/admin/home" >Admin</a>
         </li>
 
         <li *ngIf="!user.isLoggedIn && !atRegister && !atLogin">

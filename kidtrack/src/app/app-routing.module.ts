@@ -15,8 +15,17 @@ import { TrackerComponent } from './tracker/tracker.component';
 import { ForgetpwComponent } from './forgetpw/forgetpw.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+import { BuyCreditsComponent } from './buy-credits/buy-credits.component';
+import { RegisterDeviceComponent } from './register-device/register-device.component';
+import { BuyDeviceComponent } from './buy-device/buy-device.component';
+
+
 import { AdminComponent } from './admin/admin.component';
 
+import { UsersComponent } from './admin/users/users.component';
+import { DevicesComponent } from './admin/devices/devices.component';
+
+import { HomeComponent } from './admin/home/home.component';
 
 const appRoutes: Routes = [
 {
@@ -50,9 +59,40 @@ const appRoutes: Routes = [
         canActivate: [AuthGuardService]
    },
    {
+	path: 'register-device',
+	component: RegisterDeviceComponent,
+        canActivate: [AuthGuardService]
+   },
+   {
+	path: 'buy-device',
+	component: BuyDeviceComponent
+   },
+   {
+	path: 'buy-credits',
+	component: BuyCreditsComponent,
+        canActivate: [AuthGuardService]
+   },
+
+   {
 	path: 'admin',
 	component: AdminComponent,
-	canActivate: [AdminGuardService]
+	canActivate: [AdminGuardService],
+	 children: [
+            {
+            path: 'home',
+            component: HomeComponent
+          },
+
+          {
+            path: 'users',
+            component: UsersComponent
+          },
+          {
+            path: 'devices',
+            component: DevicesComponent
+		
+          }
+        ]
 
    }
 ];
