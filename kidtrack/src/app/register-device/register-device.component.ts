@@ -4,6 +4,11 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 
+declare var jquery:any;
+declare var $ :any;
+
+
+
 @Component({
   selector: 'app-register-device',
   templateUrl: './register-device.component.html',
@@ -32,13 +37,54 @@ export class RegisterDeviceComponent implements OnInit {
 
   }
 
+ 
 
-getDevRegistrationStatusImage(){
+ getDevRegistrationStatusImage(){	
+    return 'assets/loader.gif';
+ }
+
+
+
+
+
+
+ 
+
 	
-	return 'assets/loader.gif';
+  uploadCSV(){
+       var input=document.createElement('input');
+           input.type="file";
+	      input.style.display = 'none';
 
+           $('body').append(input);
 
-}
+	    $(input).click();
+
+	var self = this;
+
+     var readFile = function() {
+        var reader = new FileReader();
+        reader.onload = function () {
+
+		console.log(reader.result);
+
+		var imeiarray = reader.result.split("\n");
+		imeiarray.pop();
+		console.log(imeiarray);
+		for(var i=0; i<imeiarray.length; i++){
+
+			self.newlyRegisteredDevices.push(new Device(imeiarray[i]));
+		}
+
+        };
+        // start reading the file. When it is done, calls the onload event defined above.
+        reader.readAsBinaryString(input.files[0]);
+      };
+ 	
+
+      input.addEventListener('change', readFile);
+
+   }
 
 
 
