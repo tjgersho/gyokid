@@ -1,3 +1,16 @@
-<p>
-  users works!
-</p>
+<h3>Users</h3>
+<div class="row" *ngFor="let user of userArray">
+	<div class="col-xs-12" > 
+
+		<p style="text-align:center;"> 
+
+			{{user.id}} -- {{user.username}}
+
+		</p>
+
+	</div>
+</div>
+<br />
+<br />
+<br />
+<br />

@@ -5,6 +5,10 @@ return sequelize.define('device', {
 		type: DataTypes.STRING,
 		allowNull: true
 	},
+	sim: {
+		type: DataTypes.STRING,
+		allowNull: true
+	},
 	interval: {
 		type: DataTypes.INTEGER,  
 		allowNull: true
@@ -14,10 +18,10 @@ return sequelize.define('device', {
 		allowNull: false,
 		defaultValue: false
 	},
-	watchStatus:{
-		type: DataTypes.INTEGER,  //0 => OFF, 1=>active, 2=>VeryActive
+	watching:{
+		type: DataTypes.BOOLEAN,  
 		allowNull: false,
-		defaultValue: 0
+		defaultValue: false
 	},
 	lastCmdTimeStamp: {
 	   type: DataTypes.STRING,

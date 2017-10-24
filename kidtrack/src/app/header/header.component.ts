@@ -69,14 +69,23 @@ export class HeaderComponent implements OnInit, OnChanges{
  ngOnInit() {
 
 
-$('[data-spy="affix"]').affix({
+var affixOptionsObj = {
   offset: {
-    top: 380,
+    top: 0,
     bottom: function () {
       return (this.bottom = $('.footer').outerHeight(true))
     }
   }
-}) 
+};
+
+  if(this.route.snapshot.url.length > 0){
+      affixOptionsObj.offset.top = 0;
+    }else{
+      affixOptionsObj.offset.top = 380;
+
+    }
+
+//$('[data-spy="affix"]').affix(affixOptionsObj);
 
 }
 
