@@ -23,6 +23,10 @@ return sequelize.define('device', {
 		allowNull: false,
 		defaultValue: false
 	},
+	tag: {
+		type: DataTypes.STRING,
+		allowNull: true
+	},
 	lastCmdTimeStamp: {
 	   type: DataTypes.STRING,
 		allowNull: true

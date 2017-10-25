@@ -1,3 +1,49 @@
-<p>
-  buy-credits works!
-</p>
+<app-header></app-header>
+
+<div class="container">
+
+<div class="row">
+  <div class="col-xs-10 col-sm-8 col-md-6 col-xs-offset-1 col-sm-offset-2 col-md-offset-3">
+  <div class="formCard" style="text-align: center;">
+  <h2>Buy Credits!</h2>
+
+  <br />
+  <br />
+
+
+  <div class="btn-group-vertical">
+    <button type="button" class="btn btn-default  btn-block" (click)="changeOption(1)" [ngClass]="{'optSelect':  optionSelect === 1}">
+
+	Apple asd fasdf aasd as dfasd asd fasdf asdf asdf asd fasdf asd fasd ff asdf 
+    </button>
+    <button type="button" class="btn btn-default  btn-block" (click)="changeOption(2)"  [ngClass]="{'optSelect':  optionSelect === 2}">
+
+	Sams asd fasd fasdf asdf asdf asdf asdf asdf asdf asdf asdf asd fasdf asd fasung
+
+    </button>
+    <button type="button" class="btn btn-default  btn-block" (click)="changeOption(3)" [ngClass]="{'optSelect': optionSelect === 3}">
+
+	Sony asd fasd fasdf asd fasdf sad fsad fsdf sadfa ads fasd fasd 
+
+
+    </button>
+  </div>
+  
+
+   <br />   <br />
+	<p>{{buyAmount | currency:'USD':true}}</p>
+  <br />
+
+  <div id="paypal-button"></div>
+	
+
+
+</div>
+</div>
+</div>
+</div>
+
+<br />
+<br />
+<br />
+<app-footer></app-footer>

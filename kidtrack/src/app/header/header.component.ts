@@ -114,6 +114,13 @@ devicesOn(){
     return devOn;
 }
 
+clearWatching(){
+  for(var i=0; i<this.user.devices.length; i++){
+	this.user.devices[i].watching = false;
+       }
+	this.router.navigate(['/dashboard']);
+}
+
 adjustNavBox() {
     console.log('AjustingNavBox...');
 
@@ -150,6 +157,8 @@ logout(){
 goTrack(){
  this.router.navigate(['/tracker']);
 }
+
+
 
 
 

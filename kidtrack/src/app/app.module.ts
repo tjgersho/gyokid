@@ -43,6 +43,7 @@ import { UsersComponent } from './admin/users/users.component';
 import { DevicesComponent } from './admin/devices/devices.component';
 import { HomeComponent } from './admin/home/home.component';
 import { EmailComponent } from './admin/email/email.component';
+import { TruncatePipe } from './truncate.pipe';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { EmailComponent } from './admin/email/email.component';
     UsersComponent,
     DevicesComponent,
     HomeComponent,
-    EmailComponent
+    EmailComponent,
+    TruncatePipe
   ],
   imports: [
     BrowserModule,

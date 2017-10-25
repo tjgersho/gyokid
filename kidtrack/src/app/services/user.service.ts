@@ -152,6 +152,37 @@ export class UserService {
 	
 	 //http sever update device watching  and tag..
 
+	for(var i=0; i<this.devices.length; i++){
+		if(this.devices[i].imei === dev.imei){
+			this.devices[i].watching = dev.watching;
+			this.devices[i].tag = dev.tag;
+		}
+	}
+
+
+  }
+
+  userHasAvailableDevices(){
+	
+      for(var i=0; i<this.devices.length; i++){
+		if(!this.devices[i].watching){
+				return true;
+		}
+	}
+     return false;
+
+  }
+
+  userHasTrakingDevices(){
+
+    	
+      for(var i=0; i<this.devices.length; i++){
+		if(this.devices[i].watching){
+				return true;
+		}
+	}
+     return false;
+
   }
 
 

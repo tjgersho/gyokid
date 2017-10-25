@@ -2,28 +2,68 @@
 
 <div class="container">
   
-
  <div *ngIf="user.devices.length>0">
 
 	<div class="row">
 
 	 <div  class="col-md-6">
-		<h2> Data Credits: </h2>
-		{{user.cellularCredits}}
+
+
+            <div class="panel panel-default">
+             <div class="panel-heading" (click)="dataCredOpenCloseDeviceAccordian()">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse"><span class="glyphicon" [ngClass]="dataCredAccordOpenCloseButton()"></span> Data Credits: </a>
+                </h4>
+            </div>
+            <div  class="panel-collapse collapse" [ngClass]="dataCredAccordOpenClose()">
+                  <div class="panel-body">
+                   
+	 		{{user.cellularCredits}}
+
+			<br />
+		
+
+                  </div>
+            </div>
+        </div>
+
+	
 	 </div>
 
 
  	 <div  class="col-md-6">
 
-	  <div class="row"  *ngFor="let dev of user.devices">
+
+          <div class="panel panel-default">
+             <div class="panel-heading" (click)="openCloseDeviceAccordian()">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse"><span class="glyphicon" [ngClass]="accordOpenCloseButton()"></span> Registered Devices: </a>
+                </h4>
+            </div>
+            <div  class="panel-collapse collapse" [ngClass]="accordOpenClose()">
+                  <div class="panel-body">
+                               <div class="col-xs-9">
+					<h4 style="color:#000;">Devices:</h4>
+				</div>
+				<div class="col-xs-3">
+					<h4 style="color:#000;"> Tracking Status: </h4>
+				</div>
+			<div class="clr"></div>
+	 		 <div class="row"  *ngFor="let dev of user.devices" style="border-top: 1px solid #ccc;">
 	      
-		<div class="col-xs-6">
-			<h3>Device: {{ dev.imei }} </h3>
-		</div>
-		<div class="col-xs-6">
-			<p> Watching: {{ dev.watching }} </p>
-		</div>
-	  </div>
+				<div class="col-xs-8">
+					<p style="margin-top:5px;">Device: {{ dev.imei | truncate}} <i *ngIf="dev.tag !==''">- Tag: {{dev.tag}} </i></p>
+				</div>
+				<div class="col-xs-4">
+					<img [src]="trackingStatusImg(dev.watching)" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
+				</div>
+	 		 </div>
+
+                  </div>
+            </div>
+          </div>
+
+ 
 
 	</div>
 
@@ -31,8 +71,45 @@
 
 	</div>
 
-</div>
 
+    <div class="formCard" style="position:relative;">
+	<div class="row">
+		
+ 	<div  class="col-md-6">
+		<a  class="btn btn-default btn-lg btn-block" routerLink="/buy-credits">
+  			    Buy Data Credits!
+		</a>
+ 	</div>
+	 <div  class="col-md-6">
+		
+		<a  class="btn btn-default btn-lg btn-block" routerLink="/register-device">
+  			Register More Devices
+		</a>
+
+	 </div>
+
+
+ 	 <div  class="col-md-6">
+	
+		<a class="btn btn-default btn-lg btn-block" routerLink="/buy-device">
+  			Buy More Devices!
+		</a>
+	  </div>
+
+	 <div  class="col-md-6">
+	
+		<a class="btn btn-default btn-lg btn-block" routerLink="/tracker">
+  			Track
+		</a>
+	  </div>
+
+       </div>
+ 
+    </div>
+
+  </div>
+
+ <div *ngIf="user.devices.length<1">
 
 	<div class="formCard" style="position:relative;">
 	<h2  style="text-align:center;">You don't have any registered Devices</h2>
@@ -40,7 +117,7 @@
 		
 	 <div  class="col-md-6">
 		
-		<a  class="btn btn-primary btn-lg btn-block" routerLink="/register-device">
+		<a  class="btn btn-default btn-lg btn-block" routerLink="/register-device">
   			Register Device
 		</a>
 
@@ -54,23 +131,16 @@
 		</a>
 	</div>
 
-     </div>
+       </div>
 
-
-
-
-
-	<div class="row">
-		<div class="col-xs-6 col-xs-offset-6">
-		
-
-		</div>
-
-	</div>
+    </div>
 
  </div>
 
+
 </div>
+
+ 
 <br />
 <br />
 <br />

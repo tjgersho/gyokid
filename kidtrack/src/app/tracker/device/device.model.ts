@@ -4,7 +4,7 @@ import { Gps } from '../gps.model';
 
 export class Device{
  imei: string;
- id: string;
+ shortImei: string;
  tag: string;
  watching: boolean;
  gpsdata: Gps[] = [];
@@ -13,7 +13,7 @@ export class Device{
 
 	this.imei = imei;
 	
-	this.id = imei.substring(imei.length-5, imei.length-1);
+	this.shortImei = imei.substring(imei.length-5, imei.length-1);
 
         this.tag = tag;
 
