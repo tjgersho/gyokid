@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Device } from '../tracker/device/device.model';
+import { RegistrationDevice } from './registration-device.model';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -18,37 +19,97 @@ declare var $ :any;
 export class RegisterDeviceComponent implements OnInit {
 
   
-  newlyRegisteredDevices: Device[] = [];
+  newlyRegisteredDevices: RegistrationDevice[] = [];
   imeinumber:string = '';
-
+  regstatustooltip: string = '';
   constructor(private router: Router, private user: UserService) { }
 
   ngOnInit() {
+ 
   }
 
+  setRegistrationToolTip(status){
+       if(status === 0){
+
+    return "Checking the registration... Please wait.";
+
+  }else if(status === 1){
+     return "Registration Successfull! Device should now be available for tracking.";
+
+  }else{
+     return "Registration Failed. Double check your IMEI number.  You can also only register a device once.";
+  }
+  }
+
+  refreshToolTip(){
+        $('[data-toggle="tooltip"]').tooltip();
+  }
+
+ pushDeviceOnArrays(imei: string){
+
+
+   var regDev = new RegistrationDevice(imei)
+
+   regDev.registrationOk =   (Math.floor(Math.random()*3));
+   regDev.regstatustooltip = this.setRegistrationToolTip(regDev.registrationOk);
+
+   this.newlyRegisteredDevices.push(regDev);
+
+   if(regDev.registrationOk === 1){
+     var devicepush = new Device(imei);
+     this.user.devices.push(devicepush);
+ }
+
+   var self = this;
+   setTimeout(function(){
+     self.refreshToolTip();
+   }, 200);
+ }
 
  addToDeviceRegistration(){
 
 	console.log('imei..');
 	console.log(this.imeinumber);
-	this.newlyRegisteredDevices.push(new Device(this.imeinumber));
-
-  this.user.devices.push(new Device(this.imeinumber));
-
-     // this.router.navigate(['/dashboard']);
-
+ 
+  this.pushDeviceOnArrays(this.imeinumber);
 
   }
 
- 
+  
 
- getDevRegistrationStatusImage(){	
+ getDevRegistrationStatusImage(dev: RegistrationDevice){	
+
+   
+   if(dev.registrationOk === 0){
+
     return 'assets/loader.gif';
+
+  }else if(dev.registrationOk === 1){
+     return 'assets/check.png';
+
+  }else{
+     return 'assets/x.png';
+  }
+
  }
 
 
 
+getDevRegistrationWordClass(dev: RegistrationDevice){
 
+  if(dev.registrationOk === 0){
+
+   return {'regPend': true};
+
+  }else if(dev.registrationOk === 1){
+    return {'regOk': true, 'regPend': false};
+
+  }else{
+    return {'regFail': true, 'regPend': false};
+  }
+
+
+}
 
 
  
@@ -78,8 +139,7 @@ export class RegisterDeviceComponent implements OnInit {
 	
 		console.log(imeiarray);
 		  for(var i=0; i<imeiarray.length; i++){
-			  self.newlyRegisteredDevices.push(new Device(imeiarray[i]));
-        self.user.devices.push(new Device(imeiarray[i]));
+        self.pushDeviceOnArrays(imeiarray[i]);
 		  }
 
         };

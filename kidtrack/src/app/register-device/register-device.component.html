@@ -37,11 +37,11 @@
 <div class="row" *ngFor="let newdev of newlyRegisteredDevices;">
 	<div class="col-xs-12" > 
 
-		<p style="text-align:center;"> 
+		<p style="text-align:center;" data-toggle="tooltip" [title]="newdev.regstatustooltip" > 
 
-			{{newdev.imei}} 
+			<span [ngClass]="getDevRegistrationWordClass(newdev)">{{newdev.imei}} </span>
 
-			<img [src]="getDevRegistrationStatusImage()" />
+			<img [src]="getDevRegistrationStatusImage(newdev)" style="width: 20px;"/>
 		</p>
 
 	</div>

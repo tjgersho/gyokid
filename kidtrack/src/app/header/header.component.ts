@@ -97,9 +97,22 @@ navAffixed:boolean = false;
   }
   
 });
+
+  $('[data-toggle="tooltip"]').tooltip();
 }
 
 
+devicesOn(){
+    var devOn = false;
+  for(var i=0; i<this.user.devices.length; i++){
+
+      if(this.user.devices[i].watching){
+        devOn = true;
+      }
+  }
+
+    return devOn;
+}
 
 adjustNavBox() {
     console.log('AjustingNavBox...');

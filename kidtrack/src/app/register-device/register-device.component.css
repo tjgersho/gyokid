@@ -1,0 +1,13 @@
+.regPend{
+
+	color: #333;
+}
+
+.regOk{
+	color: #00954a;
+}
+
+.regFail {
+	text-decoration: line-through;
+	color: red;
+}

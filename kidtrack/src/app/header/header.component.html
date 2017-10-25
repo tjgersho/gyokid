@@ -58,6 +58,10 @@
       </a>
     </div>
 
+   <div [ngStyle]="{'display': devicesOn()?'block':'none'}" style="width:30px; height:30px; position:absolute; left: 250px; top:3px;" data-toggle="tooltip" data-placement="bottom" title="You have a device tracking and using data!">
+    <img src="assets/datause.png" style="width:100%; height:100%;" />
+   </div>
+
     <button type="button" *ngIf="!atRegister" class="navbar-toggle collapsed" (click)="onHamburgerClick()" data-toggle="collapse" data-target="#navCollapse" aria-expanded="false">
 	<span class="glyphicon" [ngClass]="{'glyphicon-menu-hamburger': !mobileNavOpen, 'glyphicon-remove': mobileNavOpen}"></span>
      </button>
