@@ -42,6 +42,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { UsersComponent } from './admin/users/users.component';
 import { DevicesComponent } from './admin/devices/devices.component';
 import { HomeComponent } from './admin/home/home.component';
+import { EmailComponent } from './admin/email/email.component';
 
 
 @NgModule({
@@ -65,7 +66,8 @@ import { HomeComponent } from './admin/home/home.component';
     LoaderComponent,
     UsersComponent,
     DevicesComponent,
-    HomeComponent
+    HomeComponent,
+    EmailComponent
   ],
   imports: [
     BrowserModule,

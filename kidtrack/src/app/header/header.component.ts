@@ -21,8 +21,12 @@ export class HeaderComponent implements OnInit, OnChanges{
  atTrack: boolean = false;
  atRegister: boolean = false;
  atLogin: boolean = false;
- 
+ navBox: HTMLElement;
  mobileNavOpen: boolean = false;
+
+last_known_scroll_position:number = 0;
+ticking:boolean = false;
+navAffixed:boolean = false;
 
  constructor(private route: ActivatedRoute, private user: UserService, private router: Router){
 	console.log(route.url);
@@ -67,27 +71,54 @@ export class HeaderComponent implements OnInit, OnChanges{
   }
 
  ngOnInit() {
-
-
-var affixOptionsObj = {
-  offset: {
-    top: 0,
-    bottom: function () {
-      return (this.bottom = $('.footer').outerHeight(true))
-    }
-  }
-};
+   this.navBox = document.getElementById('navBox');
 
   if(this.route.snapshot.url.length > 0){
-      affixOptionsObj.offset.top = 0;
+     this.navBox.style.position = 'fixed';
+      this.navAffixed = true;
     }else{
-      affixOptionsObj.offset.top = 380;
+      this.navBox.style.position = 'relative';
+      this.navAffixed = false;
+    }
+ var self = this;
+ window.addEventListener('scroll', function(e) {
 
+  self.last_known_scroll_position = window.scrollY;
+
+  if (!self.ticking) {
+
+    window.requestAnimationFrame(function() {
+      self.adjustNavBox();
+      self.ticking = false;
+    });
+     
+    self.ticking = true;
+
+  }
+  
+});
+}
+
+
+
+adjustNavBox() {
+    console.log('AjustingNavBox...');
+
+  // do something with the scroll position
+
+  if(this.route.snapshot.url.length < 1 && this.last_known_scroll_position < 380){
+     this.navBox.style.position = 'relative';
+     this.navAffixed = false;
+    }else{
+      if(this.navBox.style.position === 'relative'){
+        this.navBox.style.position = 'fixed';
+         this.navAffixed = true;
+      }
     }
 
-//$('[data-spy="affix"]').affix(affixOptionsObj);
-
 }
+
+
 
 
 onHamburgerClick(){

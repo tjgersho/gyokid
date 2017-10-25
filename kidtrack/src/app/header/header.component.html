@@ -52,8 +52,8 @@
 </div>
 
 
-<div class="navbar navbar-default" style="z-index: 1000;" > <!--data-spy="affix"> -->
-    <div class="navbar-header pull-left">
+<div id="navBox" class="navbar navbar-default" style="z-index: 1000; width:100%; top:0;" > <!--data-spy="affix"> -->
+    <div class="navbar-header pull-left" style="margin-left:5px;">
       <a routerLink="/"><img style="position:absolute; height:80px;" src="assets/kidtracklogo.png">
       </a>
     </div>
@@ -93,4 +93,6 @@
   </div>
 
  </div>
+
+ <div style="width:100%; height:80px;" *ngIf="navAffixed"></div>
  

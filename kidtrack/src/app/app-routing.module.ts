@@ -21,11 +21,11 @@ import { BuyDeviceComponent } from './buy-device/buy-device.component';
 
 
 import { AdminComponent } from './admin/admin.component';
-
 import { UsersComponent } from './admin/users/users.component';
 import { DevicesComponent } from './admin/devices/devices.component';
-
+import { EmailComponent } from './admin/email/email.component';
 import { HomeComponent } from './admin/home/home.component';
+
 
 const appRoutes: Routes = [
 {
@@ -91,6 +91,11 @@ const appRoutes: Routes = [
             path: 'devices',
             component: DevicesComponent
 		
+          },
+          {
+            path: 'email',
+            component: EmailComponent
+    
           }
         ]
 

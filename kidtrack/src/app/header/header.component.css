@@ -40,8 +40,16 @@ margin-right: 15px;
   font-size: 25px;
  border: 0;
  margin-left: 500px;
+ margin-bottom: 0;
 }
 
+
+.navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:hover {
+    color:#333;
+    background-color: transparent;
+}
+
+ 
 
 .navbar-nav.navbar-right:last-child {
   margin-right: 0 !important;
@@ -66,3 +74,4 @@ float:right;
 button:hover{
 color: #333;
 }
+
