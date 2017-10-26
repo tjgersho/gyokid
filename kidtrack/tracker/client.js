@@ -4,9 +4,10 @@ http://www.hacksparrow.com/tcp-socket-programming-in-node-js.html.) */
 
 var net = require('net');
 
+
 var client = new net.Socket();
 
-client.connect(1337, '0.0.0.0', function() {
+client.connect(8082, '0.0.0.0', function() {
 	console.log('Connected');
 	client.write('Hello, server! Love, Client.');
 });
@@ -19,3 +20,7 @@ client.on('data', function(data) {
 client.on('close', function() {
 	console.log('Connection closed');
 });
+
+
+
+

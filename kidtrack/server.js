@@ -1,5 +1,7 @@
 'use strict';
 
+
+
 // Get dependencies
 var express = require('express');
 var path = require('path');
@@ -48,6 +50,17 @@ app.get('*', function (req, res) {
  */
 //const port = process.env.PORT || '3000';
 var port = 8080;
+
+
+process.argv.forEach(function (val, index, array) {
+  console.log(index + ': ' + val);
+	if(val == 'dev'){
+		port = 8090;
+	}
+});
+
+
+
 app.set('port', port);
 
 /**
@@ -65,7 +78,7 @@ db.sequelize.authenticate().then(function () {
   console.error('Unable to connect to the database:', err);
 });
 
-db.sequelize.sync().then(function () {
+db.sequelize.sync({force: true}).then(function () {
   server.listen(port, function () {
     return console.log('API running on localhost:' + port);
   });

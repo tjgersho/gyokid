@@ -19,7 +19,7 @@ sequelize = new Sequelize(dbConnect.database, dbConnect.username, dbConnect.pass
 		host: dbConnect.host,
 		port: dbConnect.port,
 		dialect: dbConnect.dialect,
-		logging: false
+		logging: false 
 });
 
 var db = {};
@@ -28,11 +28,10 @@ var db = {};
 
 
 db.user = sequelize.import('../../models/user.js');
-db.merchandise = sequelize.import('../../models/merchandise.js');
 db.token = sequelize.import('../../models/token.js');
-db.transaction = sequelize.import('../../models/transaction.js');
 db.gps = sequelize.import('../../models/gps.js');
 db.device = sequelize.import('../../models/device.js');
+db.email = sequelize.import('../../models/email.js');
 
 //////////////////////////////////
 

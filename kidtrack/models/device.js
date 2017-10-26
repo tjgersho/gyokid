@@ -11,7 +11,8 @@ return sequelize.define('device', {
 	},
 	interval: {
 		type: DataTypes.INTEGER,  
-		allowNull: true
+		allowNull: false,
+		defaultValue: 100
 	},
 	alarm:{
 		type: DataTypes.BOOLEAN,
@@ -19,6 +20,11 @@ return sequelize.define('device', {
 		defaultValue: false
 	},
 	watching:{
+		type: DataTypes.BOOLEAN,  
+		allowNull: false,
+		defaultValue: false
+	},
+	realTimeMode:{
 		type: DataTypes.BOOLEAN,  
 		allowNull: false,
 		defaultValue: false

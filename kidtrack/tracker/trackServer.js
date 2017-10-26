@@ -2,6 +2,12 @@ var db = require('../server/util/db.js');
 
 var moment = require("moment");
 
+const net = require('net');
+
+
+var clients = [];
+
+
 function getTime(){
     var date = new Date();
 
@@ -20,178 +26,220 @@ function getTime(){
 }
 
 
+function isValidClient(dataArray){
+
+ return true;
+     
+}
+
+
+
+
+
+
+
 function logData(m){
 
 //"*HQ,865205030993330,V1,025109,A,3935.4775,N,10504.9935,W,0.00,52,171017,FFFFFBFF#"
 
   var dataArray = m.split(",");
- 
-var imei = dataArray[1];
+ console.log('MESSAGE FROM CLIENT');
+ console.log(m);
+
+ var imei = dataArray[1];
 
  if(dataArray[2]  === "V1"){
     var lat = dataArray[5];
     var latH = dataArray[6];
-
     var lon = dataArray[7];
     var lonH = dataArray[8];
+
   }else if(dataArray[2]  === "V4"){
     var lat = dataArray[7];
     var latH = dataArray[8];
-
     var lon = dataArray[9];
     var lonH = dataArray[10];
+	
 
-
-    var confirmedCmdTimeStamp = dataArray[4];
-    db.runningdev.find({imei:imei, lastCmdTimeStamp: confirmedCmdTimeStamp}).then(function(dev){
+    db.device.find({where:{imei:imei}}).then(function(dev){
+       
       console.log('Found Running Device to update that the command has been found.')
-      dev.update({lastCmdConfirmed: true});
+	console.log(dev.id);
+
+
+       updateGpsDev(dev, {lastCmdConfirmed: true});
+
+
     },function(err){
         console.log('COuld not confirm the cmd timestamp!');
         console.log(err);
     });
 
- } else {
+  } else {
 
-  return;
+   return;
+  }
+
+
+
+ var latFloat = parseFloat(lat)/100;
+
+ var latDeg = Math.round(latFloat);
+
+ var latHours = Math.round((latFloat - latDeg)*100);
+ var latMin = ((latFloat - latDeg)*100 - latHours);
+ var latMinDeg = latMin/60;
+ var latHourDeg = (latHours)/60;
+
+ var latitude = latDeg + latHourDeg + latMinDeg;
+
+ var lonFloat = parseFloat(lon)/100;
+ var lonDeg = Math.round(lonFloat);
+ var lonHours = Math.round((lonFloat - lonDeg)*100);
+ var lonMin = ((lonFloat - lonDeg)*100 - lonHours);
+ var lonMinDeg = lonMin/60;
+ var lonHourDeg = (lonHours)/60;
+
+ var longitude  = lonDeg + lonHourDeg + lonMinDeg;
+
+ if(lonH === "W"){
+   longitude = -longitude;
  }
 
+ if(latH === "S"){
+   latitude = -latitude;
+ }
 
+ console.log(latitude);
+ console.log(longitude);
 
-var latFloat = parseFloat(lat)/100;
-
-var latDeg = Math.round(latFloat);
-var latHours = Math.round((latFloat - latDeg)*100);
-var latMin = ((latFloat - latDeg)*100 - latHours)*100;
-var latMinDeg = latMin/60;
-var latHourDeg = (latHours+latMinDeg)/60;
-
-var latitude = latDeg + latHourDeg;
-
-var lonFloat = parseFloat(lon)/100;
-var lonDeg = Math.round(lonFloat);
-var lonHours = Math.round((lonFloat - lonDeg)*100);
-var lonMin = ((lonFloat - lonDeg)*100 - lonHours)*100;
-var lonMinDeg = lonMin/60;
-var lonHourDeg = (lonHours+lonMinDeg)/60;
-
-var longitude  = lonDeg + lonHourDeg;
-
-if(lonH === "W"){
-  longitude = -longitude;
-}
-
-if(latH === "S"){
-  latitude = -latitude;
-}
-
-console.log(latitude);
-console.log(longitude);
-
-db.gps.create({imei: imei, lat: latitude, lon: longitude}).then(function(gps){
-  console.log('Created a gps data point!');
-  console.log(gps);
-}, function(err){
-  console.log('Oops there was an error creating the gps database entry');
-});
+ db.gps.create({imei: imei, lat: latitude, lon: longitude}).then(function(gps){
+   console.log('Created a gps data point!');
+   console.log(gps.id);
+ }, function(err){
+   console.log('Oops there was an error creating the gps database entry');
+ });
 
 
 }
-function updateRunningDev(imei, status){
-
-return new Promise(function(resolve, reject){
 
 
-var cmd = 0;
+function allowTimeForCmd(dev){
 
- var alarmOn = false;
+	console.log('Timestamp last cmd');
+	console.log(dev.lastCmdTimeStamp);
+	console.log('typeof' + typeof(dev.lastCmdTimeStamp));
 
-if(status[3] === "B"){
-  var alarmOn = true;
-}
+	if(dev.lastCmdTimeStamp === null || dev.lastCmdTimeStamp === null){
+		return false;
+         } else {
 
-db.runningdev.find({where:{imei: imei}}).then(function(dev){
-  console.log('Yeah We have a running device.. check for SOS..');
-  console.log(dev);
-
-if(dev !== null){
-
-  if(dev.watchStatus === 0){
-
-      if(lastCmdConfirmed && lastCmd === "setToSleep"){
-        cmd = 0;
-
-      }else{
-        cmd = 99; //put device to sleep and make upload interval long as ballzzz
-      }
-       resolve(cmd);
-
-
-  }else if(dev.watchStatus === 1){
-
-    if(dev.lastCmdConfirmed && dev.lastCmd == "setToRunning"){
-          cmd = 0;
-          resolve(cmd);
-
-    }else{ 
-
-     db.gps.find({where:{imei: imei}, limit: 1, order:[['createdAt', 'DESC']]}).then(function(d){
-        console.log("found data");
-        var now = moment();
-        var lastConn =  moment( d.createdAt, moment.ISO_8601);
+          var now = moment();
+          var lastConn =  moment( dev.lastCmdTimeStamp );
 
           console.log('Last Conn Diff');
-          console.log(moment.durration(now.diff(lastConn)).asMinuets());
+          console.log(now.diff(lastConn, 'minutes'));
 
-          if (moment.durration(now.diff(lastConn)).asMinuets() > 1){
-              cmd = 40; //make time interval 20 sec..
-              var updateData = {interval: 20};
-              if(alarmOn){
-                  updataData.alarm = alarmOn;
-               }
-                 dev.update(updataData);
+              if (now.diff(lastConn, 'minutes') > 1){
+			return false;
+	        }else{
+                     return true;
 
-          } else {
-            cmd = 0;
-          }
+              }
+         }
 
-          resolve(cmd);
-      },function(err){
-        console.log("no data for this device");
-        reject(err);
-      });
+}
 
-    }
+
+function getRunningDevCmd(dev){
+
+
+  var cmd = "doNothing";
+
+	console.log('Last Cmd');
+	console.log(dev.lastCmd);
+	
+  if(dev.watching){
+
+
+      if(dev.lastCmdConfirmed && dev.lastCmd === "setToWatching"){
+
+        cmd = "doNothing";
+
+
+
+      }else if(dev.lastCmdConfirmed && dev.lastCmd !== "setToWatching"){
+
+	cmd = "setToWatching";
+
+      }else if(!dev.lastCmdConfirmed && allowTimeForCmd(dev) && dev.lastCmd === "setToWatching"){
+	
+	cmd = "doNothing";
+
+      }else if(!dev.lastCmdConfirmed && !allowTimeForCmd(dev) && dev.lastCmd !== "setToWatching" || !dev.lastCmd){
+	
+	cmd = "setToWatching";
+
+      }
+
+       return cmd;
+
+
+   }else{
+
+    
+      if(dev.lastCmdConfirmed && dev.lastCmd === "setToSleep"){
+        cmd = "doNothing";
  
- }
 
-}else{
-	cmd = 0;
-	 resolve(cmd);
+      }else if(dev.lastCmdConfirmed && dev.lastCmd === "resetDevice"){
+        cmd = "doNothing";
+
+      }else if(dev.lastCmdConfirmed && dev.lastCmd == "setToWatching"){
+
+	cmd = "setToSleep";
+
+      }else if(!dev.lastCmdConfirmed && allowTimeForCmd(dev) && dev.lastCmd === "setToSleep"){
+	
+	cmd = "doNothing";
+
+      }else if(!dev.lastCmdConfirmed && !allowTimeForCmd(dev) && dev.lastCmd !== "setToSleep"){
+	
+	cmd = "setToSleep";
+
+      }
+
+       return cmd;    
+   }
+
+
 }
 
-  },function(err){
-     console.log('Device was not found in the running device query..');
-     reject(err);
-  })
 
- });
-}
 
-function sendCmds(imei, cmd, socket){
 
-switch (cmd){
-  case 0: ///DO NOTHING...
+
+
+function sendCmds(cmd, client){
+
+    var getTimeString = getTime();
+    var now = moment();
+
+ switch (cmd){
+  case "doNothing": ///DO NOTHING...
+
+	console.log('CMDS>>>  Status Quo is good');
+
     return;
   break;
-  case 1: // set time interval to 20 sec..
-    var getTimeString = getTime();
+  case "setToWatching": // set time interval to 20 sec..
 
-    socket.write("*HQ,"+imei+",D1,"+getTimeString+",20,#");
-    db.runningdev.find({where:{imei: imei}}).then(function(dev){
+    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",20,#");
+
+    db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
-        dev.update({lastCmdTimeStamp: getTimeString, lastCmdConfirmed: false, lastCmd: "setToRunning"});
+       updateGpsDev(dev,{interval: 20, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false, lastCmd: "setToWatching"});
 
     },function(err){
         console.log('Couldnt find dev to update time cmd');
@@ -199,15 +247,15 @@ switch (cmd){
 
     });
   break;
-  case 40: // Reset the device..
-    var getTimeString = getTime();
+  case "resetDevice": // Reset the device..
 
-    socket.write("*HQ,"+imei+",R1,"+getTimeString+"#");
 
-    db.runningdev.find({where:{imei: imei}}).then(function(dev){
+    client.write("*HQ,"+client.imei+",R1,"+getTimeString+"#");
+
+    db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
-        dev.update({lastCmdTimeStamp: getTimeString, lastCmdConfirmed: false,  lastCmd: "resetDevice"});
+       updateGpsDev(dev, {interval: 10, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false,  lastCmd: "resetDevice"});
 
     },function(err){
         console.log('Couldnt find dev to update time cmd');
@@ -216,14 +264,14 @@ switch (cmd){
     });
 
   break;
-  case 99:  // Put device to sleep..
-    var getTimeString = getTime();
+  case "setToSleep":  // Put device to sleep..
+
     
-    socket.write("*HQ,"+imei+",D1,"+getTimeString+",2000,#");
-        db.runningdev.find({where:{imei: imei}}).then(function(dev){
+    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",2000,#");
+        db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
-        dev.update({lastCmdTimeStamp: getTimeString, lastCmdConfirmed: false, lastCmd: "setToSleep"});
+        updateGpsDev(dev,{interval: 200, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false, lastCmd: "setToSleep"});
 
     },function(err){
         console.log('Couldnt find dev to update time cmd');
@@ -232,22 +280,40 @@ switch (cmd){
     });
 
   break;
-}
+ }
 
 }
 
-const net = require('net');
+
+
+
+
+function makeid() {
+  var text = "";
+  var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+  for (var i = 0; i < 32; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
+
+
+
+
 const server = net.createServer((socc) => {
   // 'connection' listener
   console.log('client connected');
-  console.log(socc);
+  //console.log(socc);
+   socc.id = makeid();
+
+  clients.push(socc);
 
   var clientAddr = socc.remoteAddress + ":" + socc.remotePort;
 
-  socc.on('end', () => {
-    console.log('client disconnected');
-  });
- 
+	console.log(socc.id);
+
 
   socc.on('data', (data) => {
 
@@ -256,48 +322,183 @@ const server = net.createServer((socc) => {
     var message = data.toString();
   
      var dataArray = message.split(",");
+	console.log(dataArray);
 
-     if(dataArray.length > 7){
 
-       var imei = dataArray[1];
-       var status = dataArray[dataArray.length-1].slice(0,-1);
+     if(isValidClient(dataArray)){
 
-       logData(message);
+        var imei = dataArray[1];
 
-      updateRunningDev(imei, status).then(function(cmd){
-          console.log('The commmand has been received, the device has been updated...');
-          console.log(cmd);
-          sendCmds(imei, cmd, socc);
+	
 
-      },function(err){
+        var status = dataArray[dataArray.length-1].slice(0,-1);
 
-        console.log('There was an error running the update on the device..');
-        console.log(err);
+     
+	if(status[3] === "B"){
+	  getGpsDev(imei).then(function(dev){
+  	        updateGpsDev(dev, {alarm: true});
+	  },function(err){
+		console.log('Couldnt get Device for update on alarm status true');
+		console.log(err);
+	  });
+	}
 
-        sendCmds(imei, 99, socc);  // 99 put device to sleep...
+	if(socc.imei === undefined){
+  		 socc.imei = imei;
 
-      });
+         }else if(socc.imei !== imei){
+
+   		socc.imei = imei;
+         }
+   
+  
+
+
+        logData(message);
+
 
      }else{
       socc.write('You are not allowed');
+      removeClient(socc);
       socc.end();
      }
 
   });
    
 
-  
+   socc.on('end', () => {
+    console.log('client disconnected');
+	console.log(clients.length);
 
+        removeClient(socc);
+
+	console.log(clients.length);
+        socc.end();
+  });
+ 
+
+ 
   socc.pipe(socc);
 });
 
+
 server.on('error', (err) => {
-  throw err;
+  console.log('ERROR');
+  console.log(err);
+ 
+   throw err;
+  
 });
 
 server.listen(8083, () => {
   console.log('server bound');
 });
+
+
+
+
+
+
+
+
+
+function removeClient(soc){
+  console.log('In Remove Clients');
+	console.log(soc.id);
+	
+     for(var i=0; i<clients.length; i++){
+		if(clients[i].id === soc.id){
+			clients.splice(i,1);
+               }
+
+	}
+}
+
+
+
+
+
+
+function getGpsDev(imei){
+
+  return new Promise(function(resolve, reject){
+	db.device.find({where: {imei: imei}}).then(function(dev){
+		console.log("Found Device in DB");
+		resolve(dev);
+        },function(err){
+		reject(err);
+        });
+  });
+
+}
+
+
+
+
+function  updateGpsDev(dev, updateObj){
+	  console.log('Update Object');
+		dev.update(updateObj).then(function(devup){
+			console.log('Dev Update success');
+			console.log(devup.imei);
+                  },function(err){
+			console.log('Dev Update err');
+			console.log(err);
+                  });
+ 
+}
+
+
+function runCmds(client){
+	console.log('Client in runCmds');
+	console.log(client.id);
+	console.log(client.imei);
+
+	getGpsDev(client.imei).then(function(dev){
+			
+	 console.log(dev.id);
+
+            var command = getRunningDevCmd(dev);
+
+		console.log('Next Command');
+		console.log(command);
+	
+		sendCmds(command, client);
+
+
+            	 
+        },function(err){
+		console.log('Could not get GPS Device');
+		console.log(err);
+
+	});
+}
+
+
+function monitorClients(){
+
+console.log('MONITOR CLIENTS');
+console.log(clients.length);
+
+  for(var i=0; i<clients.length; i++){
+
+	console.log('--------------------------------Client-----------------------------');
+	console.log(clients[i].id);
+
+	if(clients[i].imei !== undefined){
+	   console.log(clients[i].imei);
+   
+           runCmds(clients[i]);
+
+ 	}
+
+ 
+  }
+}
+
+
+setInterval(function(){ monitorClients(); }, 5000);
+
+
 
 
 
