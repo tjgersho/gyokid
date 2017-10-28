@@ -94,14 +94,14 @@ export class UserService {
   signup(username: string, email: string, password: string){
 	console.log('username');
 	console.log(username);
-        console.log('email');
+    console.log('email');
 	console.log(email);
 	console.log('password');
 	console.log(password);
 
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-	let data = {username: username, email: email, password: password};
+	    let data = {username: username, email: email, password: password};
 
 	return this.http.post("/api/v1/users", data, options);
 

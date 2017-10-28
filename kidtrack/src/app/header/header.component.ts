@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, AfterViewInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 
@@ -15,7 +15,7 @@ declare var $ :any;
 
 
 
-export class HeaderComponent implements OnInit, OnChanges{
+export class HeaderComponent implements OnInit, OnChanges, AfterViewInit{
 
  atIndex: boolean = true;
  atTrack: boolean = false;
@@ -71,6 +71,11 @@ navAffixed:boolean = false;
   }
 
  ngOnInit() {
+
+}
+
+
+ngAfterViewInit(){
    this.navBox = document.getElementById('navBox');
 
   if(this.route.snapshot.url.length > 0){
@@ -99,8 +104,8 @@ navAffixed:boolean = false;
 });
 
   $('[data-toggle="tooltip"]').tooltip();
-}
 
+}
 
 devicesOn(){
     var devOn = false;

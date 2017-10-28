@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
 import { GlobalService } from '../services/global.service';
-
+import { Http } from '@angular/http';
 
 @Component({
   selector: 'app-register',
@@ -13,9 +13,12 @@ import { GlobalService } from '../services/global.service';
 export class RegisterComponent implements OnInit {
    
   formCenter: number = 0;
-   password;
+  username: string = "";
+  email: string = "";
+  password: string = "";
 
-  constructor(private router: Router, private userService: UserService,  private global: GlobalService) { }
+
+  constructor(private router: Router, private user: UserService,  private global: GlobalService) { }
 
   ngOnInit() {
 	console.log('Globals');
@@ -42,30 +45,33 @@ export class RegisterComponent implements OnInit {
 
 	console.log(form);
 	console.log('password');
+console.log(form.value.password);
+
+this.password = form.value.password;
+this.username = form.value.username;
+this.email = form.value.email;
+
 console.log(this.password);
+console.log(this.username);
+console.log(this.email);
 
-   // const username = form.value.username;
-   // const email = form.value.email;
-   // const password = form.value.password;
-   // const password2 = form.value.password2;
+  this.user.signup(this.username, this.email, this.password).subscribe((resp) => {
 
-   // if(password === password2){
-    //  this.userService.signup(username, email, password).subscribe((res) => {
+    console.log('Signup response');
+      console.log(resp);
+      this.user.login(this.username, this.password);
 
-	//	console.log('Response from subscribe to user server signup method');
-	//	console.log(res);
+  }, (err) => {
 
-	//	if( res.status === 200){
-	//		this.userService.login(username, password);
-               		//this.router.navigate(['/tracker']);
-          //       }else{
-	//		alert('An error occured while signing up.');
+    console.log('Error on signup req.');
+      console.log(err);
 
-          //      }
-		
-     // });
+  }, () => {
+    console.log('signup request complete..');
 
-    //}
+
+  });
+
   }
 
 
