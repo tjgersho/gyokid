@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, SimpleChanges, AfterViewInit} from '@angular/core';
+import { Component, OnInit, AfterViewInit} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 
@@ -15,7 +15,7 @@ declare var $ :any;
 
 
 
-export class HeaderComponent implements OnInit, OnChanges, AfterViewInit{
+export class HeaderComponent implements OnInit, AfterViewInit{
 
  atIndex: boolean = true;
  atTrack: boolean = false;
@@ -26,56 +26,70 @@ export class HeaderComponent implements OnInit, OnChanges, AfterViewInit{
 
 last_known_scroll_position:number = 0;
 ticking:boolean = false;
-navAffixed:boolean = false;
+navAffixed:boolean;
 
  constructor(private route: ActivatedRoute, private user: UserService, private router: Router){
-	console.log(route.url);
 
-	if(route.snapshot.url.length > 0){
-		this.atIndex = false;
-		if(route.snapshot.url[0].path === 'tracker'){
-                   this.atTrack = true;
-                }
-		if(route.snapshot.url[0].path === 'register'){
-                   this.atRegister = true;
-                }
-		if(route.snapshot.url[0].path === 'login'){
-                   this.atLogin = true;
-                }
-	
-	}
+	route.url.subscribe((r) => {
+		console.log('Route subscribe in header Response');
+		console.log(r);
+		this.setHeaderState();
 
+	   },(e) => {
+			console.log('Route Subscribe in header ERR');
+		console.log(e);
+
+	   }, () =>{
+		console.log('Route Subscribe in header complete');
+
+
+         });
 
  }
+ 
 
- ngOnChanges(changes: SimpleChanges){
-	console.log('ngOnChanges Called');
-	console.log(changes);
-
-	 if(this.route.snapshot.url.length > 0){
-	    this.atIndex = false;
+ setHeaderState(){
+ 
+ 	 if(this.route.snapshot.url.length > 0){
+	  
 		if(this.route.snapshot.url[0].path === 'tracker'){
                    this.atTrack = true;
+	
                 }else{
                   this.atTrack = false;
+
                 }
 
                 if(this.route.snapshot.url[0].path === 'register'){
                    this.atRegister = true;
+
                 }else{
                   this.atRegister = false;
+		
+                
                 }
+		 this.atIndex = false;
 	}else{
           this.atIndex = true;
         }
-  }
+}
 
- ngOnInit() {
+ 
+ngOnInit(){
+ console.log('Ng  Init header');
+ console.log('Ng  Init header'); console.log('Ng  Init header'); console.log('Ng  Init header');
+
 
 }
 
-
 ngAfterViewInit(){
+
+ console.log('Ng After View Init header');
+console.log('Ng After View Init header');
+console.log('Ng After View Init header');
+console.log('Ng After View Init header');
+
+
    this.navBox = document.getElementById('navBox');
 
   if(this.route.snapshot.url.length > 0){

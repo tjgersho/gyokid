@@ -51,11 +51,27 @@
 			<div class="clr"></div>
 	 		 <div class="row"  *ngFor="let dev of user.devices" style="border-top: 1px solid #ccc;">
 	      
-				<div class="col-xs-8">
-					<p style="margin-top:5px;">Device: {{ dev.imei | truncate}} <i *ngIf="dev.tag !==''">- Tag: {{dev.tag}} </i></p>
-				</div>
 				<div class="col-xs-4">
-					<img [src]="trackingStatusImg(dev.watching)" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
+					<p style="margin-top:5px;">Device: {{ dev.imei | truncate}} </p>
+				</div>
+				<div class="col-xs-5">
+				  
+					<div class="form-group" style="margin-top:5px;">
+						<div class="col-sm-4">
+						  <label>Tag:</label>
+						</div>
+                                                <div class="col-sm-8">
+						  <input class="form-control" (blur)="onTagChange(dev)" ([ngModel])="dev.tag" />
+						</div>
+					</div>
+ 				   
+			
+				</div>
+				
+				<div class="col-xs-3">
+					<button class="btn pull-right" (click)="onTrackStatusToggle(dev)" style="margin-top:5px;">
+					    <img [src]="trackingStatusImg(dev.watching)" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
+					</button>
 				</div>
 	 		 </div>
 

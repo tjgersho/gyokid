@@ -4,6 +4,8 @@ import { UserService } from '../services/user.service';
 
 import { TruncatePipe } from '../truncate.pipe';
 
+import { Device } from '../tracker/device/device.model';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -77,7 +79,23 @@ export class DashboardComponent implements OnInit {
  }
 
 
+ onTagChange(dev: Device){
+	console.log('ON device tag change, input blur');
+	console.log(dev);
 
+	
+
+ }
+
+ onTrackStatusToggle(dev: Device){
+	if(dev.watching){
+		dev.watching = false;
+
+	}else{
+		dev.watching = true;
+	}
+
+ }
 
 
 }
