@@ -51,6 +51,12 @@ export class Device{
  }
 
 
+resetGpsDataZeroforTest(){
+
+
+	return {lat: (Math.random()*2-1)*90, lng: (Math.random()*2-1)*180};
+}
+
  updateWatching(){
 	console.log('Device update watching');
 	console.log(this);
