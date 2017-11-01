@@ -52,9 +52,13 @@ export class Device{
 
 
  updateWatching(){
-	
+	console.log('Device update watching');
+	console.log(this);
+	console.log(this.watching);
+
 
   this.watching = !this.watching;
+   console.log(this.watching);
 
 	///send to database...
 

@@ -48,34 +48,34 @@ export class DeviceSelectorComponent implements OnInit {
 
   onDeviceSelected(dev, tagVal, index){
 
-      	console.log('onDevice Select');
-	console.log(tagVal);
+    console.log('onDevice Select');
+	  console.log(tagVal);
 
 
-	dev.watching = true;
-	dev.tag = tagVal;
+	  dev.watching = true;
+	  dev.tag = tagVal;
 	
-	this.user.deviceWatchingUpdate(dev);
+	  this.user.deviceWatchingUpdate(dev);
 
   }
 
 
-  removeDev(dev){
-        dev.watching = false;
-	dev.tag = '';
-
+  removeDev(dev: Device){
+        console.log('Remove device selector');
+        
+        console.log(dev);
         //this.user.deviceWatchingUpdate(dev);
+	      dev.updateWatching();
 
-	dev.updateWatching();
      }
 
 
   goTrack(){
-	this.onTrackGo.emit();
+	     this.onTrackGo.emit();
   }
 
   cancelTrack(){
-     this.router.navigate(['dashboard']);
+       this.router.navigate(['dashboard']);
 
   }
 

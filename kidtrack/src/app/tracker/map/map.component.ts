@@ -26,8 +26,9 @@ export class MapComponent implements OnInit {
         });
         this.marker = new google.maps.Marker({
           position: this.user.devices[0].gpsdata[0].location,
+          icon: "assets/kidtrackmapicon.png",
           map: map,
-	  draggable: false,
+	        draggable: false,
           animation: google.maps.Animation.DROP,
 	  title: this.user.devices[0].tag
         });
