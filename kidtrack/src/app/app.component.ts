@@ -10,7 +10,14 @@ import { GlobalService } from './services/global.service';
 export class AppComponent {
   title = 'KidTrack';
 
-	constructor(private global: GlobalService){}
+	constructor(private global: GlobalService){
+			
+	   global.onWindowChange.subscribe((w)=>{
+		console.log("On window change global observable in index");
+		console.log(w);
+            });
+
+	}
 	@HostListener('window:resize', ['$event'])
 	 onResize(event) {
   		this.global.updateWindowDimensions()

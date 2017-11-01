@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { UserService } from '../services/user.service';
+import { GlobalService } from '../services/global.service';
 declare var paypal: any;
 
 
@@ -12,7 +13,7 @@ declare var paypal: any;
 export class BuyCreditsComponent implements OnInit {
 buyAmount: number = 2;
 optionSelect: number = 1;
-  constructor(private router: Router) { }
+  constructor(private router: Router, private user: UserService, private global: GlobalService) { }
 
   ngOnInit() {
 var self = this;
@@ -54,6 +55,8 @@ var self = this;
 		console.log(payment);
                 // The payment is complete!
                 // You can now show a confirmation message to the customer
+		
+		self.user.cellularCredits = parseFloat(payment.transactions[0].amount.total)*self.global.cellCreditFactor;
 
 		self.router.navigate(['/dashboard']);
             });
@@ -96,6 +99,10 @@ var self = this;
 		case 4:
 		 this.buyAmount = 50;
 		break;
+		case 5:
+		 this.buyAmount = 100;
+		break;
+
 
 	}
   }

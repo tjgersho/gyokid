@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
 
@@ -15,7 +15,7 @@ declare var $ :any;
 
 
 
-export class HeaderComponent implements OnInit, AfterViewInit{
+export class HeaderComponent implements OnInit{
 
  atIndex: boolean = true;
  atTrack: boolean = false;
@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, AfterViewInit{
 
 last_known_scroll_position:number = 0;
 ticking:boolean = false;
-navAffixed:boolean;
+navAffixed:boolean = true;
 
  constructor(private route: ActivatedRoute, private user: UserService, private router: Router){
 
@@ -74,20 +74,9 @@ navAffixed:boolean;
         }
 }
 
- 
+
+
 ngOnInit(){
- console.log('Ng  Init header');
- console.log('Ng  Init header'); console.log('Ng  Init header'); console.log('Ng  Init header');
-
-
-}
-
-ngAfterViewInit(){
-
- console.log('Ng After View Init header');
-console.log('Ng After View Init header');
-console.log('Ng After View Init header');
-console.log('Ng After View Init header');
 
 
    this.navBox = document.getElementById('navBox');

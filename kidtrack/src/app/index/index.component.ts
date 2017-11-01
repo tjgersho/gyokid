@@ -4,6 +4,7 @@ declare var jquery:any;
 declare var $ :any;
 
 
+
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
@@ -15,7 +16,10 @@ export class IndexComponent implements OnInit {
 
   constructor() { 
 	
-
+	//global.onWindowChange.subscribe((w)=>{
+	//	console.log("On window change global observable in index");
+	//	console.log(w);
+        //});
     }
 
   ngOnInit() {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Device } from '../tracker/device/device.model';
-import { RegistrationDevice } from './registration-device.model';
+import { Device } from '../models/device.model';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -19,7 +18,7 @@ declare var $ :any;
 export class RegisterDeviceComponent implements OnInit {
 
   
-  newlyRegisteredDevices: RegistrationDevice[] = [];
+  newlyRegisteredDevices: Device[] = [];
   imeinumber:string = '';
   regstatustooltip: string = '';
   constructor(private router: Router, private user: UserService) { }
@@ -48,7 +47,7 @@ export class RegisterDeviceComponent implements OnInit {
  pushDeviceOnArrays(imei: string){
 
 
-   var regDev = new RegistrationDevice(imei)
+   var regDev = new Device(imei)
 
    regDev.registrationOk =   (Math.floor(Math.random()*3));
    regDev.regstatustooltip = this.setRegistrationToolTip(regDev.registrationOk);
@@ -58,7 +57,7 @@ export class RegisterDeviceComponent implements OnInit {
    if(regDev.registrationOk === 1){
      var devicepush = new Device(imei);
      this.user.devices.push(devicepush);
- }
+   }
 
    var self = this;
    setTimeout(function(){
@@ -77,7 +76,7 @@ export class RegisterDeviceComponent implements OnInit {
 
   
 
- getDevRegistrationStatusImage(dev: RegistrationDevice){	
+ getDevRegistrationStatusImage(dev: Device){	
 
    
    if(dev.registrationOk === 0){
@@ -95,7 +94,7 @@ export class RegisterDeviceComponent implements OnInit {
 
 
 
-getDevRegistrationWordClass(dev: RegistrationDevice){
+getDevRegistrationWordClass(dev: Device){
 
   if(dev.registrationOk === 0){
 

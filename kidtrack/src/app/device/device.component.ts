@@ -1,6 +1,9 @@
 import { Component, OnInit, Input , EventEmitter, Output} from '@angular/core';
 
-import { Device } from './device.model';
+import { UserService } from '../services/user.service';
+
+
+import { Device } from '../models/device.model';
 
 @Component({
   selector: 'app-device',
@@ -15,7 +18,7 @@ export class DeviceComponent implements OnInit {
   @Output() removeDevice = new EventEmitter<Device>();
 
 
-  constructor() { }
+  constructor(private user: UserService) { }
 
   ngOnInit() {
   }

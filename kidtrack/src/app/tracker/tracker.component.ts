@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Device } from './device/device.model';
+import { Device } from '../models/device.model';
 
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
@@ -23,14 +23,23 @@ export class TrackerComponent implements OnInit {
   
   stateHover: string = ''
 
-  deviceTrackerList: Device[];
   showDeviceSelector: boolean = true;
 
   constructor(private user: UserService, private router:Router) {
 
+
+	console.log('Tracker constructor');
+	console.log('Tracker constructor');
+
 	if(!user.isLoggedIn){
  	  router.navigate(['/']);
         }
+
+	if(user.userHasTrakingDevices()){
+		this.showDeviceSelector = false;
+
+		user.getAllDeviceGpsData();
+	}
    }
 
   ngOnInit() {
@@ -56,11 +65,9 @@ export class TrackerComponent implements OnInit {
         }
 
 
-       devicesSelected(list){
+       devicesSelected(){
 	console.log('In tracker Compoent and devicesSelected');
-	console.log(list);
 
-	this.deviceTrackerList = list;
 
          this.showDeviceSelector = false;
        }

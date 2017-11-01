@@ -26,6 +26,7 @@ export class RegisterComponent implements OnInit {
 	this.formCenter = this.calculateFormCenter();
 
 	this.global.onWindowChange.subscribe((data: object) => {
+		console.log('Global on window change subscribe in register');
 		console.log(data);
 		this.formCenter = this.calculateFormCenter();
 	});

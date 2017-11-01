@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 
 import { UserService } from '../services/user.service';
 
+import { GlobalService } from '../services/global.service';
+
 import { TruncatePipe } from '../truncate.pipe';
 
-import { Device } from '../tracker/device/device.model';
+import { Device } from '../models/device.model';
 
 
 @Component({
@@ -17,7 +19,16 @@ export class DashboardComponent implements OnInit {
   regDeviceAccordOpen: boolean = true;
   dataCredAccordOpen: boolean = true;
 
-  constructor(private user: UserService) { }
+  constructor(private user: UserService, private global: GlobalService) {
+		if(user.cellularCredits < 1){
+			this.regDeviceAccordOpen = false;
+		}
+
+		if(user.cellularCredits > 1000){
+			 this.dataCredAccordOpen = false;
+		}
+	
+	 }
 
   ngOnInit() {
   }
@@ -82,18 +93,13 @@ export class DashboardComponent implements OnInit {
  onTagChange(dev: Device){
 	console.log('ON device tag change, input blur');
 	console.log(dev);
-
+	///Update Model////
 	
-
  }
 
  onTrackStatusToggle(dev: Device){
-	if(dev.watching){
-		dev.watching = false;
+	dev.updateWatching();
 
-	}else{
-		dev.watching = true;
-	}
 
  }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import { UserService } from '../../services/user.service';
 
 declare var google: any;
 
@@ -12,21 +12,36 @@ declare var google: any;
 })
 export class MapComponent implements OnInit {
 
-  constructor() { }
+  marker: any;
+  
+
+  constructor(private user: UserService) { }
 
   ngOnInit() {
 
 
-          var uluru = {lat: -25.363, lng: 131.044};
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 4,
-          center: uluru
+          zoom: 15,
+          center: this.user.devices[0].gpsdata[0].location
         });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
+        this.marker = new google.maps.Marker({
+          position: this.user.devices[0].gpsdata[0].location,
+          map: map,
+	  draggable: false,
+          animation: google.maps.Animation.DROP,
+	  title: this.user.devices[0].tag
         });
- 	
+ 	  this.marker.addListener('click', this.toggleBounce);
   }
+
+
+  toggleBounce() {
+    if (this.marker.getAnimation() !== null) {
+       this.marker.setAnimation(null);
+    } else {
+       this.marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+  }
+  
 
 }

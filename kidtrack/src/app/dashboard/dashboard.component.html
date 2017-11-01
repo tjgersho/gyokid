@@ -6,22 +6,43 @@
 
 	<div class="row">
 
-	 <div  class="col-md-6">
+	 <div  class="col-md-4">
 
 
             <div class="panel panel-default">
              <div class="panel-heading" (click)="dataCredOpenCloseDeviceAccordian()">
                 <h4 class="panel-title">
-                    <a data-toggle="collapse"><span class="glyphicon" [ngClass]="dataCredAccordOpenCloseButton()"></span> Data Credits: </a>
+                    <a data-toggle="collapse"><span class="glyphicon" [ngClass]="dataCredAccordOpenCloseButton()"></span> Tracking Credits: </a>
                 </h4>
             </div>
             <div  class="panel-collapse collapse" [ngClass]="dataCredAccordOpenClose()">
                   <div class="panel-body">
-                   
-	 		{{user.cellularCredits}}
 
+                               <div class="col-xs-5">
+					<h4 style="color:#000;">GPS Pings:</h4>
+				</div>
+				<div class="col-xs-7">
+					<h4 style="color:#000;">Value ($):</h4>
+				</div>
+			<div class="clr"></div>
+	 		 <div class="row"  style="border-top: 1px solid #ccc;">
+	      
+				<div class="col-xs-5">
+					<p>{{user.cellularCredits}}</p>
+				</div>
+				<div class="col-xs-7">
+				  
+					<p>{{user.cellularCredits/global.cellCreditFactor | currency:"USD":"$"}}</p>
+			
+				</div>
+			 </div>
+					
+				
 			<br />
-		
+			<br />
+		    <a  class="btn btn-default btn-lg pull-right" routerLink="/buy-credits" *ngIf="user.cellularCredits < 1">
+  			 Buy Data Credits!
+		    </a>
 
                   </div>
             </div>
@@ -31,7 +52,7 @@
 	 </div>
 
 
- 	 <div  class="col-md-6">
+ 	 <div  class="col-md-8">
 
 
           <div class="panel panel-default">
@@ -42,34 +63,33 @@
             </div>
             <div  class="panel-collapse collapse" [ngClass]="accordOpenClose()">
                   <div class="panel-body">
-                               <div class="col-xs-9">
+                               <div class="col-xs-5">
 					<h4 style="color:#000;">Devices:</h4>
 				</div>
+                               <div class="col-xs-4">
+					<h4 style="color:#000;">Tag:</h4>
+				</div>
 				<div class="col-xs-3">
-					<h4 style="color:#000;"> Tracking Status: </h4>
+					<h4 style="color:#000;" class="pull-right"> Status: </h4>
 				</div>
 			<div class="clr"></div>
 	 		 <div class="row"  *ngFor="let dev of user.devices" style="border-top: 1px solid #ccc;">
 	      
-				<div class="col-xs-4">
+				<div class="col-xs-5">
 					<p style="margin-top:5px;">Device: {{ dev.imei | truncate}} </p>
 				</div>
-				<div class="col-xs-5">
+				<div class="col-xs-4">
 				  
 					<div class="form-group" style="margin-top:5px;">
-						<div class="col-sm-4">
-						  <label>Tag:</label>
-						</div>
-                                                <div class="col-sm-8">
-						  <input class="form-control" (blur)="onTagChange(dev)" ([ngModel])="dev.tag" />
-						</div>
+
+						  <input class="form-control" (blur)="onTagChange(dev)" [(ngModel)]="dev.tag" placeholder="Tag" maxlength="10"/>
 					</div>
  				   
 			
 				</div>
 				
 				<div class="col-xs-3">
-					<button class="btn pull-right" (click)="onTrackStatusToggle(dev)" style="margin-top:5px;">
+					<button class="btn pull-right" (click)="onTrackStatusToggle(dev)" style="margin-top:5px;" [disabled]="user.cellularCredits < 0.01">
 					    <img [src]="trackingStatusImg(dev.watching)" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
 					</button>
 				</div>

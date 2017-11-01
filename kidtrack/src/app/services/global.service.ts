@@ -10,24 +10,30 @@ declare var $ :any;
 
 export class GlobalService{
 
+	cellCreditFactor: number = 1024;
+
 	screenWidth: number;
 	screenHeight: number;
 	jqWindow = $(window);
-
+     
 	
 	onWindowChange: Observable<object>;
 	private _observer: Observer<object>;
 
 	constructor(){
+
+		console.log('Globals constructor...');
 	
 
-
-		console.log('Globals ngOn Init');
 		
 		this.screenWidth = this.jqWindow.width();
 		this.screenHeight = this.jqWindow.height();
 
                 this.onWindowChange = Observable.create((observer: Observer<object>) => {
+			console.log('Observer on creating observable');
+	
+			console.log(observer);
+
 			this._observer = observer;
 		});
 

@@ -2,9 +2,11 @@ import { Component, OnInit , Output, EventEmitter} from '@angular/core';
 
 import { UserService } from '../../services/user.service';
 
-import { Device } from '../device/device.model';
+import { Device } from '../../models/device.model';
 
 import { GlobalService } from '../../services/global.service';
+
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -15,11 +17,11 @@ import { GlobalService } from '../../services/global.service';
 export class DeviceSelectorComponent implements OnInit {
 
   @Output() onTrackGo = new EventEmitter<null>();
-  @Output() onTrackCancel = new EventEmitter<null>();
+
 
   formCenter: number = 0;
 
-  constructor(private user: UserService, private global: GlobalService) { }
+  constructor(private user: UserService, private global: GlobalService, private router: Router) { }
 
   ngOnInit() {
 
@@ -27,6 +29,7 @@ export class DeviceSelectorComponent implements OnInit {
    	this.formCenter = this.calculateFormCenter();
 
 	this.global.onWindowChange.subscribe((data: object) => {
+		console.log('Global on window Change  - observable subscribe');
 		console.log(data);
 		this.formCenter = this.calculateFormCenter();
 	});
@@ -61,9 +64,9 @@ export class DeviceSelectorComponent implements OnInit {
         dev.watching = false;
 	dev.tag = '';
 
-        this.user.deviceWatchingUpdate(dev);
+        //this.user.deviceWatchingUpdate(dev);
 
-
+	dev.updateWatching();
      }
 
 
@@ -72,7 +75,7 @@ export class DeviceSelectorComponent implements OnInit {
   }
 
   cancelTrack(){
-       this.onTrackCancel.emit();
+     this.router.navigate(['dashboard']);
 
   }
 

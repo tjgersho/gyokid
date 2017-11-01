@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http, RequestOptions, Headers } from '@angular/http';
-import { Device } from '../tracker/device/device.model';
+import { Device } from '../models/device.model';
+
+
 
 @Injectable()
 export class UserService {
@@ -11,12 +13,16 @@ export class UserService {
   devices: Device[] = [];
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
-  cellularCredits: number = 0;
+  cellularCredits: number = 1000;
+
+
 
 
   constructor(private router: Router, private http: Http) {
 
 	var self = this;
+
+	
 	console.log('UserService initialize');
 
   	this.getUserFromToken().then(function(user){
@@ -27,8 +33,9 @@ export class UserService {
 		console.log('Not loggedin..');
 		console.log(err);
 
-
 	});
+
+	
   }
 
 
@@ -62,7 +69,7 @@ export class UserService {
 
 		if(localToken !== undefined  && localToken !== null){
 
-		  var devices = []; // [new Device("1029220920830293840",  "", true)];
+		  var devices = [new Device('129918273918273918273')]; // [new Device("1029220920830293840",  "", true)];
 
 		  var user = {username: "tjgers", email: 't@t.com', token: localToken, devices: devices, isAdmin: true };
 		  resolve(user);
@@ -88,13 +95,28 @@ export class UserService {
   	this.devices = user.devices;
   	this.isLoggedIn = true;
   	this.isAdmin = user.isAdmin;
+
+	this.getAllDeviceGpsData();
   }
 
+
+  getAllDeviceGpsData(){
+	console.log('Get all Device GPS data');
+
+
+	console.log(this.devices.length);
+
+	for (let dev of this.devices){
+		dev.getGpsData();
+
+	}
+  }
+  
 
   signup(username: string, email: string, password: string){
 	console.log('username');
 	console.log(username);
-    console.log('email');
+        console.log('email');
 	console.log(email);
 	console.log('password');
 	console.log(password);

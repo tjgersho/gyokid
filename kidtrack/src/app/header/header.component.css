@@ -88,6 +88,12 @@ h1, h2, h3, h4{
 }
 
 .pop{
+min-height:250px;
+position: absolute;
+text-align:center;
+width:100%;
+padding:20px 30px;
+top:0;
 
 /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+0&0.84+0,0+56 */
 background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,0.84) 0%, rgba(255,255,255,0) 56%); /* FF3.6-15 */
