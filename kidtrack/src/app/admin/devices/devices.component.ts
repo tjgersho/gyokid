@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Device } from '../device.model';
-
-import { AdminService } from '../admin.service';
 
 declare var jquery:any;
 declare var $ :any;
+
+import { Http, RequestOptions, Headers } from '@angular/http';
+import { Device } from '../../models/device.model';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
+import { Observer } from 'rxjs/Observer';
+
+import { UserService } from '../../services/user.service';
 
 
 
@@ -20,38 +25,50 @@ export class DevicesComponent implements OnInit {
   imeinumber: string;
   simnumber: string;
 
-  constructor(private admin: AdminService) { 
+  limit:number = 10;
+  page:number = 0
+  order:string = '';
+
+  constructor(private user: UserService, private http: Http) { 
     var self = this;
     this.loading = true;
-  	 this.admin.getDevices().then(function(devs){
-  	 		console.log('Got Devices');
-  	 		console.log(devs);
-  	   	self.deviceArray = devs;
-         self.loading = false;
-  	 },function(err){
-  	 	console.log('Error Getting devices');
-  	 	console.log(err);
-                self.loading = false;
-  	 });
 
+
+    this.getDevices();
+
+
+ 
   }
 
  ngOnInit() {}
 
  addNewDevice(imei:string = this.imeinumber, sim:string = this.simnumber){
-   	var self = this;
-
+   
 	this.loading = true;
- 	//http request to add new device...
- 	setTimeout(function(){
- 		console.log(imei);
- 		console.log(sim);
- 		console.log(self.deviceArray);
- 		self.loading = false;
 
- 		self.deviceArray.push(new Device(imei, sim));
+	var dev = {imei: imei, sim: sim};
+ 
+   let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+             let options = new RequestOptions({ headers: headers });
 
- 	}, 1000);
+     let deviceUrl = '/api/v1/admin/device';
+  
+     this.http.post(deviceUrl, dev, options).subscribe((response) => {
+
+			
+
+		this.getDevices();
+
+ 		 this.loading = false;
+
+
+	  },(err)=>{
+
+  		this.loading = false;
+
+	 });
+            
+
 
  }
 	
@@ -95,6 +112,108 @@ export class DevicesComponent implements OnInit {
       input.addEventListener('change', readFile);
 
    }
+
+
+ getDevices(){
+
+
+	console.log('Get Device');
+	console.log(this.user.token);
+
+  this.loading = true;
+
+              let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+             let options = new RequestOptions({ headers: headers });
+
+   let deviceUrl = '/api/v1/admin/devices?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
+  
+     this.http.get(deviceUrl, options).subscribe((response) => {
+
+			console.log('device array response');
+			console.log(response);
+			this.deviceArray = response.json();
+ 		        this.loading = false;
+
+
+	  },(err)=>{
+
+		console.log('Get Device array Err');
+		console.log(err);
+
+  		        this.loading = false;
+
+	 });
+            
+
+
+ }
+
+
+ updateDevice(dev){
+
+  this.loading = true;
+
+	
+
+              let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+             let options = new RequestOptions({ headers: headers });
+
+   let deviceUrl = '/api/v1/admin/device/'+dev.id;
+  
+     this.http.put(deviceUrl, dev, options).subscribe((response) => {
+
+			console.log('device array response');
+			console.log(response);
+			 		this.getDevices();
+ 		 this.loading = false;
+
+
+	  },(err)=>{
+
+  		this.loading = false;
+
+	 });
+            
+
+
+
+  }
+
+
+ onDevDelete(dev){
+
+
+	this.loading = true;
+
+	
+
+              let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+             let options = new RequestOptions({ headers: headers });
+
+   let deviceUrl = '/api/v1/admin/device/'+dev.id;
+  
+     this.http.delete(deviceUrl,  options).subscribe((response) => {
+
+			console.log('device array response');
+			console.log(response);
+		       this.getDevices();
+ 		 this.loading = false;
+
+
+	  },(err)=>{
+
+  		this.loading = false;
+
+	 });
+            
+
+
+
+
+ }
+
+
+
 
 
 }

@@ -65,7 +65,7 @@ console.log(this.email);
 		console.log(" Nested Signup success  -- login response");
 		console.log(resp);
 
-		 this.router.navigate(['/tracker']);
+		 this.router.navigate(['/dashboard']);
 
 	}, (err) => {
              

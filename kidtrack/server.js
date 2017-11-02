@@ -1,7 +1,5 @@
 'use strict';
 
-
-
 // Get dependencies
 var express = require('express');
 var path = require('path');
@@ -26,15 +24,28 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));
 
-// dynamically include routes (Controller)
-fs.readdirSync('./server/routes').forEach(function (file) {
-  console.log(file);
 
-  if (file.substr(-3) == '.js') {
-    var api = require('./server/routes/' + file);
-    app.use('/api/v1', api);
-  }
-});
+function endPointUse(path, subDomain){
+	
+   fs.readdirSync(path).forEach(function (file) {
+
+	 if (file.substr(-3) == '.js') {
+   		 var api = require(path + file);
+   		 app.use(subDomain, api);
+  	}else{
+
+		endPointUse(path  + file + '/', subDomain + '/' + file);
+	}
+    });
+
+}
+
+endPointUse('./server/routes/', '/api/v1');
+
+
+
+
+
 
 // Set our api routes
 //app.use('/api', api);
@@ -45,17 +56,38 @@ app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });
 
+
+//////////////
+var route, routes = [];
+
+app._router.stack.forEach(function(middleware){
+    if(middleware.route){ // routes registered directly on the app
+        routes.push(middleware.route);
+    } else if(middleware.name === 'router'){ // router middleware 
+        middleware.handle.stack.forEach(function(handler){
+            route = handler.route;
+            route && routes.push(route);
+        });
+    }
+});
+
+console.log(routes);
+
 /**
  * Get port from environment and store in Express.
  */
 //const port = process.env.PORT || '3000';
 var port = 8080;
 
+var seqopts = null
 
 process.argv.forEach(function (val, index, array) {
   console.log(index + ': ' + val);
 	if(val == 'dev'){
 		port = 8090;
+	}
+	if(val == 'force'){
+		seqopts = {force: true};
 	}
 });
 
@@ -78,7 +110,13 @@ db.sequelize.authenticate().then(function () {
   console.error('Unable to connect to the database:', err);
 });
 
-db.sequelize.sync({force: true}).then(function () {
+
+console.log('Sequelize startup option');
+console.log(seqopts);
+
+
+
+db.sequelize.sync(seqopts).then(function () {
   server.listen(port, function () {
     return console.log('API running on localhost:' + port);
   });

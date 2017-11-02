@@ -41,24 +41,28 @@ export class LoginComponent implements OnInit {
     const usernameoremail = form.value.usernameoremail;
     const password = form.value.password;
 
-      this.userService.login(usernameoremail, password)
+      this.userService.login(usernameoremail, password).subscribe((resp) => {
+
+		console.log("-- login response");
+		console.log(resp);
+
+		 this.router.navigate(['/dashboard']);
+
+	}, (err) => {
+             
+		console.log(" -- login ERR");
+		console.log(err);
+
+	}, () => {
+
+		console.log(" Nested Signup success  -- login observable complete");
+			
+	});
 
 
 
-     //.subscribe((res) => {
 
-	//	console.log('Response from subscribe to user server signup method');
-	//	console.log(res);
 
-	//	if( res.status === 200){
-	//		this.userService.login();
-               		//this.router.navigate(['/tracker']);
-          //       }else{
-	//		alert('An error occured while signing up.');
-
-          //      }
-		
-      //});
 
    
   }

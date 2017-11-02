@@ -27,6 +27,7 @@ module.exports = function (db) {
 			});
 		},
 		adminOnly: function(req, res, next){
+	
 			var token = req.get('Auth') || '';
 
 			db.token.findOne({

@@ -124,7 +124,7 @@ nodemailerMailgun.sendMail({
 }
 
 
-router.post('/users',  bodyParser.json(),  function(req, res){
+router.post('/user',  bodyParser.json(),  function(req, res){
 ///Signup Endpoint...
 console.log('Sign Up Endpoint');
 console.log(req.body);
@@ -141,7 +141,7 @@ console.log(req.body);
 
         db.user.create(body).then(function(user){   
 		user.setReferralToken();
-		sendEmailConfirmationEmail(user);
+		//sendEmailConfirmationEmail(user);
 
 
 	  if(body.referralUserId !== null &&  body.referralUserId !== undefined){
@@ -186,7 +186,7 @@ console.log(req.body);
 
 
 
-router.put('/users',  [bodyParser.json(), middleware.requireAuthentication],  function(req, res){
+router.put('/user',  [bodyParser.json(), middleware.requireAuthentication],  function(req, res){
   var user = req.user;
 
 
@@ -224,6 +224,24 @@ var body = _.pick(req.body, 'bodyColorR', 'bodyColorG', 'bodyColorB', 'bodyColor
 
 });
 
+
+router.get('/user/devices/',  [bodyParser.json(), middleware.requireAuthentication],  function(req, res){
+  var user = req.user;
+	console.log('User in get user devices');
+		
+  db.device.findAll({where: {userId: user.id}}).then(function(devices){
+
+		console.log('response from find all devices by user id');
+		console.log(devices);
+ 		res.json(devices);
+	},function(err){
+		console.log('Find devices error');
+		console.log(err);
+		 res.status(400).json(err);
+
+    });
+
+});
 
 
 module.exports = router;

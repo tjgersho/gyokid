@@ -14,7 +14,7 @@ module.exports = {
       }], {});
     */
   
-return db.user.create({username: 'admin', email: 'travis.g@paradigmmotion.com', password: '521tmoney', role: 1}).then(function(usr){
+return db.user.create({username: 'admin', email: 'travis.g@paradigmmotion.com', password: '123kt321', role: 1}).then(function(usr){
 
 		usr.setReferralToken();
 		console.log(usr);

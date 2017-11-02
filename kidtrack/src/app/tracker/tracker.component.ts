@@ -31,15 +31,19 @@ export class TrackerComponent implements OnInit {
 	console.log('Tracker constructor');
 	console.log('Tracker constructor');
 
-	if(!user.isLoggedIn){
- 	  router.navigate(['/']);
+	if(user.devices.length < 1){
+ 	  router.navigate(['/dashboard']);
         }
+
+	
 
 	if(user.userHasTrakingDevices()){
 		this.showDeviceSelector = false;
 
 		user.getAllDeviceGpsData();
 	}
+
+	
    }
 
   ngOnInit() {

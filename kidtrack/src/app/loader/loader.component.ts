@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError, NavigationCancel } from '@angular/router';
 
 
 
@@ -17,7 +17,6 @@ export class LoaderComponent implements OnInit {
 
 		console.log('Router Event');
 		console.log(event);
-
             if (event instanceof NavigationStart) {
                 // Show loading indicator
 		this.showLoader = true;
@@ -27,6 +26,12 @@ export class LoaderComponent implements OnInit {
                 // Hide loading indicator
                this.showLoader = false;
             }
+
+            if (event instanceof NavigationCancel) {
+                // Hide loading indicator
+               this.showLoader = false;
+            }
+
 
             if (event instanceof NavigationError) {
                 // Hide loading indicator

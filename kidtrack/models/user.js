@@ -131,7 +131,7 @@ module.exports = function(sequelize, DataTypes){
 				});
 	  	      };
 
-	user.findByToken = function(token) {
+	 user.findByToken = function(token) {
 
 				return new Promise(function(resolve, reject) {
 					try {
@@ -154,7 +154,7 @@ module.exports = function(sequelize, DataTypes){
 				});
 			};
 
-	user.prototype.toPublicJSON = function() {
+	 user.prototype.toPublicJSON = function() {
 				var json = this.toJSON();
 				console.log('TO PUBLIC UNPARSED');
 				console.log(json);

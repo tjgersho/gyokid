@@ -40,10 +40,12 @@ import { AdminComponent } from './admin/admin.component';
 
 
 import { LoaderComponent } from './loader/loader.component';
+
 import { UsersComponent } from './admin/users/users.component';
 import { DevicesComponent } from './admin/devices/devices.component';
 import { HomeComponent } from './admin/home/home.component';
 import { EmailComponent } from './admin/email/email.component';
+
 import { TruncatePipe } from './truncate.pipe';
 import { BrowseremailComponent } from './browseremail/browseremail.component';
 import { EmailconfirmComponent } from './emailconfirm/emailconfirm.component';

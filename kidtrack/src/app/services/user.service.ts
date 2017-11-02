@@ -9,6 +9,7 @@ import { Observer } from 'rxjs/Observer';
 
 @Injectable()
 export class UserService {
+  id: number = -1;
   username: string = "";
   email: string = "";
   token: string = "";
@@ -27,80 +28,141 @@ export class UserService {
 	
 	console.log('UserService initialize');
 
-  	this.getUserFromToken().then(function(user){
-	
-		self.initializeUser(user);
-		
-	},function(err){
-		console.log('Not loggedin..');
-		console.log(err);
+  	this.getUserFromToken().then(function(resp){
+
+	  },function(err){
 
 	});
 
 	
   }
 
+
+
+
+  isAdminUser(){
+
+	console.log("CALLLING ----- IS ADMIN USER ");
+
+	var self = this;
+
+	return new Promise( (resolve, reject) => {
+		console.log('Is Admin user token variable');
+		console.log(self.token);
+		console.log(this.token);
+
+             let headers = new Headers({ 'Content-Type': 'application/json', Auth: self.token});
+             let options = new RequestOptions({ headers: headers });
+		this.http.get('/api/v1/user/getAdminByToken', options).subscribe((resp)=>{
+			
+			console.log('user/getAdminByToken response');
+		        console.log('In the isAdmin response');
+			console.log(resp);
+
+			self.isAdmin = true;
+		
+			resolve(true);
+
+		},(err) => {
+		         console.log('In the isAdmin response ERR');
+			console.log(err);
+			this.isAdmin = false;
+			resolve(false);
+
+		},()=>{console.log('Get Admin By Token Call completion');});
+	});
+
+  }
 
   getUserFromToken(){
 
 	return new Promise( (resolve, reject) => {
 
-	var token = '';
-
-        // 	console.log('LocalStorage token PRE');
-	//		console.log(localStorage.token);
-	
-	//if(this.token !== ""){
-	//	token = this.token;
-	//	localStorage.setItem('token', token);
-	//}
-
 	var localToken = localStorage.getItem("token");
-	console.log('local Token');
-	console.log(localToken);
 	
 	if(localToken  !== "" && localToken !== this.token){
-		token = localToken;
-		this.token = token;
+		this.token = localToken;
 	}
 
-	  setTimeout(function(){
-		
-			console.log('LocalStorage token');
-			console.log(localStorage.token);
+	if(this.token === ""){
+	   reject(false);
+	}
 
-		if(localToken !== undefined  && localToken !== null){
+        let headers = new Headers({ 'Content-Type': 'application/json'});
+        let options = new RequestOptions({ headers: headers });
+	  this.http.post('/api/v1/user/findByToken', {token: this.token}).subscribe((resp) =>{
 
-		  var devices = [new Device('129918273918273918273')]; // [new Device("1029220920830293840",  "", true)];
+			console.log("in the http post of get User from token response");
+			console.log(resp);
+			console.log(resp.json());
+			var user = resp.json();
 
-		  var user = {username: "tjgers", email: 't@t.com', token: localToken, devices: devices, isAdmin: true };
-		  resolve(user);
-
-		}else{
-
-		reject("not Logged in");
-		}
+		      	this.initializeUser(user);
+		       
+			resolve(true);
 
 
-	
-	  }, 2000);
+		},(err)=>{
+			console.log("in the http post of get User from token response ERR");
+			console.log(err);
 
-	});
+			reject(false);
+			
+				
+		});
+
+	});	
 
   }
 
 
   initializeUser(user){
+
+	console.log("INITIALIZING USER");
+	
   	this.username = user.username;
   	this.email = user.email;
-  	this.token = user.token;
-  	this.devices = user.devices;
+
   	this.isLoggedIn = true;
-  	this.isAdmin = user.isAdmin;
+	
+  	this.isAdminUser().then(function(resp){
+		console.log('In initialize user isADMIN user response');
+		console.log(resp);
+		
+
+	},function(err){
+		console.log('In initialize user isADMIN user responseERR');
+		console.log(err);
+
+	});
+
+
+	this.getUserDevices();
 
 	this.getAllDeviceGpsData();
   }
 
+  getUserDevices(){
+
+        let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.token});
+        let options = new RequestOptions({ headers: headers });
+         this.http.get("/api/v1/user/devices/", options).subscribe((resp)=>{
+
+			console.log('Respons get user devices');
+			console.log(resp);
+			var devices = resp.json();
+			console.log(devices);
+
+			this.devices = devices;
+			
+		},(err)=>{
+
+		},()=>{
+
+		});
+
+
+  }
 
   getAllDeviceGpsData(){
 	console.log('Get all Device GPS data');
@@ -127,7 +189,7 @@ export class UserService {
         let options = new RequestOptions({ headers: headers });
 	    let data = {username: username, email: email, password: password};
 
-	return this.http.post("/api/v1/users", data, options);
+	return this.http.post("/api/v1/user", data, options);
 
   }
 
@@ -151,7 +213,9 @@ export class UserService {
 		console.log(resp);
 
 		var token = resp.headers.get('auth');
-
+		console.log('Token from response');
+		console.log(token);
+                localStorage.removeItem('token');
 		localStorage.setItem('token', token );
 
 		this.token = token;
@@ -159,7 +223,11 @@ export class UserService {
        		console.log('Local Storage in login');
 		console.log(localStorage.token);
 
+		console.log('User Service token');
+		console.log(this);
+		console.log(this.token);
 
+	        //this.initializeUser(user);
 
 		return resp;
 	}).catch((err) => {

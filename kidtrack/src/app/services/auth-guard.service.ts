@@ -5,22 +5,47 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angula
 import {Router} from '@angular/router';
 import { UserService } from './user.service';
 
+import { Observable } from 'rxjs/Observable';
+
+
+
+
 @Injectable()
 export class AuthGuardService implements CanActivate {
  
   constructor(private user: UserService, private router:Router){}
 
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) { 
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<boolean>|Promise<boolean>|boolean {
+ 
+	var self = this;
+	console.log('In Can Activate for AuthGuardService');
 
-	if(this.user.isLoggedIn){
-	      return true;
-        }else{
+	return new Promise(function(resolve, reject){
 
-	     this.router.navigate(['/']);
-	      return false;
-        }
+		 self.user.getUserFromToken().then(function(resp){
+
+			console.log('In Can Activate.. isValidUser Response');
+			console.log(resp);
+			
+			if(resp){
+
+				 resolve(true);
+			}else{
+
+				 self.router.navigate(['/']);
+	     			 resolve(false);
+
+			}
+			
+		},function(err){
+			 self.router.navigate(['/']);
+			 resolve(false);
+
+	     });
 	
+	  });
+
   }
 
 }

@@ -98,14 +98,14 @@
          <li  *ngIf="!user.isLoggedIn && !atRegister">
           <a routerLink="/register" >Register</a>
        </li>
-	  <li  *ngIf="user.isLoggedIn">
+	  <li  *ngIf="user.isLoggedIn  && !atDash">
          	 <a routerLink="/dashboard" >Dashboard</a>
       	  </li>
 
 
     </ul>
     <div style="margin-left: auto; margin-right: auto; text-align: right; max-width: 75px !important;">
-            <button class="navbar-btn btn btn-default" (click)="goTrack()" *ngIf="user.isLoggedIn && !atTrack">Track</button>
+            <button class="navbar-btn btn btn-default" (click)="goTrack()" *ngIf="user.isLoggedIn && !atTrack  && user.devices.length > 0">Track</button>
      </div>
 
   </div>

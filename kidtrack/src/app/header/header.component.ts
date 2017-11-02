@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit{
  atTrack: boolean = false;
  atRegister: boolean = false;
  atLogin: boolean = false;
+ atDash: boolean = false;
  navBox: HTMLElement;
  mobileNavOpen: boolean = false;
 
@@ -58,6 +59,22 @@ navAffixed:boolean = true;
                 }else{
                   this.atTrack = false;
 
+                }
+
+               	if(this.route.snapshot.url[0].path === 'dashboard'){
+                   this.atDash = true;
+	
+                }else{
+                  this.atDash = false;
+
+                }
+                if(this.route.snapshot.url[0].path === 'login'){
+                   this.atLogin = true;
+
+                }else{
+                  this.atLogin = false;
+		
+                
                 }
 
                 if(this.route.snapshot.url[0].path === 'register'){

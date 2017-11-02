@@ -43,6 +43,8 @@ db.device.belongsTo(db.user);
 
 db.email.belongsTo(db.user);
 
+db.device.hasMany(db.gps);
+db.gps.belongsTo(db.device);
 
 //////////////////////////////
 

@@ -16,9 +16,12 @@ var cryptojs = require('crypto-js');
 
 
 router.post('/user/findByToken',  bodyParser.json(),  function(req, res){
+
+console.log('IN Find By Token');
  var body = _.pick(req.body, 'token');
 
   var token = body.token;
+console.log('token', token);
     db.token.findOne({
           where: {
              tokenHash: cryptojs.MD5(token).toString()
@@ -38,6 +41,13 @@ router.post('/user/findByToken',  bodyParser.json(),  function(req, res){
              res.status(401).json(err);
           });
       });
+});
+
+router.get('/user/getAdminByToken', [bodyParser.json(), middleware.adminOnly],  function(req, res){
+	console.log('In Get by Admin Token');
+	console.log(req.user.id);
+	
+	res.status(200).json(req.user);
 });
 
 
