@@ -60,7 +60,23 @@ console.log(this.email);
 
     console.log('Signup response');
       console.log(resp);
-      this.user.login(this.username, this.password);
+      this.user.login(this.username, this.password).subscribe((resp) => {
+
+		console.log(" Nested Signup success  -- login response");
+		console.log(resp);
+
+		 this.router.navigate(['/tracker']);
+
+	}, (err) => {
+             
+		console.log(" Nested Signup success  -- login ERR");
+		console.log(err);
+
+	}, () => {
+
+		console.log(" Nested Signup success  -- login observable complete");
+			
+	});
 
   }, (err) => {
 

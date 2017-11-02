@@ -45,6 +45,11 @@ import { DevicesComponent } from './admin/devices/devices.component';
 import { HomeComponent } from './admin/home/home.component';
 import { EmailComponent } from './admin/email/email.component';
 import { TruncatePipe } from './truncate.pipe';
+import { BrowseremailComponent } from './browseremail/browseremail.component';
+import { EmailconfirmComponent } from './emailconfirm/emailconfirm.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { TermsComponent } from './terms/terms.component';
+import { ReturnsComponent } from './returns/returns.component';
 
 
 @NgModule({
@@ -70,7 +75,12 @@ import { TruncatePipe } from './truncate.pipe';
     DevicesComponent,
     HomeComponent,
     EmailComponent,
-    TruncatePipe
+    TruncatePipe,
+    BrowseremailComponent,
+    EmailconfirmComponent,
+    PrivacyComponent,
+    TermsComponent,
+    ReturnsComponent
   ],
   imports: [
     BrowserModule,

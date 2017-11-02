@@ -11,10 +11,13 @@ declare var google: any;
   styleUrls: ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-
   marker: any;
   map: any;
   timer: any;
+  markers: any[] = [];
+  infowindows: object[] = []
+
+ 
 
   constructor(private user: UserService) { }
 
@@ -33,7 +36,7 @@ export class MapComponent implements OnInit {
           animation: google.maps.Animation.DROP,
 	  title: this.user.devices[0].tag
         });
- 	  this.marker.addListener('click', this.toggleBounce);
+ 	  this.marker.addListener('click', this.toggleBounce.bind(this));
 
      this.timer = setInterval(()=>{
 
@@ -57,10 +60,17 @@ export class MapComponent implements OnInit {
     console.log("RUNNING SHIT");
     let newLocationTest = this.user.devices[0].resetGpsDataZeroforTest();
     console.log(newLocationTest);
-    this.marker.position = newLocationTest;
-    this.map.center = newLocationTest;
+    this.marker.setPosition(newLocationTest);
+    this.map.setCenter(newLocationTest);
 
   }
+
+  clearMarkers() {
+        for (var i = 0; i < this.markers.length; i++) {
+          this.markers[i].setMap(null);
+        }
+        this.markers = [];
+   }
 
   ngOnDestroy(){
 

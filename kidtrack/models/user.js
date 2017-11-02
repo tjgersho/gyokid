@@ -99,9 +99,12 @@ module.exports = function(sequelize, DataTypes){
 		
 
 		}
-	  },
-	  classMethods:{
-	  		authenticate: function(body){
+	  }
+
+	});
+
+
+        user.authenticate = function(body){
 	  			return new Promise(function(resolve, reject) {
 					if (typeof body.email_or_username !== 'string' || typeof body.password !== 'string') {
 						return reject();
@@ -126,8 +129,9 @@ module.exports = function(sequelize, DataTypes){
 						reject();
 					});
 				});
-	  	      },
-			findByToken: function(token) {
+	  	      };
+
+	user.findByToken = function(token) {
 
 				return new Promise(function(resolve, reject) {
 					try {
@@ -148,38 +152,7 @@ module.exports = function(sequelize, DataTypes){
 						reject();
 					}
 				});
-			},
-			isAdminToken: function(token) {
-
-				return new Promise(function(resolve, reject) {
-					try {
-						var decodedJWT = jwt.verify(token, 'qwerty098');
-						var bytes = cryptojs.AES.decrypt(decodedJWT.token, 'abc123!@#!');
-						var tokenData = JSON.parse(bytes.toString(cryptojs.enc.Utf8));
-						if(tokenData.role === 1){
-							user.findById(tokenData.id).then(function (user) {
-								if (user) {
-									resolve(user);
-								} else {
-									reject();
-								}
-							}, function (e) {
-								reject();
-							});
-						}else{
-							reject();
-
-						}
-						
-					} catch (e) {
-						reject();
-					}
-				});
-			}
-
-	  }
-
-	});
+			};
 
 	user.prototype.toPublicJSON = function() {
 				var json = this.toJSON();
@@ -246,6 +219,34 @@ module.exports = function(sequelize, DataTypes){
 					console.error(e);
 					//return undefined;
 				}
+			};
+
+	user.isAdminToken = function(token) {
+
+				return new Promise(function(resolve, reject) {
+					try {
+						var decodedJWT = jwt.verify(token, 'qwerty098');
+						var bytes = cryptojs.AES.decrypt(decodedJWT.token, 'abc123!@#!');
+						var tokenData = JSON.parse(bytes.toString(cryptojs.enc.Utf8));
+						if(tokenData.role === 1){
+							user.findById(tokenData.id).then(function (user) {
+								if (user) {
+									resolve(user);
+								} else {
+									reject();
+								}
+							}, function (e) {
+								reject();
+							});
+						}else{
+							reject();
+
+						}
+						
+					} catch (e) {
+						reject();
+					}
+				});
 			};
 	
 

@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Device } from '../models/device.model';
-
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/Rx';
+import { Observer } from 'rxjs/Observer';
 
 
 @Injectable()
@@ -138,24 +140,38 @@ export class UserService {
 	console.log(password);
 
 	//Submit to server to login.. get back a token.
-  
-	this.isLoggedIn = true;
-	this.isAdmin = true;
-	
+  	var data = {email_or_username: usernameoremail, password: password};
+
+
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+	return this.http.post("/api/v1/login",   data, options).map((resp)=>{
+		console.log('Login Map response');
+		console.log(resp);
+
+		var token = resp.headers.get('auth');
+
+		localStorage.setItem('token', token );
+
+		this.token = token;
+		this.isLoggedIn = true;
+       		console.log('Local Storage in login');
+		console.log(localStorage.token);
+
+
+
+		return resp;
+	}).catch((err) => {
+		console.log('Catch Error in the login..');
+		console.log(err);
+		
+		return Observable.throw(err);
+
+	});
+
 
 	
-	var token = "alkdjlaskdjoi02oisjovkaki92ij";
-
-
-	localStorage.setItem('token', token );
-
-	this.token = token;
-
-        console.log('Local Storage in login');
-	console.log(localStorage.token);
-
-
-	this.router.navigate(['/tracker']);
 
   }
 

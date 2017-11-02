@@ -41,6 +41,7 @@ db.email = sequelize.import('../../models/email.js');
 db.user.hasMany(db.device);
 db.device.belongsTo(db.user);
 
+db.email.belongsTo(db.user);
 
 
 //////////////////////////////
