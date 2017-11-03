@@ -27,6 +27,15 @@ import { EmailComponent } from './admin/email/email.component';
 import { HomeComponent } from './admin/home/home.component';
 
 
+import { TermsComponent } from './terms/terms.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { ReturnsComponent } from './returns/returns.component';
+import { ContactComponent } from './contact/contact.component';
+
+import { ResetEmailComponent } from './reset-email/reset-email.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { ViewEmailComponent } from './view-email/view-email.component';
+
 const appRoutes: Routes = [
 {
     path: '',
@@ -54,6 +63,10 @@ const appRoutes: Routes = [
 	component: ForgetpwComponent
    },
    {
+	path: 'resetemail',
+	component: ResetEmailComponent
+   },
+   {
 	path: 'dashboard',
 	component: DashboardComponent,
         canActivate: [AuthGuardService]
@@ -72,7 +85,30 @@ const appRoutes: Routes = [
 	component: BuyCreditsComponent,
         canActivate: [AuthGuardService]
    },
-
+   {
+	path: 'returns',
+	component: ReturnsComponent
+   },
+   {
+	path: 'terms',
+	component: TermsComponent
+   },
+   {
+	path: 'privacy',
+	component: PrivacyComponent
+   },
+   {
+	path: 'contact',
+	component: ContactComponent
+   },
+   {
+	path: 'viewemail',
+	component: ViewEmailComponent
+   },
+   {
+	path: 'confirmemail',
+	component: ConfirmEmailComponent
+   },
    {
 	path: 'admin',
 	component: AdminComponent,

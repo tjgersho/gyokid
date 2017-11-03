@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PrivacyComponent } from './privacy.component';
+import { ViewEmailComponent } from './view-email.component';
 
-describe('PrivacyComponent', () => {
-  let component: PrivacyComponent;
-  let fixture: ComponentFixture<PrivacyComponent>;
+describe('ViewEmailComponent', () => {
+  let component: ViewEmailComponent;
+  let fixture: ComponentFixture<ViewEmailComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PrivacyComponent ]
+      declarations: [ ViewEmailComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PrivacyComponent);
+    fixture = TestBed.createComponent(ViewEmailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

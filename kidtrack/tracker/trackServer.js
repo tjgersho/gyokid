@@ -75,6 +75,11 @@ function logData(m){
         console.log(err);
     });
 
+  } else if(dataArray[2]  === "V3"){
+	console.log('V3 DATA....');
+	console.log("WHAT AM I SUPPOSED TO DO WITH THIS BS..");
+	return;
+
   } else {
 
    return;
@@ -84,21 +89,28 @@ function logData(m){
 
  var latFloat = parseFloat(lat)/100;
 
- var latDeg = Math.round(latFloat);
+ var latDeg = Math.floor(latFloat);
 
- var latHours = Math.round((latFloat - latDeg)*100);
+ var latHours = Math.floor((latFloat - latDeg)*100);
  var latMin = ((latFloat - latDeg)*100 - latHours);
  var latMinDeg = latMin/60;
  var latHourDeg = (latHours)/60;
 
  var latitude = latDeg + latHourDeg + latMinDeg;
 
+
  var lonFloat = parseFloat(lon)/100;
- var lonDeg = Math.round(lonFloat);
- var lonHours = Math.round((lonFloat - lonDeg)*100);
+
+ var lonDeg = Math.floor(lonFloat);
+
+ var lonHours = Math.floor((lonFloat - lonDeg)*100);
+
  var lonMin = ((lonFloat - lonDeg)*100 - lonHours);
+
  var lonMinDeg = lonMin/60;
+
  var lonHourDeg = (lonHours)/60;
+
 
  var longitude  = lonDeg + lonHourDeg + lonMinDeg;
 
@@ -193,6 +205,9 @@ function getRunningDevCmd(dev){
  
 
       }else if(dev.lastCmdConfirmed && dev.lastCmd === "resetDevice"){
+        cmd = "setLanguage";
+
+      }else if(dev.lastCmdConfirmed && dev.lastCmd === "setLanguage"){
         cmd = "doNothing";
 
       }else if(dev.lastCmdConfirmed && dev.lastCmd == "setToWatching"){
@@ -225,6 +240,7 @@ function sendCmds(cmd, client){
     var getTimeString = getTime();
     var now = moment();
 
+
  switch (cmd){
   case "doNothing": ///DO NOTHING...
 
@@ -234,7 +250,7 @@ function sendCmds(cmd, client){
   break;
   case "setToWatching": // set time interval to 20 sec..
 
-    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",20,#");
+    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",20#");
 
     db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
@@ -264,10 +280,28 @@ function sendCmds(cmd, client){
     });
 
   break;
+  case "setLanguage": // Reset the device..
+
+
+    client.write("*HQ,"+client.imei+",LAG,"+getTimeString+"2#");
+
+    db.device.find({where:{imei: client.imei}}).then(function(dev){
+        console.log('found device to update the time cmd sent');
+        console.log(dev.imei);
+
+       updateGpsDev(dev, {interval: 200, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false,  lastCmd: "setLanguage"});
+
+    },function(err){
+        console.log('Couldnt find dev to update time cmd');
+        console.log(err);
+
+    });
+
+  break;
   case "setToSleep":  // Put device to sleep..
 
     
-    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",2000,#");
+    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",100#");
         db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
@@ -332,8 +366,11 @@ const server = net.createServer((socc) => {
 	
 
         var status = dataArray[dataArray.length-1].slice(0,-1);
+	console.log("DEVICE STATUS");
+	console.log(status);
+     	console.log(status[3]);
 
-     
+
 	if(status[3] === "B"){
 	  getGpsDev(imei).then(function(dev){
   	        updateGpsDev(dev, {alarm: true});

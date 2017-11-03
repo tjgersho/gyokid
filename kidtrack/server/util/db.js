@@ -32,6 +32,7 @@ db.token = sequelize.import('../../models/token.js');
 db.gps = sequelize.import('../../models/gps.js');
 db.device = sequelize.import('../../models/device.js');
 db.email = sequelize.import('../../models/email.js');
+db.comment = sequelize.import('../../models/comment.js');
 
 //////////////////////////////////
 

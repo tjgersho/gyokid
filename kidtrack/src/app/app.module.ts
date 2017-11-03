@@ -14,6 +14,13 @@ import { LoginComponent } from './login/login.component';
 import { TrackerComponent } from './tracker/tracker.component';
 import { ForgetpwComponent } from './forgetpw/forgetpw.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { TermsComponent } from './terms/terms.component';
+import { PrivacyComponent } from './privacy/privacy.component';
+import { ReturnsComponent } from './returns/returns.component';
+import { ContactComponent } from './contact/contact.component';
+
+
+
 
 //////Element Components//////
 import { HeaderComponent } from './header/header.component';
@@ -49,9 +56,10 @@ import { EmailComponent } from './admin/email/email.component';
 import { TruncatePipe } from './truncate.pipe';
 import { BrowseremailComponent } from './browseremail/browseremail.component';
 import { EmailconfirmComponent } from './emailconfirm/emailconfirm.component';
-import { PrivacyComponent } from './privacy/privacy.component';
-import { TermsComponent } from './terms/terms.component';
-import { ReturnsComponent } from './returns/returns.component';
+import { ResetEmailComponent } from './reset-email/reset-email.component';
+import { ViewEmailComponent } from './view-email/view-email.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+
 
 
 @NgModule({
@@ -82,7 +90,11 @@ import { ReturnsComponent } from './returns/returns.component';
     EmailconfirmComponent,
     PrivacyComponent,
     TermsComponent,
-    ReturnsComponent
+    ReturnsComponent,
+    ContactComponent,
+    ResetEmailComponent,
+    ViewEmailComponent,
+    ConfirmEmailComponent
   ],
   imports: [
     BrowserModule,
