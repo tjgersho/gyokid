@@ -54,8 +54,7 @@ import { HomeComponent } from './admin/home/home.component';
 import { EmailComponent } from './admin/email/email.component';
 
 import { TruncatePipe } from './truncate.pipe';
-import { BrowseremailComponent } from './browseremail/browseremail.component';
-import { EmailconfirmComponent } from './emailconfirm/emailconfirm.component';
+
 import { ResetEmailComponent } from './reset-email/reset-email.component';
 import { ViewEmailComponent } from './view-email/view-email.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
@@ -86,8 +85,6 @@ import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
     HomeComponent,
     EmailComponent,
     TruncatePipe,
-    BrowseremailComponent,
-    EmailconfirmComponent,
     PrivacyComponent,
     TermsComponent,
     ReturnsComponent,

@@ -37,7 +37,7 @@ import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ViewEmailComponent } from './view-email/view-email.component';
 
 const appRoutes: Routes = [
-{
+  {
     path: '',
     pathMatch: 'full',
     component: IndexComponent
@@ -49,6 +49,11 @@ const appRoutes: Routes = [
    },
    {
 	path: 'register',
+	component: RegisterComponent
+
+   },
+   {
+	path: 'referral/code/:code',
 	component: RegisterComponent
 
    },
@@ -102,11 +107,11 @@ const appRoutes: Routes = [
 	component: ContactComponent
    },
    {
-	path: 'viewemail',
+	path: 'viewemail/:emailId/id/:id',
 	component: ViewEmailComponent
    },
    {
-	path: 'confirmemail',
+	path: 'confirmemail/:username/code/:code',
 	component: ConfirmEmailComponent
    },
    {
@@ -135,7 +140,10 @@ const appRoutes: Routes = [
           }
         ]
 
-   }
+   },
+    { path: '**',
+	redirectTo: '/'
+     }
 ];
 
 

@@ -364,6 +364,13 @@ const server = net.createServer((socc) => {
         var imei = dataArray[1];
 
 	
+	if(socc.imei === undefined){
+  		 socc.imei = imei;
+
+         }else if(socc.imei !== imei){
+
+   		socc.imei = imei;
+         }
 
         var status = dataArray[dataArray.length-1].slice(0,-1);
 	console.log("DEVICE STATUS");
@@ -380,13 +387,12 @@ const server = net.createServer((socc) => {
 	  });
 	}
 
-	if(socc.imei === undefined){
-  		 socc.imei = imei;
+	if(status[3] === "E"){
+             sendCmds("resetDevice", socc);
+		
+        }
 
-         }else if(socc.imei !== imei){
 
-   		socc.imei = imei;
-         }
    
   
 

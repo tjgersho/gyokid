@@ -1,3 +1,18 @@
-<p>
-  confirm-email works!
-</p>
+
+<app-header></app-header>
+
+
+<div class="container-fluid">
+
+<br/><br/>
+<div ng-if="self.ecloading"><img src="public/img/loading.gif"/></div>
+<div ng-if="!self.ecloading" class="container text-center">
+  <h3 ng-if="emailConfirmCtrl.emailConfirmed">YOUR EMAIL HAS BEEN CONFIRMED.</h3>
+  <h3> Get some <span><a ui-sref="play" class="btn btn-lg">XNUM</a><span>!</span></span></h3>
+  <h3 ng-if="!emailConfirmCtrl.emailConfirmed">Something weird happened and your email was not confirmed.</h3>
+</div>
+
+
+
+<br /><br /><br /><br />
+<app-footer></app-footer>
