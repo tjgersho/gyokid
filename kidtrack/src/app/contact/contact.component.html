@@ -3,24 +3,26 @@
 
 <div class="container-fluid" style="text-align:center;">
 
-<div class="formCard">
-<h2 class="text-info">Contact Us</h2>
-  <form class="form-horizontal" name="contactUsForm" no-validate="no-validate">
+<div class="formCard" style="max-width: 1200px;">
+ <h2>Contact Us</h2>
+  <form class="form-horizontal" (ngSubmit)="onSignup(f)" #f="ngForm">
     <fieldset>
       <div class="row">
         <div class="col-sm-6">
           <div class="form-group text-center">
             <label style="font-size:18px" for="contact_name">Name:</label>
-            <input class="form-control" name="contact_name" id="contact_name" type="text" placeholder="Name" style="width:60%; margin-left:auto; margin-right:auto" ng-model="contactCtrl.contact_name" required="required"/>
-            <div class="alert alert-danger" role="alert" ng-bind="contactCtrl.errors.contact_name" ng-if="contactCtrl.errors.contact_name"></div>
+            <input class="form-control" name="contact_name" id="contact_name" type="text" placeholder="Name" style="width:60%; margin-left:auto; margin-right:auto" ngModel required #contact_name="ngModel"/>
+            <div class="alert alert-warning" style="width:60%;  margin-left:auto; margin-right:auto" role="alert" *ngIf="contact_name.touched && !contact_name.valid">Please enter your name</div>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group text-center">
             <label style="font-size:18px" for="contact_email">Email:</label>
-            <input class="form-control" name="contact_email" id="contact_email" ng-model="contactCtrl.contact_email" type="email" placeholder="Email" style="width:60%; margin-left:auto; margin-right:auto" required="required"/>
-            <div class="alert alert-danger" role="alert" ng-bind="contactCtrl.errors.email" ng-if="contactCtrl.errors.email" style="width:60%; margin-left:auto; margin-right:auto"></div>
-            <div class="alert alert-danger" role="alert" ng-if="contactUsForm.contact_email.$error.email" style="width:60%; margin-left:auto; margin-right:auto">Entry must be a valid email.</div>
+            <input class="form-control" name="contact_email" id="contact_email"
+            ngModel type="email" placeholder="Email" style="width:60%; margin-left:auto; margin-right:auto"
+            required  #contact_email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"/>
+
+            <div class="alert alert-warning" role="alert" *ngIf="contact_email.touched  && !contact_email.valid" style="width:60%; margin-left:auto; margin-right:auto">Entry must be a valid email.</div>
           </div>
         </div>
       </div>
@@ -28,19 +30,19 @@
         <div class="col-sm-6">
           <div class="form-group text-center">
             <label style="font-size:18px" for="comment">Comment:</label>
-            <textarea class="form-control" name="contact_comment" id="contact_comment" style="width:60%; margin-left:auto; margin-right:auto" rows="5" ng-model="contactCtrl.contact_comment" required="required">Lets hear it...</textarea>
-            <div class="alert alert-danger" role="alert" ng-bind="contactCtrl.errors.contact_comment" ng-if="contactCtrl.errors.contact_comment" style="width:60%; margin-left:auto; margin-right:auto"></div>
+            <textarea class="form-control" name="contact_comment" id="contact_comment" style="width:60%; margin-left:auto; margin-right:auto" rows="5" ngModel required #contact_comment="ngModel">Lets hear it...</textarea>
+            <div class="alert alert-warning" role="alert" style="width:60%; margin-left:auto; margin-right:auto" *ngIf="contact_comment.touched && !contact_comment.valid">Please leave a comment.</div>
           </div>
         </div>
         <div class="col-sm-6">
           <div class="form-group">
             <div style="display:block; width:304px;  margin-left:auto; margin-right:auto; margin-top:5px">
-              <div class="g-recaptcha" data-sitekey="6LflqQsUAAAAADbZ5_KgeGUqAUvBX6TKlCHA4FfJ"></div>
-              <div class="alert alert-danger" role="alert" ng-bind="contactCtrl.errors.contact_captcha" ng-if="contactCtrl.errors.contact_captcha" style="width:60%; margin-left:auto; margin-right:auto"></div><br/>
+              <div class="g-recaptcha" data-sitekey="6LcJdTcUAAAAAAEHsqXmPUuTtJLJhfQQJFzdi-yK" data-callback="verifyCaptchaCallback"></div>
+              <div class="alert alert-danger" role="alert"  *ngIf="captachErrors" style="width:60%; margin-left:auto; margin-right:auto">{{captchaErrors}}</div><br/>
               <div class="clr"></div>
             </div>
-            <div class="form-group text-center" style="margin-top:25px">
-              <button class="btn btn-default" name="comment_submit" id="comment_submit" style="width:60%" ng-disabled="contactUsForm.$invalid" ng-click="contactCtrl.formsubmit()">Submit <span><img id="loader" src="img/loader.gif" style="display:none"/></span></button>
+            <div class="form-group text-center" style="margin-top:25px"> cap:{{captchaChecked}}
+              <button class="btn btn-default" type="submit" name="comment_submit" id="comment_submit" style="width:60%" [disabled]="!f.valid || !captchaChecked">Submit <span><img id="loader" src="img/loader.gif" style="display:none"/></span></button>
             </div>
           </div>
         </div>
@@ -59,3 +61,20 @@
 <br /><br /><br /><br />
 <app-footer></app-footer>
 
+
+
+
+
+<div class="modal fade" id="contactUsthanks" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header"><img src="public/img/xoIcon.png" width="30px" style="float:left; margin-right:15px"/>
+        <button class="close" type="button" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Thanks!</h4>
+      </div>
+      <div class="modal-body">
+        <h5>Thanks for contacting us! We will get back with you as soon as possible.</h5>
+      </div>
+      <div class="modal-footer">
+    <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+</div>
