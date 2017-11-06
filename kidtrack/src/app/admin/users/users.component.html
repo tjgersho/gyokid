@@ -1,16 +1,38 @@
 <h3>Users</h3>
-<div class="row" *ngFor="let user of userArray">
-	<div class="col-xs-12" > 
 
-		<p style="text-align:center;"> 
 
-			{{user.id}} -- {{user.username}}
 
-		</p>
-
-	</div>
+<div class="styleTable">
+  <table>
+    <tr>
+      <td>Id</td>
+      <td>Username</td>
+      <td>Email</td>
+      <td>PingCredits</td>
+      <td>ReferralWins</td>
+      <td>Referral Count</td>
+      <td>Joined</td>
+      <td>Confirmed</td>
+      <td>Delete?</td>
+    </tr>
+    <tr *ngFor="let list of users">
+      <td>{{list.id}}</td>
+      <td>{{list.username}}</td>
+      <td>{{list.email}}</td>
+      <td> 
+        <input class="form-control" type="text" style="width:100px" [(ngModel)]="list.pingCredits" (blur)="updateUserPingCredits(list)"/>
+      </td>
+      <td> 
+        <input class="form-control" type="text" style="width:50px" [(ngModel)]="list.referralWins" (blur)="updateUserWins(list)"/>
+      </td>
+      <td>{{list.referralCount}}</td>
+      <td>{{list.createdAt | date}}	</td>
+      <td>{{list.emailConfirmed}}</td>
+      <td>
+        <button (click)="deleteUser(list.id)">Delete</button>
+      </td>
+    </tr>
+  </table>
 </div>
-<br />
-<br />
-<br />
-<br />
+
+

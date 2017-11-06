@@ -20,11 +20,11 @@ export class DashboardComponent implements OnInit {
   dataCredAccordOpen: boolean = true;
 
   constructor(private user: UserService, private global: GlobalService) {
-		if(user.cellularCredits < 1){
+		if(user.pingCredits < 1){
 			this.regDeviceAccordOpen = false;
 		}
 
-		if(user.cellularCredits > 1000){
+		if(user.pingCredits > 1000){
 			 this.dataCredAccordOpen = false;
 		}
 	

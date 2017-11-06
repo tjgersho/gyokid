@@ -33,6 +33,8 @@ db.gps = sequelize.import('../../models/gps.js');
 db.device = sequelize.import('../../models/device.js');
 db.email = sequelize.import('../../models/email.js');
 db.comment = sequelize.import('../../models/comment.js');
+db.referral = sequelize.import('../../models/referral.js');
+db.pingSale = sequelize.import('../../models/pingsales.js');
 
 //////////////////////////////////
 

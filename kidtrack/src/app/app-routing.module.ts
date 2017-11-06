@@ -25,7 +25,8 @@ import { UsersComponent } from './admin/users/users.component';
 import { DevicesComponent } from './admin/devices/devices.component';
 import { EmailComponent } from './admin/email/email.component';
 import { HomeComponent } from './admin/home/home.component';
-
+import { CommentsComponent } from './admin/comments/comments.component';
+import { PingsalesComponent } from './admin/pingsales/pingsales.component';
 
 import { TermsComponent } from './terms/terms.component';
 import { PrivacyComponent } from './privacy/privacy.component';
@@ -136,6 +137,16 @@ const appRoutes: Routes = [
           {
             path: 'email',
             component: EmailComponent
+    
+          },
+          {
+            path: 'comments',
+            component: CommentsComponent
+    
+          },
+          {
+            path: 'sales',
+            component: PingsalesComponent
     
           }
         ]

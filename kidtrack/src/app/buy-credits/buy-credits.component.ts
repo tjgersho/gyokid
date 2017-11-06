@@ -56,7 +56,7 @@ var self = this;
                 // The payment is complete!
                 // You can now show a confirmation message to the customer
 		
-		self.user.cellularCredits = parseFloat(payment.transactions[0].amount.total)*self.global.cellCreditFactor;
+		self.user.pingCredits = parseFloat(payment.transactions[0].amount.total)*self.global.cellCreditFactor;
 
 		self.router.navigate(['/dashboard']);
             });

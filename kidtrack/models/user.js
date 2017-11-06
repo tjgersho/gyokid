@@ -71,11 +71,7 @@ module.exports = function(sequelize, DataTypes){
 		referralCode:{
 			type: DataTypes.TEXT			
 		},
-		shippingAddress:{
-			type: DataTypes.TEXT			
-		},
-
-                cellularCredits: {
+                pingCredits: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
                   	defaultValue: 500

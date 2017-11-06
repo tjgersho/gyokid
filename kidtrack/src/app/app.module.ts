@@ -44,20 +44,33 @@ import { GlobalService } from './services/global.service';
 
 import { MapComponent } from './tracker/map/map.component';
 import { AdminComponent } from './admin/admin.component';
-
-
-import { LoaderComponent } from './loader/loader.component';
-
+import { CommentsComponent } from './admin/comments/comments.component';
+import { PingsalesComponent } from './admin/pingsales/pingsales.component';
 import { UsersComponent } from './admin/users/users.component';
 import { DevicesComponent } from './admin/devices/devices.component';
 import { HomeComponent } from './admin/home/home.component';
 import { EmailComponent } from './admin/email/email.component';
+
+
+
+
+
+import { LoaderComponent } from './loader/loader.component';
+
+
 
 import { TruncatePipe } from './truncate.pipe';
 
 import { ResetEmailComponent } from './reset-email/reset-email.component';
 import { ViewEmailComponent } from './view-email/view-email.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+
+
+
+//Directives ////
+import { ViewEmailDirective } from './admin/email/view-email.directive';
+
+
 
 
 
@@ -91,7 +104,10 @@ import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
     ContactComponent,
     ResetEmailComponent,
     ViewEmailComponent,
-    ConfirmEmailComponent
+    ConfirmEmailComponent,
+    ViewEmailDirective,
+    CommentsComponent,
+    PingsalesComponent
   ],
   imports: [
     BrowserModule,

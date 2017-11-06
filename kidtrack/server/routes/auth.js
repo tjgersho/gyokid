@@ -79,13 +79,15 @@ router.post('/login',  bodyParser.json(),  function (req, res) {
 
 
 
-// DELETE /users/login
+// DELETE /logoutn
 router.delete('/logout', [bodyParser.json(), middleware.requireAuthentication], function (req, res) {
-  req.token.destroy().then(function () {
+
+ req.token.destroy().then(function () {
     res.status(204).send();
  }).catch(function () {
     res.status(500).send();
  });
+
 });
 
 

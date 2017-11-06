@@ -28,11 +28,11 @@
 	 		 <div class="row"  style="border-top: 1px solid #ccc;">
 	      
 				<div class="col-xs-5">
-					<p>{{user.cellularCredits}}</p>
+					<p>{{user.pingCredits}}</p>
 				</div>
 				<div class="col-xs-7">
 				  
-					<p>{{user.cellularCredits/global.cellCreditFactor | currency:"USD":"$"}}</p>
+					<p>{{user.pingCredits/global.cellCreditFactor | currency:"USD":"$"}}</p>
 			
 				</div>
 			 </div>
@@ -40,7 +40,7 @@
 				
 			<br />
 			<br />
-		    <a  class="btn btn-default btn-lg pull-right" routerLink="/buy-credits" *ngIf="user.cellularCredits < 1">
+		    <a  class="btn btn-default btn-lg pull-right" routerLink="/buy-credits" *ngIf="user.pingCredits < 1">
   			 Buy Data Credits!
 		    </a>
 
@@ -89,7 +89,7 @@
 				</div>
 				
 				<div class="col-xs-3">
-					<button class="btn pull-right" (click)="onTrackStatusToggle(dev)" style="margin-top:5px;" [disabled]="user.cellularCredits < 0.01">
+					<button class="btn pull-right" (click)="onTrackStatusToggle(dev)" style="margin-top:5px;" [disabled]="user.pingCredits < 0.01">
 					    <img [src]="trackingStatusImg(dev.watching)" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
 					</button>
 				</div>

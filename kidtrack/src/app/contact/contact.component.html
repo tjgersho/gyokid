@@ -41,7 +41,7 @@
               <div class="alert alert-danger" role="alert"  *ngIf="captachErrors" style="width:60%; margin-left:auto; margin-right:auto">{{captchaErrors}}</div><br/>
               <div class="clr"></div>
             </div>
-            <div class="form-group text-center" style="margin-top:25px"> cap:{{captchaChecked}}
+            <div class="form-group text-center" style="margin-top:25px">
               <button class="btn btn-default" type="submit" name="comment_submit" id="comment_submit" style="width:60%" [disabled]="!f.valid || !captchaChecked">Submit <span><img id="loader" src="img/loader.gif" style="display:none"/></span></button>
             </div>
           </div>

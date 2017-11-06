@@ -16,7 +16,7 @@ export class UserService {
   devices: Device[] = [];
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
-  cellularCredits: number = 1000;
+  pingCredits: number = 1000;
 
 
 
@@ -122,7 +122,7 @@ export class UserService {
 	
   	this.username = user.username;
   	this.email = user.email;
-
+	this.pingCredits =  user.pingCredits;
   	this.isLoggedIn = true;
 	
   	this.isAdminUser().then(function(resp){
@@ -249,6 +249,24 @@ export class UserService {
       this.isAdmin = false;
       this.router.navigate(['/']);
       localStorage.removeItem('token');
+ 
+       let headers = new Headers({ 'Content-Type': 'application/json' , Auth: this.token});
+       let options = new RequestOptions({ headers: headers });
+
+
+	this.http.delete('/api/v1/logout', options).subscribe((resp) => {
+		console.log('Resp from logout endpoint');
+		console.log(resp);
+
+		this.token = '';
+ 
+            }, (err) => {
+		console.log('Response err from logout endpoint');
+		console.log(err);
+
+		}, () => {
+		    console.log('logout endpoint subscribe complete');
+			});
 
     //Destroy Token on server
   }

@@ -19,37 +19,25 @@ router.put('/user/:id',  [bodyParser.json(), middleware.adminOnly],  function(re
 
 var userId = parseInt(req.params.id, 10);
 
-var body = _.pick(req.body, 'bodyColorR', 'bodyColorG', 'bodyColorB', 'bodyColorA',
-		'sendmail', 'shippingAddress', 'referralWins', 'cellularCredits' );
+var body = _.pick(req.body, 'sendmail', 'referralWins', 'pingCredits' );
 ///Some Validation on the post.
 
   var attributes = {};
 
 
 
-   if (body.hasOwnProperty('useSkin')) {
-    attributes.useSkin = body.useSkin;
-  }
-
-   if (body.hasOwnProperty('skinId')) {
-    attributes.skinId = body.skinId;
-  }
-
   if (body.hasOwnProperty('sendmail')) {
     attributes.sendmail = body.sendmail;
   }
 
-   if(body.hasOwnProperty('shippingAddress')){
-      attributes.shippingAddress = body.shippingAddress;
 
-    }
 
    if(body.hasOwnProperty('referralWins')){
       attributes.referralWins = body.referralWins;
 
     }
-   if(body.hasOwnProperty('xBits')){
-      attributes.xBits = body.xBits;
+   if(body.hasOwnProperty('pingCredits')){
+      attributes.pingCredits = body.pingCredits;
 
     }
 
@@ -85,7 +73,7 @@ router.get('/users', middleware.adminOnly, function (req, res) {
     
    var where = {};
 
-   var include = [{model: db.xnum}];
+   var include = [{model: db.device}];
 
 
     var limit;
@@ -163,21 +151,16 @@ router.get('/userspagecount', middleware.adminOnly, function(req,res){
 router.delete('/user/:id', [middleware.adminOnly], function (req, res) {
 
  var userId = parseInt(req.params.id, 10);
-db.user.find({where: {id:userId}, include: [{model: db.xnum}]}).then(function(u){
 
-
-
-	u.xnums.forEach(function(x){
-
-		if(!x.paid){
-			x.update({found : false, userId: null, payRequested: false});
-
-		}
-	});
+  db.user.find({where: {id:userId}, include: [{model: db.device}]}).then(function(u){
  
+	u.devices.forEach(function(d){
+		d.removeUser(u);
+        });
 
-  u.destroy().then(function () {
-    res.status(204).send();
+      u.destroy().then(function () {
+     res.status(204).send();
+
   }).catch(function () {
     res.status(500).send();
  });
