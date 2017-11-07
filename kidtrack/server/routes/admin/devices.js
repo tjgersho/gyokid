@@ -38,7 +38,7 @@ router.put('/device/:id',  [bodyParser.json(), middleware.adminOnly],  function(
 
 var deviceId = parseInt(req.params.id, 10);
 
-var body = _.pick(req.body, 'imei', 'sim', 'userId');
+var body = _.pick(req.body, 'userId');
 ///Some Validation on the post.
 
   var attributes = {};
@@ -49,27 +49,80 @@ var body = _.pick(req.body, 'imei', 'sim', 'userId');
     attributes.userId = body.userId;
   }
 
-   if (body.hasOwnProperty('imei')) {
-    attributes.imei= body.imei;
-  }
+  
+ console.log('in device update.');
+  console.log(deviceId);
+  console.log(attributes);
 
-  if (body.hasOwnProperty('sim')) {
-    attributes.sim = body.sim;
-  }
 
-   	console.log('in device update.');
-	console.log(deviceId);
-	console.log(attributes);
+db.user.findById(attributes.userId).then(function(u){
 
+	 console.log('Found Device user');
+         console.log(u);
+
+      db.device.findById(deviceId).then(function(device) {
+	  if (!!device) {
+
+	    device.setUser(u);
+		res.status(204).send();
+
+          } else {
+            res.status(404).send();
+          }
+        }, function() {
+         res.status(500).send();
+       });
+
+
+       },function(err){
+
+          console.log('Found Device user ERR');
+         console.log(err);
+
+
+       });
+
+
+
+});
+
+
+router.post('/device/:id',  [bodyParser.json(), middleware.adminOnly],  function(req, res){
+
+
+var deviceId = parseInt(req.params.id, 10);
+
+var body = _.pick(req.body, 'userId');
+///Some Validation on the post.
+
+    
+ console.log('in device de register...');
+  console.log(deviceId);
 
   db.device.findById(deviceId).then(function(device) {
-    if (!!usr) {
-      device.update(attributes).then(function(d) {
-        res.json(d);
-      }, function(e) {
-        res.status(400).json(e);
-      });
+    if (!!device) {
+     	
+	db.user.findById(device.userId).then(function(u){
+
+	 console.log('Found Device user');
+         console.log(u);
+
+	  device.setUser(null);
+
+	res.status(204).send();
+
+       },function(err){
+
+          console.log('Found Device user ERR');
+         console.log(err);
+
+
+       });
+
+
     } else {
+      console.log('Couldnt find device for deregistration');
+
       res.status(404).send();
     }
   }, function() {
@@ -79,7 +132,6 @@ var body = _.pick(req.body, 'imei', 'sim', 'userId');
 
 
 });
-
 
 
 // GeT /users ADMIN

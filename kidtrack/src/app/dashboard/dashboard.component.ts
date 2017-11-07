@@ -94,6 +94,7 @@ export class DashboardComponent implements OnInit {
 	console.log('ON device tag change, input blur');
 	console.log(dev);
 	///Update Model////
+	dev.updateTag();
 	
  }
 

@@ -5,43 +5,65 @@ import { UserService } from '../services/user.service';
 
 @Injectable()
 export class Device{
+ id: number;
  imei: string;
+ sim: string;
  shortImei: string;
- tag: string;
- watching: boolean;
+ tag: string = '';
+ watching: boolean = false;
  gpsdata: Gps[] = [];
  registrationOk: number = 0;
  regstatustooltip: string = "Registration is good";
- http: Http;
  user: UserService;
+ http: Http;
 
- constructor(imei: string, tag: string = "", watching: boolean = false, ){
+ constructor(){
+
+	console.log('INITIALIZATION OF DEVICE');
+	
+
+ }
+
+ setDevice(obj){
+
+	console.log('Set Device method');
+	console.log(obj);
+
+	var {imei, sim, tag, watching} = obj;
 
 	this.imei = imei;
+
+	this.sim = sim;
 	
-	this.shortImei = imei.substring(imei.length-5, imei.length-1);
+	this.shortImei = this.imei.substring(this.imei.length-5, this.imei.length-1);
 
-        this.tag = tag;
+	this.tag = tag;
 
-	this.watching = watching;
- }
+  }
 
  getGpsData(){
 	console.log('This device... get gps Data');
 	console.log(this.imei);
-	this.gpsdata.push(new Gps(new Date().toString(), {lat: (Math.random()*2-1)*90, lng: (Math.random()*2-1)*180}));
+	 var gpsDataArray: Gps[]  = [];
+	
+	
+	 gpsDataArray.push(new Gps(new Date().toString(), {lat: (Math.random()*2-1)*90, lng: (Math.random()*2-1)*180}));
+
+	 this.gpsdata = gpsDataArray;
 
  }
  
 
  updateTag(){
 	
+	console.log('Update Device Tag METHOD');
+	console.log(this.tag);
 
         let headers = new Headers({ 'Content-Type': 'application/json', auth: this.user.token });
         let options = new RequestOptions({ headers: headers });
 		
 
-	this.http.put("/api/v1/device/"+this.imei, {tag: this.tag}, options).subscribe((response) =>{
+	this.http.put("/api/v1/device/"+this.id, {tag: this.tag}, options).subscribe((response) =>{
 
 		console.log('Update Response');
 		console.log(response);
@@ -63,8 +85,21 @@ resetGpsDataZeroforTest(){
 	console.log(this.watching);
 
 
-  this.watching = !this.watching;
+      this.watching = !this.watching;
    console.log(this.watching);
+
+
+   let headers = new Headers({ 'Content-Type': 'application/json', auth: this.user.token });
+        let options = new RequestOptions({ headers: headers });
+		
+
+	this.http.put("/api/v1/device/"+this.id, {watching: this.watching}, options).subscribe((response) =>{
+
+		console.log('Update Response');
+		console.log(response);
+
+	});
+
 
 	///send to database...
 

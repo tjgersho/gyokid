@@ -116,30 +116,37 @@ export class UserService {
   }
 
 
-  initializeUser(user){
+  initializeUser(userData){
 
 	console.log("INITIALIZING USER");
 	
-  	this.username = user.username;
-  	this.email = user.email;
-	this.pingCredits =  user.pingCredits;
+  	this.username = userData.username;
+  	this.email = userData.email;
+	this.pingCredits =  userData.pingCredits;
   	this.isLoggedIn = true;
+
+	var deviceArray: Device[] = [];
+
+	for(var i=0; i<userData.devices.length; i++){
+		let dev = new Device();
+		dev.setDevice({imei: userData.devices[i].imei});
+		deviceArray.push(dev);	
+        }
 	
+	this.devices = deviceArray;
+
   	this.isAdminUser().then(function(resp){
 		console.log('In initialize user isADMIN user response');
 		console.log(resp);
 		
 
 	},function(err){
-		console.log('In initialize user isADMIN user responseERR');
+		console.log('In initialize user isADMIN user response ERR');
 		console.log(err);
 
 	});
 
 
-	this.getUserDevices();
-
-	this.getAllDeviceGpsData();
   }
 
   getUserDevices(){

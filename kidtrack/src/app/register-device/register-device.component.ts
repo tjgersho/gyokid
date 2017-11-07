@@ -47,7 +47,8 @@ export class RegisterDeviceComponent implements OnInit {
  pushDeviceOnArrays(imei: string){
 
 
-   var regDev = new Device(imei)
+   var regDev = new Device()
+	regDev.setDevice({imei: imei});
 
    regDev.registrationOk =   (Math.floor(Math.random()*3));
    regDev.regstatustooltip = this.setRegistrationToolTip(regDev.registrationOk);
@@ -55,7 +56,8 @@ export class RegisterDeviceComponent implements OnInit {
    this.newlyRegisteredDevices.push(regDev);
 
    if(regDev.registrationOk === 1){
-     var devicepush = new Device(imei);
+     var devicepush = new Device();
+	devicepush.setDevice({imei:imei});
      this.user.devices.push(devicepush);
    }
 

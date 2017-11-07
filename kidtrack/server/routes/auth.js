@@ -33,9 +33,30 @@ console.log('token', token);
            
           req.token = tokenInstance;
 
-          db.user.findByToken(token).then(function(resp){
+          db.user.findByToken(token).then(function(user){
 
-              res.status(200).json(resp.toPublicJSON());
+		console.log('USER find by token');
+		console.log(user);
+
+		db.device.findAll({where:{userId: user.id}}).then(function(devices){
+			console.log('Users');
+			console.log(devices);
+
+
+			user.dataValues.devices = devices;
+			
+			
+		       console.log(user);
+
+		
+			 res.status(200).json(user);
+
+                },function(err){
+
+
+		});
+
+                 
             },function(err){
 
              res.status(401).json(err);

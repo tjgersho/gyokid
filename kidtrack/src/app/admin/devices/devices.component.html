@@ -31,17 +31,42 @@
 </div>
 
 
-<div class="row" *ngFor="let dev of deviceArray">
-	<div class="col-xs-12" > 
 
-		<p style="text-align:center;"> 
+<h3>Devices:</h3>
 
-			{{dev.imei}} -- {{dev.sim}} <button class="btn btn-danger" (click)="onDevDelete(dev)"><span class="glyphicon glyphicon-remove"></span></button>
-
-		</p>
-
-	</div>
+<div class="styleTable">
+  <table>
+    <tr>
+      <td>Id</td>
+      <td>IMEI</td>
+      <td>SIM</td>
+      <td>Owner</td>
+      <td>Deregister</td>
+      <td>Last Updated</td>
+      <td>Added</td>
+      <td>Delete?</td>
+    </tr>
+    <tr *ngFor="let list of deviceArray">
+      <td>{{list.id}}</td>
+      <td>{{list.imei}}</td>
+      <td>{{list.sim}}</td>
+      <td> 
+        <input class="form-control" type="text" style="width:100px" [(ngModel)]="list.userId" (blur)="updateOwner(list)"/>
+      </td>
+      <td> 
+ 	 <button (click)="deregister(list.id)">Deregister</button>
+      </td>
+      <td>{{list.updatedAt | date}}</td>
+      <td>{{list.createdAt | date}}	</td>
+      <td>
+        <button (click)="deleteDevice(list.id)">Delete</button>
+      </td>
+    </tr>
+  </table>
 </div>
+
+
+
 
 <br />
 <br />

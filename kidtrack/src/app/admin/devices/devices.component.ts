@@ -48,8 +48,8 @@ export class DevicesComponent implements OnInit {
 
 	var dev = {imei: imei, sim: sim};
  
-   let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-             let options = new RequestOptions({ headers: headers });
+       let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+      let options = new RequestOptions({ headers: headers });
 
      let deviceUrl = '/api/v1/admin/device';
   
@@ -149,52 +149,74 @@ export class DevicesComponent implements OnInit {
  }
 
 
- updateDevice(dev){
+ updateOwner(dev){
+
+
+	console.log('Update owner  / exactly what happens when someone registers a device.. i.e. sequelize relation hookup');
+	console.log(dev);
 
   this.loading = true;
 
 	
+   let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+   let options = new RequestOptions({ headers: headers });
 
-              let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-             let options = new RequestOptions({ headers: headers });
+   let data = {userId: dev.userId};
 
-   let deviceUrl = '/api/v1/admin/device/'+dev.id;
-  
-     this.http.put(deviceUrl, dev, options).subscribe((response) => {
+     this.http.put('/api/v1/admin/device/'+dev.id, data, options).subscribe((response) => {
 
 			console.log('device array response');
 			console.log(response);
-			 		this.getDevices();
- 		 this.loading = false;
-
-
+		         this.getDevices();
+ 		        this.loading = false;
 	  },(err)=>{
-
   		this.loading = false;
+	 });
+            
 
+  }
+
+ deregister(id: number){
+
+	console.log('DeRegister device -- id: ');
+	console.log(id);
+
+	 this.loading = true;
+
+	
+   let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+   let options = new RequestOptions({ headers: headers });
+
+     let data = {id: id};
+
+     this.http.post('/api/v1/admin/device/'+id, data, options).subscribe((response) => {
+
+			console.log('device deregister response');
+			console.log(response);
+		         this.getDevices();
+ 		        this.loading = false;
+	  },(err)=>{
+  		this.loading = false;
 	 });
             
 
 
 
-  }
+
+ }
 
 
- onDevDelete(dev){
-
+ deleteDevice(id: number){
 
 	this.loading = true;
 
-	
+         let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+         let options = new RequestOptions({ headers: headers });
 
-              let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-             let options = new RequestOptions({ headers: headers });
-
-   let deviceUrl = '/api/v1/admin/device/'+dev.id;
   
-     this.http.delete(deviceUrl,  options).subscribe((response) => {
+     this.http.delete('/api/v1/admin/device/'+id,  options).subscribe((response) => {
 
-			console.log('device array response');
+			console.log('device delete response');
 			console.log(response);
 		       this.getDevices();
  		 this.loading = false;
