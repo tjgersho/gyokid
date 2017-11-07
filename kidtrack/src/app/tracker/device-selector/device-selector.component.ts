@@ -8,6 +8,8 @@ import { GlobalService } from '../../services/global.service';
 
 import { Router } from '@angular/router';
 
+import { DeviceService } from '../../services/device.service';
+
 
 @Component({
   selector: 'app-device-selector',
@@ -21,7 +23,7 @@ export class DeviceSelectorComponent implements OnInit {
 
   formCenter: number = 0;
 
-  constructor(private user: UserService, private global: GlobalService, private router: Router) { }
+  constructor(private user: UserService, private global: GlobalService, private router: Router, private deviceService: DeviceService) { }
 
   ngOnInit() {
 
@@ -52,10 +54,10 @@ export class DeviceSelectorComponent implements OnInit {
 	  console.log(tagVal);
 
 
-	  dev.watching = true;
+	  //dev.watching = true;
 	  dev.tag = tagVal;
 	
-	  this.user.deviceWatchingUpdate(dev);
+	  this.deviceService.updateWatching(dev, this.user.token);
 
   }
 
@@ -65,7 +67,7 @@ export class DeviceSelectorComponent implements OnInit {
         
         console.log(dev);
         //this.user.deviceWatchingUpdate(dev);
-	      dev.updateWatching();
+	      this.deviceService.updateWatching(dev, this.user.token);
 
      }
 

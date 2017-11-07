@@ -24,7 +24,8 @@ export class TrackerComponent implements OnInit {
   stateHover: string = ''
 
   showDeviceSelector: boolean = true;
-
+  runMap: boolean = false;
+  
   constructor(private user: UserService, private router:Router) {
 
 
@@ -39,18 +40,18 @@ export class TrackerComponent implements OnInit {
 
 	if(user.userHasTrakingDevices()){
 		this.showDeviceSelector = false;
-
+		this.runMap = true;
 		user.getAllDeviceGpsData();
+	}else{
+
+		this.showDeviceSelector = true;
+		this.runMap = false;
 	}
 
 	
    }
 
-  ngOnInit() {
-	
-
-
-  }
+  ngOnInit() {}
 
  	resetDeviceList(){
 	   console.log('Reset Device list');
@@ -74,12 +75,14 @@ export class TrackerComponent implements OnInit {
 
 
          this.showDeviceSelector = false;
+	 this.runMap = true;
        }
 	
        cancelDeviceSelection(obj){
          console.log('In tracker on cancel device select.');
 	 console.log(obj);
           this.showDeviceSelector = false;
+	   this.runMap = false;
 
       }
 

@@ -40,6 +40,8 @@ import { UserService } from './services/user.service';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AdminGuardService } from './services/admin-guard.service';
 import { GlobalService } from './services/global.service';
+import { DeviceService } from './services/device.service';
+
 
 
 import { MapComponent } from './tracker/map/map.component';
@@ -115,7 +117,7 @@ import { ViewEmailDirective } from './admin/email/view-email.directive';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [UserService, AuthGuardService, AdminGuardService, GlobalService],
+  providers: [UserService, AuthGuardService, AdminGuardService, GlobalService, DeviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

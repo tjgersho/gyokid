@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { DeviceService } from '../services/device.service';
 
 
 declare var jquery:any;
@@ -29,7 +30,7 @@ last_known_scroll_position:number = 0;
 ticking:boolean = false;
 navAffixed:boolean = true;
 
- constructor(private route: ActivatedRoute, private user: UserService, private router: Router){
+ constructor(private route: ActivatedRoute, private user: UserService, private router: Router, private deviceService: DeviceService){
 
 	route.url.subscribe((r) => {
 		console.log('Route subscribe in header Response');
@@ -142,8 +143,17 @@ devicesOn(){
 clearWatching(){
   for(var i=0; i<this.user.devices.length; i++){
 	this.user.devices[i].watching = false;
+	
        }
-	this.router.navigate(['/dashboard']);
+
+     this.deviceService.turnOffAllWatching(this.user.token).subscribe((resp)=> {
+		console.log('Header Clear watching');
+		console.log(resp);
+			this.router.navigate(['/dashboard']);
+
+	},(err)=>{}, () =>{});
+	
+
 }
 
 adjustNavBox() {

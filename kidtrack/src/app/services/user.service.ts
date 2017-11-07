@@ -5,6 +5,7 @@ import { Device } from '../models/device.model';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { Observer } from 'rxjs/Observer';
+import { DeviceService } from './device.service';
 
 
 @Injectable()
@@ -21,7 +22,7 @@ export class UserService {
 
 
 
-  constructor(private router: Router, private http: Http) {
+  constructor(private router: Router, private http: Http, private deviceService: DeviceService) {
 
 	var self = this;
 
@@ -129,7 +130,15 @@ export class UserService {
 
 	for(var i=0; i<userData.devices.length; i++){
 		let dev = new Device();
-		dev.setDevice({imei: userData.devices[i].imei});
+		dev.imei = userData.devices[i].imei;
+		dev.id = userData.devices[i].id;
+	        dev.alarm = userData.devices[i].alarm;
+   		dev.watching = userData.devices[i].watching;
+		dev.sim = userData.devices[i].sim;
+		dev.tag = userData.devices[i].tag;
+ 
+
+
 		deviceArray.push(dev);	
         }
 	
@@ -178,7 +187,7 @@ export class UserService {
 	console.log(this.devices.length);
 
 	for (let dev of this.devices){
-		dev.getGpsData();
+		this.deviceService.getGpsData(dev, this.token);
 
 	}
   }
@@ -278,20 +287,6 @@ export class UserService {
     //Destroy Token on server
   }
 
-
-  deviceWatchingUpdate(dev: Device){
-	
-	 //http sever update device watching  and tag..
-
-	for(var i=0; i<this.devices.length; i++){
-		if(this.devices[i].imei === dev.imei){
-			this.devices[i].watching = dev.watching;
-			this.devices[i].tag = dev.tag;
-		}
-	}
-
-
-  }
 
   userHasAvailableDevices(){
 	

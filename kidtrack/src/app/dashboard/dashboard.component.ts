@@ -8,6 +8,8 @@ import { TruncatePipe } from '../truncate.pipe';
 
 import { Device } from '../models/device.model';
 
+import { DeviceService } from '../services/device.service';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -19,7 +21,7 @@ export class DashboardComponent implements OnInit {
   regDeviceAccordOpen: boolean = true;
   dataCredAccordOpen: boolean = true;
 
-  constructor(private user: UserService, private global: GlobalService) {
+  constructor(private user: UserService, private global: GlobalService, private deviceService: DeviceService) {
 		if(user.pingCredits < 1){
 			this.regDeviceAccordOpen = false;
 		}
@@ -94,12 +96,12 @@ export class DashboardComponent implements OnInit {
 	console.log('ON device tag change, input blur');
 	console.log(dev);
 	///Update Model////
-	dev.updateTag();
+	this.deviceService.updateTag(dev, this.user.token);
 	
  }
 
  onTrackStatusToggle(dev: Device){
-	dev.updateWatching();
+	this.deviceService.updateWatching(dev, this.user.token);
 
 
  }

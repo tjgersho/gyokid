@@ -96,6 +96,77 @@ var body = _.pick(req.body, 'tag', 'watching');
 
 
 
+/////Device Update watching & tag.....
+
+router.put('/devices',  [bodyParser.json(), middleware.requireAuthentication],  function(req, res){
+
+var usr = req.user;
+
+var body = _.pick(req.body, 'watching');
+///Some Validation on the post.
+
+  var attributes = {};
+
+
+
+ 
+
+
+   if (body.hasOwnProperty('watching')) {
+    attributes.watching = body.watching;
+  }
+
+
+  
+ console.log('in device update.');
+
+  console.log(attributes);
+
+
+
+  db.device.findAll({where: {userId: usr.id}}).then(function(devices) {
+	 if (!!devices) {
+
+	var results = [];
+	var promises =    devices.map(function(device){
+
+		return device.update(attributes).then(function(d){
+
+			console.log('Device was updated');
+			console.log(d);
+			results.push(d);
+			
+			
+			},function(err){
+			results.push(err);
+		
+			});
+
+            });
+
+
+		return Promise.all(promises).then(function(resp){
+				console.log('All promises resp');
+				console.log(resp);
+				res.status(200).send(results);
+
+			});
+			
+
+		
+
+          } else {
+            res.status(404).send();
+          }
+           }, function() {
+            res.status(500).send();
+          });
+
+
+
+});
+
+
 
 
 
