@@ -2,36 +2,52 @@
 
 <div class="container">
 
-<div style="position: relative; margin-top: 15px; margin-bottom:30px;">
-<div class="row">
-  <div class="col-xs-10 col-sm-8 col-md-6 col-xs-offset-1 col-sm-offset-2 col-md-offset-3">
-   <div class="formCard">
+ <div style="position: relative; margin-top: 15px; margin-bottom:30px;">
+  <div class="row">
+   <div class="col-xs-12 col-sm-10 col-md-8 col-xs-offset-0 col-sm-offset-1 col-md-offset-2">
+    <div class="formCard">
 
 	<h3> Register Devices </h3>
-      <div class="form-group">
-        <label for="imei">IMEI #:</label>
+       <form action="" class="form-inline">
 
-     <div class="input-group">
-    <input type="text" id="imei" name="imei" [(ngModel)]="imeinumber" class="form-control"/>
-    <div class="input-group-btn">
-      <button class="btn btn-default" (click)="addToDeviceRegistration()" [disabled]="imeinumber === '' || imeinumber.length < 15">
-        <i class="glyphicon glyphicon-plus"></i>
-      </button>
-    </div>
-  </div>
+       <div class="input-group">
+     
+          <span class="input-group-addon">IMEI #:</span>
+   
+      
+           <input type="text" id="imei" name="imei" [(ngModel)]="imeinumber"  class="form-control" placeholder="IMEI #">
+        
+        </div>
+        
+          <div class="input-group">
+            <span class="input-group-addon">KTC #:</span>
+            <input type="text" id="ktc" name="ktc"  class="form-control"  [(ngModel)]="ktc"  placeholder="KTC">   
+  
+            <div class="input-group-btn">
+             <button class="btn btn-default" (click)="addToDeviceRegistration()" [disabled]="registerFormOk()">
+                 <i class="glyphicon glyphicon-plus"></i>
+             </button>
+           </div>
+         </div>
+
+   </form>
+
 	<br />
    <div class="form-group">
         <button class="btn" (click)="uploadCSV()">Upload CSV <span class="glyphicon glyphicon-upload"></span></button>
               <a class="btn pull-right" routerLink="/dashboard"><-Dashboard</a>
    </div>
-      </div>
-      <div class="clr"></div>
+
+        <div class="clr"></div>
+
+    </div>
+    
 
   </div>
  </div>
 </div>
 
-</div>
+
 
 
 <div class="row" *ngFor="let newdev of newlyRegisteredDevices;">
@@ -48,9 +64,10 @@
 </div>
 
 
-  
 
-</div>
+</div>  
+
+
 <br />
 <br />
 <br />

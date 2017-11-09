@@ -265,7 +265,10 @@ export class UserService {
       this.isAdmin = false;
       this.router.navigate(['/']);
       localStorage.removeItem('token');
- 
+
+       this.clearWatchingObservable().subscribe((resp)=>{
+ 		console.log('Logout clear watching then logout');
+		console.log(resp);
        let headers = new Headers({ 'Content-Type': 'application/json' , Auth: this.token});
        let options = new RequestOptions({ headers: headers });
 
@@ -283,6 +286,13 @@ export class UserService {
 		}, () => {
 		    console.log('logout endpoint subscribe complete');
 			});
+
+
+     },(err)=>{		
+		console.log('Logout clear watching then logoutERR');
+		console.log(err);
+
+     }, () => {});
 
     //Destroy Token on server
   }
@@ -308,6 +318,33 @@ export class UserService {
 		}
 	}
      return false;
+
+  }
+
+
+ clearWatching(){
+  for(var i=0; i<this.devices.length; i++){
+	this.devices[i].watching = false;
+	
+       }
+
+       this.deviceService.turnOffAllWatching(this.token).subscribe((resp)=> {
+		console.log('Header Clear watching');
+		console.log(resp);
+			this.router.navigate(['/dashboard']);
+
+	},(err)=>{}, () =>{});
+	
+
+  }
+
+  clearWatchingObservable(){
+  for(var i=0; i<this.devices.length; i++){
+	this.devices[i].watching = false;
+	
+       }
+
+      return  this.deviceService.turnOffAllWatching(this.token);
 
   }
 

@@ -25,7 +25,6 @@ import { ContactComponent } from './contact/contact.component';
 //////Element Components//////
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
-import { DeviceComponent } from './device/device.component';
 import { DeviceSelectorComponent } from './tracker/device-selector/device-selector.component';
 
 
@@ -83,7 +82,6 @@ import { ViewEmailDirective } from './admin/email/view-email.directive';
     TrackerComponent,
     FooterComponent,
     IndexComponent,
-    DeviceComponent,
     DeviceSelectorComponent,
     RegisterComponent,
     LoginComponent,

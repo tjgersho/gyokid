@@ -48,14 +48,12 @@ export class DeviceSelectorComponent implements OnInit {
   }
 
 
-  onDeviceSelected(dev, tagVal, index){
+  onDeviceSelected(dev){
 
     console.log('onDevice Select');
-	  console.log(tagVal);
+	  console.log(dev.tag);
 
 
-	  //dev.watching = true;
-	  dev.tag = tagVal;
 	
 	  this.deviceService.updateWatching(dev, this.user.token);
 

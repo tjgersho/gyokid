@@ -20,6 +20,7 @@ export class RegisterDeviceComponent implements OnInit {
   
   newlyRegisteredDevices: Device[] = [];
   imeinumber:string = '';
+  ktc: string = ""
   regstatustooltip: string = '';
   constructor(private router: Router, private user: UserService) { }
 
@@ -76,6 +77,12 @@ export class RegisterDeviceComponent implements OnInit {
 
   }
 
+registerFormOk(){
+
+ return this.imeinumber === '' || this.imeinumber.length < 15 || this.ktc.length !== 3;
+
+}
+ 
   
 
  getDevRegistrationStatusImage(dev: Device){	

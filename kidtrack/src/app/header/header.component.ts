@@ -128,33 +128,9 @@ ngOnInit(){
 
 }
 
-devicesOn(){
-    var devOn = false;
-  for(var i=0; i<this.user.devices.length; i++){
 
-      if(this.user.devices[i].watching){
-        devOn = true;
-      }
-  }
 
-    return devOn;
-}
 
-clearWatching(){
-  for(var i=0; i<this.user.devices.length; i++){
-	this.user.devices[i].watching = false;
-	
-       }
-
-     this.deviceService.turnOffAllWatching(this.user.token).subscribe((resp)=> {
-		console.log('Header Clear watching');
-		console.log(resp);
-			this.router.navigate(['/dashboard']);
-
-	},(err)=>{}, () =>{});
-	
-
-}
 
 adjustNavBox() {
     console.log('AjustingNavBox...');

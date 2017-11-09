@@ -69,9 +69,9 @@
       </a>
     </div>
 
-   <div [ngStyle]="{'display': devicesOn()?'block':'none'}" style="width:90px; height:30px; position:absolute; left: 180px; top:8px;">
-     <img src="assets/datause.png" style="width:30px; height:30px;" data-toggle="tooltip" data-placement="bottom" title="Device tracking on and using data!"/>
-     <button class="btn btn-xs btn-warning pull-right" style="margin-top:4px;" (click)="clearWatching()" data-toggle="tooltip" data-placement="bottom" title="Turn off all device tracking!">
+   <div [ngStyle]="{'display': user.userHasTrakingDevices()?'block':'none'}" style="width:90px; height:30px; position:absolute; left: 180px; top:8px;">
+     <a routerLink="/tracker"><img src="assets/datause.png" style="width:30px; height:30px;" data-toggle="tooltip" data-placement="bottom" title="Device tracking on and using data!"/></a>
+     <button class="btn btn-xs btn-warning pull-right" style="margin-top:4px;" (click)="user.clearWatching()" data-toggle="tooltip" data-placement="bottom" title="Turn off all device tracking!">
 	<span style="color:red;"  class="glyphicon glyphicon-off"></span>
      </button>
    </div>
