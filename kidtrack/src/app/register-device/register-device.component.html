@@ -8,29 +8,30 @@
     <div class="formCard">
 
 	<h3> Register Devices </h3>
-       <form action="" class="form-inline">
 
+         <div class="input-group">
        <div class="input-group">
      
-          <span class="input-group-addon">IMEI #:</span>
+          <span class="input-group-addon"  style="width:82px;">IMEI #:</span>
    
       
-           <input type="text" id="imei" name="imei" [(ngModel)]="imeinumber"  class="form-control" placeholder="IMEI #">
+           <input type="text"  [(ngModel)]="imeinumber"  class="form-control" placeholder="IMEI #">
         
         </div>
         
           <div class="input-group">
-            <span class="input-group-addon">KTC #:</span>
-            <input type="text" id="ktc" name="ktc"  class="form-control"  [(ngModel)]="ktc"  placeholder="KTC">   
+            <span class="input-group-addon" style="width:82px;">KTC #:</span>
+            <input type="text"  class="form-control"  [(ngModel)]="ktcnumber"  placeholder="KTC" style="max-width:75px;">   
   
-            <div class="input-group-btn">
+            
+         </div>
+        <div class="input-group-btn">
              <button class="btn btn-default" (click)="addToDeviceRegistration()" [disabled]="registerFormOk()">
                  <i class="glyphicon glyphicon-plus"></i>
              </button>
            </div>
          </div>
 
-   </form>
 
 	<br />
    <div class="form-group">

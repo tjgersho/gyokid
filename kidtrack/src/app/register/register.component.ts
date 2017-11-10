@@ -34,7 +34,7 @@ export class RegisterComponent implements OnInit {
   }
 
   calculateFormCenter(){
-	var offset = (this.global.screenHeight-430)/2 - 100;
+	var offset = (this.global.screenHeight-430)/2 - 120;
 	if(offset < 0){
 		offset = 0;
          }

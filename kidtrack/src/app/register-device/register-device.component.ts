@@ -3,6 +3,8 @@ import { Device } from '../models/device.model';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { Http, RequestOptions, Headers } from '@angular/http';
+
 import { UserService } from '../services/user.service';
 
 declare var jquery:any;
@@ -20,9 +22,9 @@ export class RegisterDeviceComponent implements OnInit {
   
   newlyRegisteredDevices: Device[] = [];
   imeinumber:string = '';
-  ktc: string = ""
+  ktcnumber: string = ""
   regstatustooltip: string = '';
-  constructor(private router: Router, private user: UserService) { }
+  constructor(private router: Router, private user: UserService, private http: Http) { }
 
   ngOnInit() {
  
@@ -34,7 +36,7 @@ export class RegisterDeviceComponent implements OnInit {
     return "Checking the registration... Please wait.";
 
   }else if(status === 1){
-     return "Registration Successfull! Device should now be available for tracking.";
+     return "Registration Successfull! Device is now be available for tracking. Make sure your device is turned on.";
 
   }else{
      return "Registration Failed. Double check your IMEI number.  You can also only register a device once.";
@@ -42,44 +44,85 @@ export class RegisterDeviceComponent implements OnInit {
   }
 
   refreshToolTip(){
-        $('[data-toggle="tooltip"]').tooltip();
+	setTimeout(function(){
+   		 $('[data-toggle="tooltip"]').tooltip();
+
+	},1000);
+    
   }
 
- pushDeviceOnArrays(imei: string){
 
+ pushDeviceOnArrays(imei: string){
 
    var regDev = new Device()
 	regDev.imei = imei;
 
-   regDev.registrationOk =   (Math.floor(Math.random()*3));
-   regDev.regstatustooltip = this.setRegistrationToolTip(regDev.registrationOk);
+   regDev.registrationOk = 0;
+
+   regDev.regstatustooltip = this.setRegistrationToolTip(0);
 
    this.newlyRegisteredDevices.push(regDev);
+   
+   return this.newlyRegisteredDevices.length-1;
 
-   if(regDev.registrationOk === 1){
-     var devicepush = new Device();
-	devicepush.imei = imei;
-     this.user.devices.push(devicepush);
-   }
+ }
 
-   var self = this;
-   setTimeout(function(){
-     self.refreshToolTip();
-   }, 200);
+
+ callServerForRegistration(imei: string, ktc: string){
+
+  var regStatus = 0;
+ 	
+     var index = this.pushDeviceOnArrays(imei);
+
+     let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+     let options = new RequestOptions({ headers: headers });
+
+	var data = {imei: imei, ktc: ktc};
+
+	this.http.post('/api/v1/register-device', data, options).subscribe((resp) => {
+		console.log('Device Registration Resp');
+		console.log(resp);
+
+		this.newlyRegisteredDevices[index].registrationOk = 1;
+		this.newlyRegisteredDevices[index].regstatustooltip = this.setRegistrationToolTip(1);
+ 	this.refreshToolTip()
+
+	},(err)=>{ 
+
+ 		console.log('Device Registration Resp ERR');
+		console.log(err);
+		
+		this.newlyRegisteredDevices[index].registrationOk = 2;
+		this.newlyRegisteredDevices[index].regstatustooltip = this.setRegistrationToolTip(2);
+             this.refreshToolTip()
+
+	},() => {
+
+		console.log('Device Registration DONE');
+		
+
+	});
+
+     this.refreshToolTip();
+
  }
 
  addToDeviceRegistration(){
 
 	console.log('imei..');
 	console.log(this.imeinumber);
- 
-  this.pushDeviceOnArrays(this.imeinumber);
+	console.log(this.ktcnumber);
 
+	this.callServerForRegistration(this.imeinumber, this.ktcnumber);
+
+    
   }
+
+
 
 registerFormOk(){
 
- return this.imeinumber === '' || this.imeinumber.length < 15 || this.ktc.length !== 3;
+ return this.imeinumber === '' || this.imeinumber.length < 15 || this.ktcnumber.length !== 3;
 
 }
  
@@ -147,7 +190,18 @@ getDevRegistrationWordClass(dev: Device){
 	
 		console.log(imeiarray);
 		  for(var i=0; i<imeiarray.length; i++){
-        self.pushDeviceOnArrays(imeiarray[i]);
+
+			var imeiandktc = imeiarray[i].split(',');
+			console.log('IMEI');
+			console.log(imeiandktc[0]);
+			console.log('KTC');
+			console.log(imeiandktc[1]);
+
+
+			self.callServerForRegistration(imeiandktc[0], imeiandktc[1].substring(0, 3));
+
+
+
 		  }
 
         };

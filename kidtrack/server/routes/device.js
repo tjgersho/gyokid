@@ -8,27 +8,6 @@ var bodyParser = require('body-parser');
 
 
 
-/////Device Registration.....
-router.post('/device', [bodyParser.json(), middleware.requireAuthentication],  function(req, res){
-
-
-var body = _.pick(req.body, 'imei');
-
-  console.log("create Device");
-  console.log(body);
-
-  db.device.create(body).then(function(device) {
-    if (!!device) {
-             res.json(device);
-         } else {
-             res.status(404).send();
-    }
-  }, function() {
-    res.status(500).send();
-  });
-
-});
-
 
 
 /////Device Update watching & tag.....
@@ -135,10 +114,12 @@ var body = _.pick(req.body, 'watching');
 			console.log('Device was updated');
 			console.log(d);
 			results.push(d);
-			
+			return 1;
+
 			
 			},function(err){
 			results.push(err);
+			return 0;
 		
 			});
 
@@ -163,6 +144,44 @@ var body = _.pick(req.body, 'watching');
           });
 
 
+
+});
+
+
+
+/////Device Registration.....
+router.post('/register-device', [bodyParser.json(), middleware.requireAuthentication],  function(req, res){
+
+
+var body = _.pick(req.body, 'imei', 'ktc');
+
+var usr = req.user;
+
+console.log('USER in device registration');
+	console.log(usr.id);
+
+
+  console.log("Find  Device for user registration");
+  console.log(body);
+
+  db.device.find({where: {imei: body.imei, ktc: body.ktc}}).then(function(device) {
+
+    if (!!device && !device.userId) {
+
+         console.log('Device Found...');
+	console.log(device.imei, device.userId);
+
+	     device.setUser(usr);
+
+             res.json(device);
+
+         } else {
+
+             res.status(404).send();
+    }
+  }, function() {
+    res.status(500).send();
+  });
 
 });
 

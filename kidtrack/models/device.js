@@ -9,6 +9,10 @@ return sequelize.define('device', {
 		type: DataTypes.STRING,
 		allowNull: true
 	},
+	ktc: {
+		type: DataTypes.STRING,
+		allowNull: true
+	},
 	interval: {
 		type: DataTypes.INTEGER,  
 		allowNull: false,

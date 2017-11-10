@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   calculateFormCenter(){
-	var offset = (this.global.screenHeight-300)/2 - 70;
+	var offset = (this.global.screenHeight-300)/2 - 110;
 	if(offset < 0){
 		offset = 0;
          }
