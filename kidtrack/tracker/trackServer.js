@@ -125,12 +125,31 @@ function logData(m){
  console.log(latitude);
  console.log(longitude);
 
- db.gps.create({imei: imei, lat: latitude, lon: longitude}).then(function(gps){
-   console.log('Created a gps data point!');
-   console.log(gps.id);
- }, function(err){
-   console.log('Oops there was an error creating the gps database entry');
- });
+   db.device.find({where:{imei:imei}}).then(function(dev){
+       
+
+      db.gps.create({imei: imei, lat: latitude, lon: longitude}).then(function(gps){
+         console.log('Created a gps data point!');
+         console.log(gps.id);
+
+
+	      console.log('Found Running Device to update that the command has been found.')
+	  console.log(dev.id);
+
+
+          gps.setDevice(dev);
+
+       }, function(err){
+          console.log('Oops there was an error creating the gps database entry');
+       });
+
+
+
+
+  },function(err){
+     console.log('COuld not confirm the cmd timestamp!');
+     console.log(err);
+  });
 
 
 }

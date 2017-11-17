@@ -188,6 +188,74 @@ console.log('USER in device registration');
 
 
 
+/////Device Registration.....
+router.get('/device/:id',  [middleware.requireAuthentication],  function(req, res){
+
+var usr = req.user;
+
+var deviceId = parseInt(req.params.id, 10);
+
+  
+ console.log('in GET Device GPS data');
+  console.log(deviceId);
+
+console.log('User id');
+	console.log(usr.id);
+
+
+
+
+
+  db.device.findById(deviceId).then(function(device) {
+
+	console.log('Found device for get GPS data');
+	console.log(device.id);
+	console.log('Device user id');
+	console.log(device.userId);
+	
+	 if (!!device && device.userId === usr.id) {
+
+			db.gps.findAll({
+				where: {deviceId: device.id}, 
+				order: [
+   					 ['createdAt', 'DESC']
+				],
+				limit: 10 
+				}).then(function(gpsData){
+					console.log('GPS Data');
+					console.log(gpsData);
+
+			        	res.status(200).send(gpsData);
+				
+
+				},function(err){
+				  console.log('ERR getting GPS Data'); 
+				  console.log(err);
+				  res.status(404).send([]);  
+				 
+				});
+
+			 } else {
+                            res.status(404).send([]);
+                     }
+			
+			
+
+		},function(err){
+
+			console.log("Find Device to get GPS data by Err");
+			console.log(err);
+			 res.status(404).send([]);
+
+		});
+ 
+
+
+});
+
+
+
+
 
 
 module.exports = router;

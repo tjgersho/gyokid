@@ -58,7 +58,7 @@
 		<div class="col-xs-8">
 
 		   <button (click)="onDeviceSelected(dev)" class="btn btn-default btn-lg btn-block" [disabled]="user.cellularCredits < 1">
- 			Device: {{ dev.shortImei }}
+ 			Device: {{ dev.imei | truncate}}
 		   </button>
 
                 </div>

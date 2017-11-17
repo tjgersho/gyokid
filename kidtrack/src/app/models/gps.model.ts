@@ -1,9 +1,9 @@
 export class Gps {
 
   timestamp: string;
-  location: object;
+  location: {lat:number, lng: number};
 
-  constructor(timestamp: string, location: object) { 
+  constructor(timestamp: string, location: {lat:number, lng: number}) { 
 	this.timestamp = timestamp;
 	this.location = location;
 	
