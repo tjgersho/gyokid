@@ -217,6 +217,8 @@ export class MapComponent implements OnInit {
 
 
  	 marker.addListener('click', function(){
+		console.log('This in the listener');
+		console.log(this);
 		
   		 if (marker.getAnimation() !== null) {
      		     marker.setAnimation(null);
