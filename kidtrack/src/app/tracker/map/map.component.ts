@@ -219,7 +219,7 @@ export class MapComponent implements OnInit {
  	 marker.addListener('click', function(){
 		console.log('This in the listener');
 		console.log(this);
-		
+
   		 if (marker.getAnimation() !== null) {
      		     marker.setAnimation(null);
    		 } else {
@@ -231,7 +231,7 @@ export class MapComponent implements OnInit {
 		  infowindow.open(self.map, marker);
 
 		 }
-            });
+            }.bind(devices[i]));
 
 	    this.markers.push(marker);
 
