@@ -231,7 +231,7 @@ export class MapComponent implements OnInit {
 		  infowindow.open(self.map, marker);
 
 		 }
-            }.bind(devices[i]));
+            }.bind(this.user.devices[i]));
 
 	    this.markers.push(marker);
 
