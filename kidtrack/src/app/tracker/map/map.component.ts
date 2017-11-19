@@ -189,6 +189,8 @@ export class MapComponent implements OnInit {
 
    initializeMarkers(){
 
+   	var self = this;
+
 	console.log('Draw Markers..');
 	console.log(this);
 
@@ -222,9 +224,9 @@ export class MapComponent implements OnInit {
    		     marker.setAnimation(google.maps.Animation.BOUNCE);
     		 }
 
-		if(this.user.devices[i].tag !== null && this.user.devices[i].tag !== undefined  && this.user.devices[i].tag !== ''){
+		if(self.user.devices[i].tag !== null && self.user.devices[i].tag !== undefined  && self.user.devices[i].tag !== ''){
 	
-		  infowindow.open(this.map, marker);
+		  infowindow.open(self.map, marker);
 
 		 }
             });
