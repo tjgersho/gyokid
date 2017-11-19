@@ -217,16 +217,14 @@ export class MapComponent implements OnInit {
 
 
  	 marker.addListener('click', function(){
-		console.log('This in the listener');
-		console.log(this);
-
+ 	 	// This here is each device associated with this marker.. from the function binding..
   		 if (marker.getAnimation() !== null) {
      		     marker.setAnimation(null);
    		 } else {
    		     marker.setAnimation(google.maps.Animation.BOUNCE);
     		 }
 
-		if(self.user.devices[i].tag !== null && self.user.devices[i].tag !== undefined  && self.user.devices[i].tag !== ''){
+		if(this.tag !== null && this.tag !== undefined  && this.tag !== ''){
 	
 		  infowindow.open(self.map, marker);
 
