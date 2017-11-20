@@ -28,7 +28,18 @@ function getTime(){
 
 function isValidClient(dataArray){
 
- return true;
+ console.log("Is Valid Client");
+ console.log(dataArray);
+
+ if(dataArray[0] === '*HQ'){
+
+    return true;
+
+	}else{
+ 
+    return false;
+
+  }
      
 }
 
@@ -139,6 +150,10 @@ function logData(m){
 
           gps.setDevice(dev);
 
+	  //Update users data credtis..!!!!
+
+
+
        }, function(err){
           console.log('Oops there was an error creating the gps database entry');
        });
@@ -189,6 +204,8 @@ function getRunningDevCmd(dev){
 
 	console.log('Last Cmd');
 	console.log(dev.lastCmd);
+
+  
 	
   if(dev.watching){
 
@@ -299,6 +316,13 @@ function sendCmds(cmd, client){
     });
 
   break;
+  case "initializeDevice": // Reset the device..
+
+
+    client.write("*HQ,11111111111,R1,"+getTimeString+"#");
+
+    
+  break;
   case "setLanguage": // Reset the device..
 
 
@@ -324,7 +348,23 @@ function sendCmds(cmd, client){
         db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
-        updateGpsDev(dev,{interval: 200, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false, lastCmd: "setToSleep"});
+        updateGpsDev(dev,{interval: 100, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false, lastCmd: "setToSleep"});
+
+    },function(err){
+        console.log('Couldnt find dev to update time cmd');
+        console.log(err);
+        
+    });
+
+  break;
+  case "shutDownDevice":  // Put device to sleep..
+
+    
+    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",500#");
+        db.device.find({where:{imei: client.imei}}).then(function(dev){
+        console.log('found device to update the time cmd sent');
+        console.log(dev.imei);
+        updateGpsDev(dev,{interval: 500, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false, lastCmd: "shutDownDevice"});
 
     },function(err){
         console.log('Couldnt find dev to update time cmd');
@@ -367,6 +407,7 @@ const server = net.createServer((socc) => {
 
 	console.log(socc.id);
 
+   sendCmds("initializeDevice", socc);
 
   socc.on('data', (data) => {
 
@@ -414,9 +455,30 @@ const server = net.createServer((socc) => {
 
    
   
+	//Check if the user has credits to log this data.. otherwise .. send cmd to shut down device..
+
+	db.device.find({where:{imei: imei}, include: [{model: db.user}]}).then(function(dev){
+
+		console.log('Device to check if user has credits');
+		console.log(dev.user.pingCredits);
+
+		if(dev.user.pingCredits > 0) {
+
+			dev.user.update({pingCredits: dev.user.pingCredits-1});
+
+		         logData(message);
+		
+		}else{
+			
+			sendCmds("shutDownDevice", socc);
+		      dev.update({watching: false});
+                      dev.user.update({pingCredits: dev.user.pingCredits-1});
+		}
+        },function(err){
 
 
-        logData(message);
+        });
+     
 
 
      }else{
@@ -484,7 +546,7 @@ function removeClient(soc){
 function getGpsDev(imei){
 
   return new Promise(function(resolve, reject){
-	db.device.find({where: {imei: imei}}).then(function(dev){
+	db.device.find({where: {imei: imei}, include:[{model: db.user}]}).then(function(dev){
 		console.log("Found Device in DB");
 		resolve(dev);
         },function(err){
@@ -516,8 +578,13 @@ function runCmds(client){
 	console.log(client.imei);
 
 	getGpsDev(client.imei).then(function(dev){
-			
-	 console.log(dev.id);
+	 console.log('Device in runCmds');
+	console.log(dev.id);
+	console.log('Dev user ping Credits');
+	console.log(dev.user.pingCredits);
+
+	if(dev.user.pingCredits > 0) {
+
 
             var command = getRunningDevCmd(dev);
 
@@ -526,6 +593,7 @@ function runCmds(client){
 	
 		sendCmds(command, client);
 
+	}
 
             	 
         },function(err){

@@ -188,7 +188,7 @@ console.log('USER in device registration');
 
 
 
-/////Device Registration.....
+/////Device GPS.......
 router.get('/device/:id',  [middleware.requireAuthentication],  function(req, res){
 
 var usr = req.user;
@@ -253,6 +253,96 @@ console.log('User id');
 
 });
 
+
+
+
+/////Get All user Device GPS.......
+router.post('/allGpsData',  [bodyParser.json(), middleware.requireAuthentication],  function(req, res){
+
+ var usr = req.user;
+
+ var deviceIDArr = _.pick(req.body, 'devArry');
+ console.log(deviceIDArr);
+
+
+  
+ console.log('in GET Device GPS data');
+
+console.log('User id');
+	console.log(usr.id);
+
+
+var results = [];
+
+ var promises = deviceIDArr.devArry.map(function(devId){
+	
+	console.log('Device Id in map function');
+	console.log(devId);
+
+	return  db.device.findById(devId).then(function(device) {
+
+	console.log('Found device for get GPS data');
+	console.log(device.id);
+	console.log('Device user id');
+	console.log(device.userId);
+	
+	              if (!!device && device.userId === usr.id) {
+
+			  return db.gps.findAll({
+				where: {deviceId: device.id}, 
+				order: [
+   					 ['createdAt', 'DESC']
+				],
+				limit: 10 
+				}).then(function(gpsData){
+					console.log('GPS Data');
+					console.log(gpsData);
+
+
+
+					results.push({'devId': device.id, gpsData: gpsData});
+
+					return 1;
+				});
+
+			     }else{
+			           result.push('FAIL');
+                                   return Promise.resolve();
+					return 0;
+			     }
+                          
+                         }).catch(function(err){
+
+                                   result.push('FAIL');
+                                   return Promise.resolve();
+
+				  return 0;
+
+			});
+
+
+        });  // map function
+
+	console.log('Promises');
+	console.log(promises);
+
+
+        return Promise.all(promises).then(function(resp){
+				console.log('All promises resp');
+				console.log(resp);
+
+				console.log('Results');
+				console.log(results);
+
+				res.status(200).send(results);
+
+			});
+
+ 	
+ 
+
+
+});
 
 
 

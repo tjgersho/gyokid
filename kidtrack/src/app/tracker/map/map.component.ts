@@ -40,22 +40,30 @@ export class MapComponent implements OnInit {
           center: {lat: 40, lng: -50}
         });
 
-
    this.initializeMap().then(function(resp){
+	console.log('Self. Timer');
+	console.log(self.timer);
+
+     if(!self.timer){
+	
+
+     
+
+       self.timer = setInterval(()=>{
+
+           self.gameloop();
+  
+         },10000);
 
 
-     self.timer = setInterval(()=>{
-
-        self.gameloop();
-
-     },10000);
+      }
 
 
 	setTimeout(()=>{
 
       		  self.zoomInOnAverage();
 
-            },2000);
+            },1000);
 
 	
 
@@ -71,12 +79,14 @@ export class MapComponent implements OnInit {
 
   }
 
+
+
   initializeMap(){
 	var self = this;
 
 	return new Promise(function(resolve, reject){
 
-		self.deviceService.getGpsData(self.user.devices[0], self.user.token).then(function(resp){
+		self.deviceService.getGpsData(self.user.devices, self.user.token).then(function(resp){
 			console.log('Got GPS data.');
 			console.log(resp);
 
@@ -107,7 +117,7 @@ export class MapComponent implements OnInit {
 
 	this.watchingCount = 0;
 	for(var i=0; i< this.user.devices.length; i++){
-		if(this.user.devices[i].watching){
+		if(this.user.devices[i].watching && this.user.devices[i].gpsdata[0]){
 			
 			console.log(this.user.devices[i].tag);
 			console.log(this.user.devices[i].gpsdata[0].location.lat);
@@ -182,6 +192,8 @@ export class MapComponent implements OnInit {
 		  break;
 		}
 	}
+		console.log('New Zoom');
+		console.log(newZoom);
 
 	 this.map.setZoom(newZoom);
 
@@ -195,10 +207,11 @@ export class MapComponent implements OnInit {
 	console.log(this);
 
 	for( var i=0; i<this.user.devices.length; i++){
-	 if(this.user.devices[i].watching){
+	 if(this.user.devices[i].watching && this.user.devices[i].gpsdata[0]){
 	
 	if(this.user.devices[0].tag !== null && this.user.devices[0].tag !== undefined  && this.user.devices[0].tag !== ''){
-	  var deviceTag = '<p>' + this.user.devices[i].tag + '</p>';
+	  var deviceTag = '<p style="text-align:center;"><b>' + this.user.devices[i].tag + '</b></p>';
+	
 	   deviceTag += '<p>' + this.user.devices[i].gpsdata[0].timestamp + '</p>';
 	  var infowindow = new google.maps.InfoWindow({content: deviceTag});
 
@@ -222,6 +235,9 @@ export class MapComponent implements OnInit {
      		     marker.setAnimation(null);
    		 } else {
    		     marker.setAnimation(google.maps.Animation.BOUNCE);
+		      setTimeout(function(){
+				 marker.setAnimation(null);
+			},2000);
     		 }
 
 		if(this.tag !== null && this.tag !== undefined  && this.tag !== ''){
@@ -231,7 +247,7 @@ export class MapComponent implements OnInit {
 		 }
             }.bind(this.user.devices[i]));
 
-	    this.markers.push(marker);
+	    this.markers.push({deviceId: this.user.devices[i].id, marker: marker, infowindow: infowindow});
 
 
 	  } //Is watching..
@@ -241,12 +257,59 @@ export class MapComponent implements OnInit {
    }
   
 
+
+
+
   gameloop(){
 	console.log('GAME LOOP');
+	var self = this;
+	var watchingArray = [];
+	for(var j=0; j<this.user.devices.length; j++){
 
-  //  var newLocationTest = this.deviceService.resetGpsDataZeroforTest(); 
-   // this.marker.setPosition(newLocationTest);
-   // this.map.setCenter(newLocationTest);
+		if(this.user.devices[j].watching){
+			watchingArray.push(this.user.devices[j]);
+		}
+	}
+	this.deviceService.getGpsData(watchingArray, self.user.token).then(function(resp){
+			console.log('Got GPS data.');
+			console.log(resp);
+        	
+		for(var k=0; k<self.user.devices.length; k++){
+		 if(self.user.devices[k].watching){
+
+		  for(var i=0; i<self.markers.length; i++){
+			  console.log('Markers id');
+			 console.log(self.markers[i].deviceId);
+			  console.log('self.user.devices[k].id');
+		         console.log(self.user.devices[k].id);
+			    if(self.markers[i].deviceId === self.user.devices[k].id){
+
+				self.markers[i].marker.setPosition(self.user.devices[k].gpsdata[0].location);
+
+			       var deviceTag = '<p style="text-align:center;"><b>' + self.user.devices[k].tag + '</b></p>';
+	
+	   		        deviceTag += '<p>' + self.user.devices[k].gpsdata[0].timestamp + '</p>';
+
+				self.markers[i].infowindow.setContent(deviceTag);
+
+
+
+			     }
+
+      		   }
+		 }
+		}
+				
+
+		},function(err){
+				console.log('Didnt get GPS data....');
+			console.log(err);
+
+		});
+
+
+
+
 
   }
 
@@ -258,6 +321,7 @@ export class MapComponent implements OnInit {
    }
 
   ngOnDestroy(){
+	console.log('ON DESTROY MAP BABY');
 
     clearInterval(this.timer);
 

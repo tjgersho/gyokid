@@ -12,5 +12,5 @@ export class Device{
  regstatustooltip: string = "Registration is good";
  alarm: boolean = false;
  constructor(){}
-
+ editTagBoolean:boolean = false;
 }

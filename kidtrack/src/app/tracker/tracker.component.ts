@@ -59,6 +59,8 @@ export class TrackerComponent implements OnInit {
              //this.deviceTrackerList = [];
 
              this.showDeviceSelector = true;
+ 		this.runMap = false;
+	  
         }
 
       
@@ -73,9 +75,10 @@ export class TrackerComponent implements OnInit {
        devicesSelected(){
 	console.log('In tracker Compoent and devicesSelected');
 
-
          this.showDeviceSelector = false;
 	 this.runMap = true;
+
+	
        }
 	
        cancelDeviceSelection(obj){

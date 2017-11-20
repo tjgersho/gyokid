@@ -49,7 +49,7 @@
 	      <img src="assets/signaloff.png" style="width:20px;" />
 	 </h4>
 
-   	 <div *ngFor="let dev of user.devices; let i = index">
+   	 <div *ngFor="let dev of user.devices">
             <div class="row"  style="margin-bottom:5px;" *ngIf="!dev.watching">
 	     
 		<div class="col-xs-4">
@@ -72,17 +72,22 @@
 
 		<div  class="selectedDevBox">
             
-                  <div *ngFor="let dev of user.devices" style="float:left;">
+                  <div *ngFor="let dev of user.devices; let i = index" style="float:left;">
 
 		     <div class="devlabel" style="margin:5px; padding:5px;"  *ngIf="dev.watching">
  			
-				<p>DEV: {{dev.shortImei}} 
+				<p>DEV: {{dev.imei | truncate}} 
 				  <button class="btn btn-xs btn-danger" (click)="removeDev(dev)">
 					<span class="glyphicon glyphicon-remove"></span>
 				 </button>
+				  <button class="btn btn-xs btn-default" (click)="editTagClick(dev)">
+					<span class="glyphicon glyphicon-pencil" *ngIf="!dev.editTagBoolean"></span>
+					<span class="glyphicon glyphicon-ok" *ngIf="dev.editTagBoolean"></span>
+				 </button>
                                </p>
 				
-			      <i *ngIf="dev.tag !== ''">TAG: {{dev.tag}}</i>
+			      <i *ngIf="dev.tag !== '' && !dev.editTagBoolean">TAG: {{dev.tag}}</i>
+                              <input type="text" #devTag class="form-control" placeholder="Tag:" *ngIf="dev.editTagBoolean" [(ngModel)]="dev.tag" (blur)="blurEditTag(dev)" maxlength="10"/>
 
       		      </div>
 	          </div>

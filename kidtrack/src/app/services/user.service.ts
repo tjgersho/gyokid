@@ -179,6 +179,13 @@ export class UserService {
 
 
   }
+ 
+   refreshData(){
+	
+	return this.getUserFromToken();
+		
+
+  }
 
   getAllDeviceGpsData(){
 	console.log('Get all Device GPS data');
@@ -186,10 +193,10 @@ export class UserService {
 
 	console.log(this.devices.length);
 
-	for (let dev of this.devices){
-		this.deviceService.getGpsData(dev, this.token);
 
-	}
+	this.deviceService.getGpsData(this.devices, this.token);
+
+
   }
   
 

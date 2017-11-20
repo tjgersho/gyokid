@@ -105,7 +105,7 @@
 
     </ul>
     <div style="margin-left: auto; margin-right: auto; text-align: right; max-width: 75px !important;">
-            <button class="navbar-btn btn btn-default" (click)="goTrack()" *ngIf="user.isLoggedIn && !atTrack  && user.devices.length > 0">Track</button>
+            <button class="navbar-btn btn btn-default" (click)="goTrack()" *ngIf="user.isLoggedIn && !atTrack  && user.devices.length > 0" [disabled]="user.pingCredits < 1">Track</button>
      </div>
 
   </div>

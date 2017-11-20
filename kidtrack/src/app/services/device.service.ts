@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {Http, RequestOptions, Headers, Response } from '@angular/http';
 import { Gps } from '../models/gps.model';
+import * as moment from 'moment';
+
 
 
 @Injectable()
@@ -12,38 +14,63 @@ constructor(private http: Http){
  }
 
 
-getGpsData(dev, token){
+ getGpsData(devArry, token){
 
-	var self = this;
+  var self = this;
 
+var devIdArry = [];
+ for(var i=0; i<devArry.length; i++){
 
+	devIdArry.push(devArry[i].id);
+
+ }
   return new Promise(function(resolve, reject){
-	console.log('This device... get gps Data');
-	console.log(dev.imei);
-	
 
 	let headers = new Headers({ 'Content-Type': 'application/json', auth: token });
         let options = new RequestOptions({ headers: headers });
 		
-	self.http.get('/api/v1/device/' + dev.id, options).subscribe((resp) => {
+	self.http.post('/api/v1/allGpsData', {devArry: devIdArry}, options).subscribe((resp) => {
 
- 		var gpsDataArray: Gps[]  = [];
+ 		
 
 		console.log('Get device gps rsponse');
 		console.log(resp.json());
 		var gpsData = resp.json();
+		console.log(gpsData);
+
+		console.log('Device Array length');
+		console.log(devArry.length);
+
+		for(var j=0; j<devArry.length; j++){
+		console.log(j);
+		  var gpsDataArray: Gps[]  = [];
+		   for(var i = 0; i< gpsData.length; i++){ 
+			
+			if(gpsData[i].devId === devArry[j].id){ // Find device id in gpdData..
+				
+                         for(var k=0; k<gpsData[i].gpsData.length; k++){
+
+			   
+			   var timeStamp = moment(gpsData[i].gpsData[k].createdAt).format('MM/DD/YY LTS');
+			   console.log('TimeStamp');
+			   console.log(timeStamp);
 
 
-		for(var i = 0; i< gpsData.length; i++){
-			 gpsDataArray.push(new Gps(gpsData[i].createdAt, {lat: parseFloat(gpsData[i].lat), lng:  parseFloat(gpsData[i].lon)}));
+			   gpsDataArray.push(new Gps(timeStamp, {lat: parseFloat(gpsData[i].gpsData[k].lat), lng:  parseFloat(gpsData[i].gpsData[k].lon)}));
+
+			 }
+
+			  break;
+
+                        }
+		   }
+		   console.log('GPS Data Array');
+		   console.log(gpsDataArray);
+		   devArry[j].gpsdata = gpsDataArray;		
+		   console.log('this Device');
+		  console.log(devArry[j]);
 		}
-		console.log('GPS Data Array');
-		console.log(gpsDataArray);
-
-		 dev.gpsdata = gpsDataArray;
-
-		console.log('this Device');
-		console.log(dev);
+		
 
 		resolve('GOTS SOME GPS DATA');
 
@@ -58,8 +85,7 @@ getGpsData(dev, token){
 
   });
 
-	
-	
+
 
  }
  

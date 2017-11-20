@@ -22,7 +22,9 @@ export class DeviceSelectorComponent implements OnInit {
 
 
   formCenter: number = 0;
-
+ 
+   editTagBooleanArray: boolean[];
+  
   constructor(private user: UserService, private global: GlobalService, private router: Router, private deviceService: DeviceService) { }
 
   ngOnInit() {
@@ -35,8 +37,7 @@ export class DeviceSelectorComponent implements OnInit {
 		console.log(data);
 		this.formCenter = this.calculateFormCenter();
 	});
-
-
+	
   }
 
    calculateFormCenter(){
@@ -59,6 +60,20 @@ export class DeviceSelectorComponent implements OnInit {
 
   }
 
+
+  editTagClick(dev){
+	
+	if(dev.editTagBoolean){
+		dev.editTagBoolean = false;
+	}else{
+	  	dev.editTagBoolean = true;
+	}
+
+  }
+
+  blurEditTag(dev){
+	dev.editTagBoolean = false;
+  }
 
   removeDev(dev: Device){
         console.log('Remove device selector');

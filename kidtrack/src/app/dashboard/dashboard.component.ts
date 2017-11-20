@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , OnDestroy} from '@angular/core';
+
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 import { UserService } from '../services/user.service';
 
@@ -16,12 +19,13 @@ import { DeviceService } from '../services/device.service';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
 
   regDeviceAccordOpen: boolean = true;
   dataCredAccordOpen: boolean = true;
+  timer: any;
 
-  constructor(private user: UserService, private global: GlobalService, private deviceService: DeviceService) {
+  constructor(private user: UserService, private global: GlobalService, private deviceService: DeviceService, private router: Router) {
 		if(user.pingCredits < 1){
 			this.regDeviceAccordOpen = false;
 		}
@@ -33,9 +37,29 @@ export class DashboardComponent implements OnInit {
 	 }
 
   ngOnInit() {
+
+	this.timer = setInterval(this.refreshData.bind(this), 10000);
   }
 
 
+
+ refreshData(){
+	console.log('Refresh data - This:');
+	console.log(this);
+
+	this.user.refreshData().then((resp) => {
+		console.log('User Refresh complete');
+		console.log(resp);
+
+		}, (err) => {
+		 console.log('User Refresh complete ERR');
+		 console.log(err);
+
+		});
+
+
+ }
+ 
  accordOpenCloseButton(){
 	if(this.regDeviceAccordOpen){
 		return {'glyphicon-minus': true};
@@ -105,6 +129,20 @@ export class DashboardComponent implements OnInit {
 
 
  }
+
+ goToTrack(){
+
+	if(this.user.pingCredits > 0){
+		this.router.navigate(['/tracker']);
+	}
+  }
+
+  ngOnDestroy(){
+	console.log('ON DESTROY DashBoard BABY');
+
+    clearInterval(this.timer);
+
+  }
 
 
 }

@@ -36,17 +36,17 @@ console.log('token', token);
           db.user.findByToken(token).then(function(user){
 
 		console.log('USER find by token');
-		console.log(user);
+		console.log(user.id);
 
 		db.device.findAll({where:{userId: user.id}}).then(function(devices){
 			console.log('Users');
-			console.log(devices);
+			console.log(devices.length);
 
 
 			user.dataValues.devices = devices;
 			
 			
-		       console.log(user);
+		       console.log(user.id);
 
 		
 			 res.status(200).json(user);

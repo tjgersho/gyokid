@@ -19,20 +19,20 @@
                   <div class="panel-body">
 
                                <div class="col-xs-5">
-					<h4 style="color:#000;">GPS Pings:</h4>
+					<h4 style="color:#000; text-align:center;">GPS Pings:</h4>
 				</div>
 				<div class="col-xs-7">
-					<h4 style="color:#000;">Value ($):</h4>
+					<h4 style="color:#000; text-align:center;">Value ($):</h4>
 				</div>
 			<div class="clr"></div>
 	 		 <div class="row"  style="border-top: 1px solid #ccc;">
 	      
 				<div class="col-xs-5">
-					<p>{{user.pingCredits}}</p>
+					<p style="text-align:center;">{{user.pingCredits}}</p>
 				</div>
 				<div class="col-xs-7">
 				  
-					<p>{{user.pingCredits/global.cellCreditFactor | currency:"USD":"$"}}</p>
+					<p style="text-align:center;">{{user.pingCredits/global.cellCreditFactor | currency:"USD":"$":"1.2-4"}}</p>
 			
 				</div>
 			 </div>
@@ -89,7 +89,7 @@
 				</div>
 				
 				<div class="col-xs-3">
-					<button class="btn pull-right" (click)="onTrackStatusToggle(dev)" style="margin-top:5px;" [disabled]="user.pingCredits < 0.01">
+					<button class="btn pull-right" (click)="onTrackStatusToggle(dev)" style="margin-top:5px;" [disabled]="user.pingCredits < 1">
 					    <img [src]="trackingStatusImg(dev.watching)" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
 					</button>
 				</div>
@@ -118,6 +118,13 @@
 
     <div class="formCard" style="position:relative;">
 	<div class="row">
+
+  	<div  class="col-md-6">
+	
+		<button class="btn btn-default btn-lg btn-block" (click)="goToTrack()" [disabled]="user.pingCredits < 1">
+  			Track
+		</button>
+	  </div>
 		
  	<div  class="col-md-6">
 		<a  class="btn btn-default btn-lg btn-block" routerLink="/buy-credits">
@@ -140,12 +147,7 @@
 		</a>
 	  </div>
 
-	 <div  class="col-md-6">
 	
-		<a class="btn btn-default btn-lg btn-block" routerLink="/tracker">
-  			Track
-		</a>
-	  </div>
 
        </div>
  
