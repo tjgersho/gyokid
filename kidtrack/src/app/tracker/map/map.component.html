@@ -1,1 +1,10 @@
 <div id="map"></div>
+ <div id="alarmContainer">
+  <div *ngFor="let mark of markers">
+    <button class="btn btn-danger btn-sm" *ngIf="mark.alarm" (click)="clearAlarm(mark)" style="font-size:12px;">
+	<span class="glyphicon glyphicon-warning-sign"></span>
+		ClearAlarm 
+	<span class="glyphicon glyphicon-remove-circle"></span>
+     </button>
+  </div> 
+</div>

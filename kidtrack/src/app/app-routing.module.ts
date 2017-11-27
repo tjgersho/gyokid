@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 
 import { AuthGuardService } from './services/auth-guard.service';
+import { AuthPingGuardService } from './services/auth-ping-guard.service';
 import { AdminGuardService } from './services/admin-guard.service';
 
 
@@ -46,7 +47,7 @@ const appRoutes: Routes = [
   {
      path: 'tracker',
      component: TrackerComponent,
-     canActivate: [AuthGuardService]
+     canActivate: [AuthPingGuardService]
    },
    {
 	path: 'register',

@@ -18,7 +18,7 @@ var usr = req.user;
 
 var deviceId = parseInt(req.params.id, 10);
 
-var body = _.pick(req.body, 'tag', 'watching');
+var body = _.pick(req.body, 'tag', 'watching', 'alarm');
 ///Some Validation on the post.
 
   var attributes = {};
@@ -34,7 +34,9 @@ var body = _.pick(req.body, 'tag', 'watching');
     attributes.watching = body.watching;
   }
 
-
+  if (body.hasOwnProperty('alarm')) {
+    attributes.alarm = body.alarm;
+  }
   
  console.log('in device update.');
   console.log(deviceId);
@@ -81,7 +83,7 @@ router.put('/devices',  [bodyParser.json(), middleware.requireAuthentication],  
 
 var usr = req.user;
 
-var body = _.pick(req.body, 'watching');
+var body = _.pick(req.body, 'watching', 'alarm');
 ///Some Validation on the post.
 
   var attributes = {};
@@ -95,7 +97,9 @@ var body = _.pick(req.body, 'watching');
     attributes.watching = body.watching;
   }
 
-
+   if (body.hasOwnProperty('alarm')) {
+    attributes.alarm = body.alarm;
+  }
   
  console.log('in device update.');
 
@@ -300,7 +304,7 @@ var results = [];
 
 
 
-					results.push({'devId': device.id, gpsData: gpsData});
+					results.push({'devId': device.id, gpsData: gpsData, alarm: device.alarm});
 
 					return 1;
 				});

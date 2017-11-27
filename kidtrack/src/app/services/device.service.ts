@@ -47,6 +47,9 @@ var devIdArry = [];
 		   for(var i = 0; i< gpsData.length; i++){ 
 			
 			if(gpsData[i].devId === devArry[j].id){ // Find device id in gpdData..
+
+			 devArry[j].alarm = gpsData[i].alarm;
+
 				
                          for(var k=0; k<gpsData[i].gpsData.length; k++){
 
@@ -157,4 +160,40 @@ var devIdArry = [];
  }
 
 
+
+
+clearAlarm(devId, token){
+
+  var self = this;
+	
+   
+        let headers = new Headers({ 'Content-Type': 'application/json', auth: token });
+        let options = new RequestOptions({ headers: headers });
+		
+
+	this.http.put("/api/v1/device/"+devId, {alarm: false}, options).subscribe((response) =>{
+
+		console.log('CLEAR ALARM RESPONSE!!!!');
+		console.log(response);
+
+	}, 
+	 (err)=>{
+		console.log('ERR clearing alarm.');
+		console.log(err);
+          },
+	 ()=>{});
+
+
+
+
+ }
+
+
+
+
 }
+
+
+
+
+

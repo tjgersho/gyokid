@@ -11,6 +11,8 @@ declare var google: any;
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
+
+
 export class MapComponent implements OnInit {
   marker: any;
   map: any;
@@ -24,6 +26,7 @@ export class MapComponent implements OnInit {
   maxLat:number = -900;
   minLon:number = 900;
   maxLon:number = -900;
+ 
 
   constructor(private user: UserService, private deviceService: DeviceService) { 
 
@@ -213,15 +216,23 @@ export class MapComponent implements OnInit {
 	  var deviceTag = '<p style="text-align:center;"><b>' + this.user.devices[i].tag + '</b></p>';
 	
 	   deviceTag += '<p>' + this.user.devices[i].gpsdata[0].timestamp + '</p>';
-	  var infowindow = new google.maps.InfoWindow({content: deviceTag});
+	   var infowindow = new google.maps.InfoWindow({content: deviceTag});
+
 
 	}
  	
+	var iconImg = "assets/kidtrackmapicon.png";
 	
+	if(this.user.devices[i].alarm){
+		iconImg = "assets/kidtrackmapiconAlarm.png";
+		deviceTag += '<p style="color:red;">Alarm has been triggered!</p>';
+
+		infowindow.setContent(deviceTag);
+	}
 
         var marker = new google.maps.Marker({
           position: this.user.devices[i].gpsdata[0].location,
-          icon: "assets/kidtrackmapicon.png",
+          icon: iconImg,
           map: this.map,
 	  draggable: false,
           animation: google.maps.Animation.DROP,
@@ -247,7 +258,25 @@ export class MapComponent implements OnInit {
 		 }
             }.bind(this.user.devices[i]));
 
-	    this.markers.push({deviceId: this.user.devices[i].id, marker: marker, infowindow: infowindow});
+	 var lineCoordinates = [];
+
+	for(var j = 0; j < this.user.devices[i].gpsdata.length; j++){
+
+		lineCoordinates.push(this.user.devices[i].gpsdata[j].location);
+	}
+
+      
+        var flightPath = new google.maps.Polyline({
+          path: lineCoordinates,
+          geodesic: true,
+          strokeColor: '#00954a',
+          strokeOpacity: 0.5,
+          strokeWeight: 3
+        });
+
+        flightPath.setMap(this.map);
+
+	    this.markers.push({deviceId: this.user.devices[i].id, alarm: this.user.devices[i].alarm, marker: marker, infowindow: infowindow, flightPath: flightPath});
 
 
 	  } //Is watching..
@@ -285,14 +314,42 @@ export class MapComponent implements OnInit {
 			    if(self.markers[i].deviceId === self.user.devices[k].id){
 
 				self.markers[i].marker.setPosition(self.user.devices[k].gpsdata[0].location);
+				
 
 			       var deviceTag = '<p style="text-align:center;"><b>' + self.user.devices[k].tag + '</b></p>';
 	
 	   		        deviceTag += '<p>' + self.user.devices[k].gpsdata[0].timestamp + '</p>';
 
 				self.markers[i].infowindow.setContent(deviceTag);
+				
+					if(self.user.devices[k].alarm){
+						self.markers[i].alarm = true;
+						var iconImg = "assets/kidtrackmapiconAlarm.png";
+						self.markers[i].marker.setIcon(iconImg);
+						deviceTag = '<p style="text-align:center; color:red;"><b>' + self.user.devices[k].tag + '</b></p>';
+	
+	   		                        deviceTag += '<p  style="color:red;">' + self.user.devices[k].gpsdata[0].timestamp + '</p>';
 
+						deviceTag += '<p style="color:red;">Alarm has been triggered!</p>';
+			
+						self.markers[i].infowindow.setContent(deviceTag);
+					}else{
+						self.markers[i].alarm = false;
+						iconImg = "assets/kidtrackmapicon.png";
 
+						self.markers[i].marker.setIcon(iconImg);
+
+					}
+
+				 var lineCoordinates = [];
+
+				for(var j = 0; j < self.user.devices[k].gpsdata.length; j++){
+
+				   lineCoordinates.push(self.user.devices[k].gpsdata[j].location);
+				}
+
+      
+        			self.markers[i].flightPath.setPath(lineCoordinates);
 
 			     }
 
@@ -319,6 +376,14 @@ export class MapComponent implements OnInit {
         }
         this.markers = [];
    }
+
+   clearAlarm(m){
+	console.log('Clear Alarm')
+	console.log(m);
+	m.alarm = false;
+	this.deviceService.clearAlarm(m.deviceId, this.user.token);
+
+    }
 
   ngOnDestroy(){
 	console.log('ON DESTROY MAP BABY');

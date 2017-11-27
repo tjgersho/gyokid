@@ -20,10 +20,8 @@ export class CommentsComponent implements OnInit {
  
   getComments(){
 
-
         let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
         let options = new RequestOptions({ headers: headers });
-
 
 	this.http.get('/api/v1/admin/comments', options).subscribe((resp) => {
 		console.log('Response from getting admin comments');

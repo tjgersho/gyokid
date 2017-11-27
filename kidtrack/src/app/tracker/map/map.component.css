@@ -5,3 +5,11 @@
   right:0;
   bottom:0;
 }
+
+#alarmContainer{
+	position:absolute;
+	top:60px;
+	left:5px;
+	width:100px;
+}
+

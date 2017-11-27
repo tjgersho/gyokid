@@ -215,12 +215,15 @@ function getRunningDevCmd(dev){
         cmd = "doNothing";
 
 
-
-      }else if(dev.lastCmdConfirmed && dev.lastCmd !== "setToWatching"){
+      }else if(dev.lastCmdConfirmed && dev.lastCmd !== "setToWatching" && dev.lastCmd === "checkSituation"){
 
 	cmd = "setToWatching";
 
-      }else if(!dev.lastCmdConfirmed && allowTimeForCmd(dev) && dev.lastCmd === "setToWatching"){
+      }else if(dev.lastCmdConfirmed && dev.lastCmd !== "setToWatching" && dev.lastCmd !== "checkSituation"){
+
+	cmd = "checkSituation";
+   
+     }else if(!dev.lastCmdConfirmed && allowTimeForCmd(dev) && dev.lastCmd === "setToWatching"){
 	
 	cmd = "doNothing";
 
@@ -249,6 +252,10 @@ function getRunningDevCmd(dev){
       }else if(dev.lastCmdConfirmed && dev.lastCmd == "setToWatching"){
 
 	cmd = "setToSleep";
+
+      }else if(dev.lastCmdConfirmed && dev.lastCmd === "checkSituation"){
+
+	cmd =  "setToSleep";
 
       }else if(!dev.lastCmdConfirmed && allowTimeForCmd(dev) && dev.lastCmd === "setToSleep"){
 	
@@ -280,13 +287,34 @@ function sendCmds(cmd, client){
  switch (cmd){
   case "doNothing": ///DO NOTHING...
 
-	console.log('CMDS>>>  Status Quo is good');
+	console.log('CMDS>>>  Status Quo is good -- DOING NOTHING');
 
     return;
   break;
+  case "checkSituation": // set time interval to 20 sec..
+
+    client.write("*HQ,"+client.imei+",S34,"+getTimeString+"0#");
+	
+    console.log('-----------------CMD Sent: CHECK SITUAITION-----------------');
+    console.log("*HQ,"+client.imei+",CK,"+getTimeString+"#");
+
+    db.device.find({where:{imei: client.imei}}).then(function(dev){
+        console.log('found device to update the time cmd sent');
+        console.log(dev.imei);
+       updateGpsDev(dev,{interval: 20, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false, lastCmd: "checkSituation"});
+
+    },function(err){
+        console.log('Couldnt find dev to update time cmd');
+        console.log(err);
+
+    });
+  break;
   case "setToWatching": // set time interval to 20 sec..
 
-    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",20#");
+    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",20,1#");
+	
+    console.log('-----------------CMD Sent: SET TO WATCHING-----------------');
+    console.log("*HQ,"+client.imei+",D1,"+getTimeString+",20#");
 
     db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
@@ -303,12 +331,14 @@ function sendCmds(cmd, client){
 
 
     client.write("*HQ,"+client.imei+",R1,"+getTimeString+"#");
+    console.log('-----------------CMD Sent: RESET DEVICE-----------------');
+    console.log("*HQ,"+client.imei+",R1,"+getTimeString+"#");
 
     db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
        updateGpsDev(dev, {interval: 10, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false,  lastCmd: "resetDevice"});
-
+       removeClient(client);
     },function(err){
         console.log('Couldnt find dev to update time cmd');
         console.log(err);
@@ -320,20 +350,25 @@ function sendCmds(cmd, client){
 
 
     client.write("*HQ,11111111111,R1,"+getTimeString+"#");
+    console.log('-----------------CMD Sent: INITIALIZE DEVICE-----------------');
+    console.log("*HQ,11111111111,R1,"+getTimeString+"#");
+    removeClient(client);
 
-    
   break;
   case "setLanguage": // Reset the device..
 
 
     client.write("*HQ,"+client.imei+",LAG,"+getTimeString+"2#");
 
+    console.log('-----------------CMD Sent: SET LANGUAGE -----------------');
+    console.log("*HQ,"+client.imei+",LAG,"+getTimeString+"2#");
+
     db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
 
        updateGpsDev(dev, {interval: 200, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false,  lastCmd: "setLanguage"});
-
+      
     },function(err){
         console.log('Couldnt find dev to update time cmd');
         console.log(err);
@@ -345,6 +380,10 @@ function sendCmds(cmd, client){
 
     
     client.write("*HQ,"+client.imei+",D1,"+getTimeString+",100#");
+
+    console.log('-----------------CMD Sent: SET TO SLEEP -----------------');
+    console.log("*HQ,"+client.imei+",D1,"+getTimeString+",100#");
+
         db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
@@ -361,6 +400,10 @@ function sendCmds(cmd, client){
 
     
     client.write("*HQ,"+client.imei+",D1,"+getTimeString+",500#");
+    console.log('-----------------CMD Sent: SHUT DOWN DEVICE -----------------');
+    console.log("*HQ,"+client.imei+",D1,"+getTimeString+",500#");
+
+
         db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
@@ -407,7 +450,7 @@ const server = net.createServer((socc) => {
 
 	console.log(socc.id);
 
-   sendCmds("initializeDevice", socc);
+  // sendCmds("initializeDevice", socc);
 
   socc.on('data', (data) => {
 
@@ -447,6 +490,7 @@ const server = net.createServer((socc) => {
 	  });
 	}
 
+	
 	if(status[3] === "E"){
              sendCmds("resetDevice", socc);
 		

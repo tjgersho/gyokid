@@ -100,7 +100,7 @@ export class UserService {
 
 		      	this.initializeUser(user);
 		       
-			resolve(true);
+			resolve(user);
 
 
 		},(err)=>{

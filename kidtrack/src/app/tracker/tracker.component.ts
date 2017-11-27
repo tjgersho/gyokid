@@ -64,13 +64,6 @@ export class TrackerComponent implements OnInit {
         }
 
       
-       getServerData(){
-	  console.log('Get Server Data');
-          //Get server data based on device list//
-
-	 
-        }
-
 
        devicesSelected(){
 	console.log('In tracker Compoent and devicesSelected');

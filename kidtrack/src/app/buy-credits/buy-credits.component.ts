@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { GlobalService } from '../services/global.service';
+import { Http, RequestOptions, Headers } from '@angular/http';
+
 declare var paypal: any;
 
 
@@ -13,7 +15,7 @@ declare var paypal: any;
 export class BuyCreditsComponent implements OnInit {
 buyAmount: number = 2;
 optionSelect: number = 1;
-  constructor(private router: Router, private user: UserService, private global: GlobalService) { }
+  constructor(private router: Router, private http: Http, private user: UserService, private global: GlobalService) { }
 
   ngOnInit() {
 var self = this;
@@ -41,8 +43,23 @@ var self = this;
                 payment: {
                     transactions: [
                         {
-                            amount: { total: self.buyAmount.toFixed(2), currency: 'USD' }
+                            amount: { total: self.buyAmount.toFixed(2), currency: 'USD' },
+			    "item_list": {
+				"items": [
+					{
+					"quantity": 1,
+ 				        "name": "item 1",
+        				"price": self.buyAmount.toFixed(2),
+        				"currency": "USD",
+        				"description": "Kidtrack GPS Ping Credits. $" + self.buyAmount.toFixed(2) + " -> Pings: " + self.buyAmount * self.global.cellCreditFactor,
+        				"tax": "0"
+					}
+				]
+
+				},
+    			    "description": "Kidtrack GPS Ping Credit purchase."
                         }
+			
                     ]
                 }
             });
@@ -55,10 +72,28 @@ var self = this;
 		console.log(payment);
                 // The payment is complete!
                 // You can now show a confirmation message to the customer
-		
-		self.user.pingCredits = parseFloat(payment.transactions[0].amount.total)*self.global.cellCreditFactor;
 
-		self.router.navigate(['/dashboard']);
+             let headers = new Headers({ 'Content-Type': 'application/json', Auth: self.user.token});
+             let options = new RequestOptions({ headers: headers });
+		self.http.post('/api/v1/logTransaction', {transaction: payment}, options).subscribe((resp) =>{
+
+				console.log('response from logging transaction');
+				console.log(resp);
+
+
+				self.router.navigate(['/dashboard']);
+
+			},(err) => {
+				console.log('Response from logtransaction response Err');
+				console.log(err);
+
+
+			}, () => {
+
+			console.log('Transaction log complete');
+		 });
+
+
             });
         },onError: function(err) {
             // Show an error page here, when an error occurs

@@ -1,3 +1,22 @@
-<p>
-  pingsales works!
-</p>
+<div class="styleTable">
+  <table>
+    <tr>
+      <td>Sale Date</td>
+      <td>ID</td>
+      <td>Email</td>
+      <td>Amount</td>
+      <td>CellCredits</td>
+      <td>Archive?</td>
+    </tr>
+    <tr *ngFor="let list of transactions">
+      <td>{{list.createdAt | date}}</td>
+      <td>{{list.id}}</td>
+      <td>{{list.email}}</td>
+      <td>{{list.amount}}</td>
+      <td>{{list.amount * global.cellCreditFactor}}</td>
+      <td>
+        <button (click)="archiveTransaction(list.id)">Archive</button>
+      </td>
+    </tr>
+  </table>
+</div>

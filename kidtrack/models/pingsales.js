@@ -5,13 +5,8 @@ return sequelize.define('pingSale', {
 		type: DataTypes.INTEGER
 	}, 
 	status: {
-		type: DataTypes.INTEGER,
-		defaultValue: 0,
-		validate: {
-          isInt: true,
-          max: 5,
-          min: 0
-		}
+		type: DataTypes.STRING,
+		allowNull: true
 	},
 	amount: {
 		type: DataTypes.FLOAT,
@@ -27,11 +22,6 @@ return sequelize.define('pingSale', {
 		allowNull: true
 	},
 	cart:{
-		type: DataTypes.TEXT,
-		allowNull: true
-
-	},
-	verificationCode:{
 		type: DataTypes.STRING,
 		allowNull: true
 
@@ -50,10 +40,16 @@ return sequelize.define('pingSale', {
 		type: DataTypes.STRING,
 		allowNull: true
 
-	},
-	phone: {
+	},	
+	email: {
 		type: DataTypes.STRING,
 		allowNull: true
+
+	},
+	payer_id: {
+		type: DataTypes.STRING,
+		allowNull: true
+
 	},
 	archive:{
              type: DataTypes.BOOLEAN,

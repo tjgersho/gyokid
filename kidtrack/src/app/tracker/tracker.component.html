@@ -4,11 +4,8 @@
 
 <app-map *ngIf="runMap"></app-map>
 
-<div style="position:absolute; bottom:30px; left:100px;">
-  <button class="btn btn-default"  (click)="getServerData()">
-     <span class="glyphicon glyphicon-refresh"></span>
-  </button>
-  <button class="btn btn-default"  (click)="resetDeviceList()">
+<div style="position:absolute; bottom:30px; left:5px;">
+  <button class="btn btn-default"  (click)="resetDeviceList()" style="width:60px; font-size:20px;">
      <span class="glyphicon glyphicon-pencil"></span>
   </button>
 </div>

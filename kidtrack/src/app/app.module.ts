@@ -37,6 +37,7 @@ import { BuyDeviceComponent } from './buy-device/buy-device.component';
 ////SERVICES///////
 import { UserService } from './services/user.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { AuthPingGuardService } from './services/auth-ping-guard.service';
 import { AdminGuardService } from './services/admin-guard.service';
 import { GlobalService } from './services/global.service';
 import { DeviceService } from './services/device.service';
@@ -115,7 +116,7 @@ import { ViewEmailDirective } from './admin/email/view-email.directive';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [UserService, AuthGuardService, AdminGuardService, GlobalService, DeviceService],
+  providers: [UserService, AuthGuardService, AuthPingGuardService, AdminGuardService, GlobalService, DeviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
