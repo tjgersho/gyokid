@@ -1,4 +1,4 @@
-import { Component, OnInit , ViewChild, NgZone} from '@angular/core';
+import { Component, OnInit,  ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { Router } from '@angular/router';
@@ -7,7 +7,9 @@ import { Http, Response, RequestOptions, Headers } from '@angular/http';
 
 declare var jquery:any;
 declare var $ :any;
+
 declare var grecaptcha: any;
+
 
 @Component({
   selector: 'app-contact',
@@ -17,51 +19,40 @@ declare var grecaptcha: any;
 export class ContactComponent implements OnInit {
 
    captchaChecked: boolean = false;
+   captchaResponse: string = '';
+   captchaWidgetId: number;
+   reCap: any;
+   captachErrors: string = '';
 
-  constructor(private http: Http, private zone: NgZone) {
+  constructor(private http: Http) {
 
-	 window['verifyCaptchaCallback'] = this.verifyCaptchaCallback.bind(this);
+
+	console.log('Contact us Constructor!');
+	
 
   }
 
   ngOnInit() {
 	console.log('Contact us NGONINIT');
-	console.log(grecaptcha);
-
-    grecaptcha.reset();
-
 
   }
 
-   isCaptchaChecked() {
 
-		console.log('this in isCaptchaChecked');
-	console.log(this);
+   resolved(captchaResponse: string) {
+        console.log(`Resolved captcha with response ${captchaResponse}:`);
 
-	console.log('isCaptchaChecked');
-	console.log(grecaptcha && grecaptcha.getResponse().length !== 0);
-       if(grecaptcha && grecaptcha.getResponse().length !== 0){
-		console.log('This captchaChecked');
-		this.captchaChecked = true;
-	}else{
+	   this.captchaChecked = true;
+   	this.captchaResponse = captchaResponse;
+    }
 
-               console.log('This captchaChecked - false');
-		this.captchaChecked = false;
-
-	}
-
-       
-   }
-
-   verifyCaptchaCallback(response){
-	console.log('captcha callback');
-	console.log(response);
-        this.zone.run(() =>  this.isCaptchaChecked());
-   }
 
   onSignup(form: NgForm) {
 
-	var captcha = $('#g-recaptcha-response');
+	
+	console.log('SUbmint captcha.value');
+	console.log(this.captchaResponse);
+
+     if(this.captchaResponse.length >0){
 
 	console.log(form);
 	console.log('name');
@@ -72,7 +63,7 @@ export class ContactComponent implements OnInit {
 	let data = {name: form.value.contact_name,
 		   email: form.value.contact_email,
 		   comment: form.value.contact_comment,
-                    gRecaptchaResponse:  captcha.val()};
+                    gRecaptchaResponse:  this.captchaResponse};
 
 	
         let headers = new Headers({ 'Content-Type': 'application/json'});
@@ -85,8 +76,14 @@ export class ContactComponent implements OnInit {
 		console.log(resp.json());
                 $('#contactUsthanks').modal('toggle');
 
-		form.reset();
-                grecaptcha.reset();
+		   form.reset();
+
+		
+                   grecaptcha.reset();
+             
+              		this.captchaChecked = false;
+
+		
 
            
 		
@@ -94,14 +91,28 @@ export class ContactComponent implements OnInit {
              
 		console.log("Comment Err");
 		console.log(err);
-		 grecaptcha.reset();
+		  
+                   grecaptcha.reset();
+                 
+		this.captchaChecked = false;
 		
 	}, () => {
 
 		console.log("Comment Complete");
-		 grecaptcha.reset();
+	
+                   grecaptcha.reset();
+              
+		this.captchaChecked = false;
 		
 	});
+
+      }else{
+	this.captachErrors = "Please check the Captcha Box to proove you're a human.";
+	setTimeout(function(){
+		this.captachErrors = '';
+	},3000);
+
+      }
 
 
    }

@@ -39,7 +39,7 @@ export class MapComponent implements OnInit {
 	var self = this;
 
     this.map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 3,
+          zoom: 10,
           center: {lat: 40, lng: -50}
         });
 
@@ -66,7 +66,7 @@ export class MapComponent implements OnInit {
 
       		  self.zoomInOnAverage();
 
-            },1000);
+            },2000);
 
 	
 

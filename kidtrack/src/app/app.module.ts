@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 
+import { RecaptchaModule } from 'ng-recaptcha';
+
 import { AppComponent } from './app.component';
 
 
@@ -114,7 +116,8 @@ import { ViewEmailDirective } from './admin/email/view-email.directive';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    RecaptchaModule.forRoot() // Keep in mind the "forRoot"-magic nuances!
   ],
   providers: [UserService, AuthGuardService, AuthPingGuardService, AdminGuardService, GlobalService, DeviceService],
   bootstrap: [AppComponent]

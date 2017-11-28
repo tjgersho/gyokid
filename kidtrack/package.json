@@ -33,6 +33,7 @@
     "jquery-touch-events": "^1.0.7",
     "jsonwebtoken": "^8.1.0",
     "moment": "^2.19.1",
+    "ng-recaptcha": "^3.0.2",
     "nodemailer": "^4.2.0",
     "nodemailer-mailgun-transport": "^1.3.5",
     "path": "^0.12.7",
