@@ -504,22 +504,28 @@ const server = net.createServer((socc) => {
 	db.device.find({where:{imei: imei}, include: [{model: db.user}]}).then(function(dev){
 
 		console.log('Device to check if user has credits');
-		console.log(dev.user.pingCredits);
 
-		if(dev.user.pingCredits > 0) {
+		if(dev.user !==  undefined && dev.user !== null){
+		 console.log(dev.user.pingCredits);
+
+		  if(dev.user.pingCredits > 0) {
 
 			dev.user.update({pingCredits: dev.user.pingCredits-1});
 
 		         logData(message);
 		
-		}else{
+		  }else{
 			
 			sendCmds("shutDownDevice", socc);
 		      dev.update({watching: false});
                       dev.user.update({pingCredits: dev.user.pingCredits-1});
+		  }
+		}else{
+			sendCmds("setToSleep", socc);
 		}
         },function(err){
-
+		console.log('Err Finding device..');
+		console.log(err);
 
         });
      

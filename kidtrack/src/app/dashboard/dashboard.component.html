@@ -22,17 +22,17 @@
 					<h4 style="color:#000; text-align:center;">GPS Pings:</h4>
 				</div>
 				<div class="col-xs-7">
-					<h4 style="color:#000; text-align:center;">Value ($):</h4>
+					<h4 style="color:#000; text-align:center;">Value (USD):</h4>
 				</div>
 			<div class="clr"></div>
 	 		 <div class="row"  style="border-top: 1px solid #ccc;">
 	      
 				<div class="col-xs-5">
-					<p style="text-align:center;">{{user.pingCredits}}</p>
+					<p style="text-align:center; font-size:22px; margin-top:20px;">{{user.pingCredits | number}}</p>
 				</div>
 				<div class="col-xs-7">
 				  
-					<p style="text-align:center;">{{user.pingCredits/global.cellCreditFactor | currency:"USD":"$":"1.2-4"}}</p>
+					<p style="text-align:center; font-size:22px; margin-top:20px;">{{user.pingCredits/global.cellCreditFactor | currency:"USD":"$":"1.2-4"}}</p>
 			
 				</div>
 			 </div>

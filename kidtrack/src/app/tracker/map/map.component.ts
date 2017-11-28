@@ -144,7 +144,7 @@ export class MapComponent implements OnInit {
 				this.minLon = loc.lng;
 			}
 
-			if(loc.lat > this.maxLon){
+			if(loc.lng > this.maxLon){
 
 				this.maxLon = loc.lng;
 			}
@@ -170,7 +170,7 @@ export class MapComponent implements OnInit {
 
 	switch(true) {
 
-		case (viewPortDiff > 100):{
+		case (viewPortDiff >= 100):{
 			var newZoom = 3;
 		     break;
 		}
@@ -178,15 +178,27 @@ export class MapComponent implements OnInit {
 			var newZoom = 5;
 		     break;
 		}
-		case (viewPortDiff < 49 && viewPortDiff >= 20):{
+		case (viewPortDiff < 50 && viewPortDiff >= 20):{
 			var newZoom = 7;
 		     break;
 		}
-		case (viewPortDiff < 19 && viewPortDiff >= 10):{
+		case (viewPortDiff < 20 && viewPortDiff >= 5):{
+			var newZoom = 8;
+		     break;
+		}
+		case (viewPortDiff < 5 && viewPortDiff >= 1):{
+			var newZoom = 10;
+		     break;
+		}
+		case (viewPortDiff < 1 && viewPortDiff >= 0.5):{
 			var newZoom = 11;
 		     break;
 		}
-		case (viewPortDiff < 9 && viewPortDiff >= 4):{
+		case (viewPortDiff < 0.5 && viewPortDiff >= 0.1):{
+			var newZoom = 12;
+		     break;
+		}
+		case (viewPortDiff < 0.1 && viewPortDiff >= 0.01):{
 			var newZoom = 13;
 		     break;
 		}
@@ -212,14 +224,31 @@ export class MapComponent implements OnInit {
 	for( var i=0; i<this.user.devices.length; i++){
 	 if(this.user.devices[i].watching && this.user.devices[i].gpsdata[0]){
 	
-	if(this.user.devices[0].tag !== null && this.user.devices[0].tag !== undefined  && this.user.devices[0].tag !== ''){
-	  var deviceTag = '<p style="text-align:center;"><b>' + this.user.devices[i].tag + '</b></p>';
+
+		///SET NEW MARKER OBJECT in array..
+
+	   	this.markers.push({});
+		var mkidx = this.markers.length - 1;
+
+		this.markers[mkidx].deviceId = this.user.devices[i].id;
+	        this.markers[mkidx].alarm = this.user.devices[i].alarm;
+
+
+	   if(this.user.devices[0].tag !== null && this.user.devices[0].tag !== undefined  && this.user.devices[0].tag !== ''){
+	      var deviceTag = '<p style="text-align:center;"><b>' + this.user.devices[i].tag + '</b></p>';
 	
-	   deviceTag += '<p>' + this.user.devices[i].gpsdata[0].timestamp + '</p>';
-	   var infowindow = new google.maps.InfoWindow({content: deviceTag});
+	      deviceTag += '<p>' + this.user.devices[i].gpsdata[0].timestamp + '</p>';
+		
 
+	    }else{
+		 var deviceTag = '';
+	     	 deviceTag += '<p>' + this.user.devices[i].gpsdata[0].timestamp + '</p>';
+	    }
 
-	}
+	var infowindow = new google.maps.InfoWindow({content: deviceTag});
+
+ 	
+	
  	
 	var iconImg = "assets/kidtrackmapicon.png";
 	
@@ -230,6 +259,8 @@ export class MapComponent implements OnInit {
 		infowindow.setContent(deviceTag);
 	}
 
+	this.markers[mkidx].infowindow = infowindow;
+
         var marker = new google.maps.Marker({
           position: this.user.devices[i].gpsdata[0].location,
           icon: iconImg,
@@ -239,24 +270,32 @@ export class MapComponent implements OnInit {
 	  title: this.user.devices[i].tag
         });
 
+	this.markers[mkidx].marker = marker;
 
- 	 marker.addListener('click', function(){
+
+ 	this.markers[mkidx].marker.addListener('click', (function(marker, infowindow){
+		
+
+		return function(){
+
  	 	// This here is each device associated with this marker.. from the function binding..
-  		 if (marker.getAnimation() !== null) {
+  		  if (marker.getAnimation() !== null) {
      		     marker.setAnimation(null);
-   		 } else {
-   		     marker.setAnimation(google.maps.Animation.BOUNCE);
-		      setTimeout(function(){
-				 marker.setAnimation(null);
+   		   } else {
+   		       marker.setAnimation(google.maps.Animation.BOUNCE);
+		        setTimeout(function(){	
+				marker.setAnimation(null);
 			},2000);
-    		 }
+    		   }
 
-		if(this.tag !== null && this.tag !== undefined  && this.tag !== ''){
-	
-		  infowindow.open(self.map, marker);
+		
+		   infowindow.open(self.map, marker);
 
-		 }
-            }.bind(this.user.devices[i]));
+		};
+
+		
+            })(marker, infowindow));
+
 
 	 var lineCoordinates = [];
 
@@ -269,14 +308,14 @@ export class MapComponent implements OnInit {
         var flightPath = new google.maps.Polyline({
           path: lineCoordinates,
           geodesic: true,
-          strokeColor: '#00954a',
+          strokeColor: '#'+Math.floor(Math.random()*16777215).toString(16),
           strokeOpacity: 0.5,
           strokeWeight: 3
         });
 
         flightPath.setMap(this.map);
 
-	    this.markers.push({deviceId: this.user.devices[i].id, alarm: this.user.devices[i].alarm, marker: marker, infowindow: infowindow, flightPath: flightPath});
+	 this.markers[mkidx].flightPath = flightPath;
 
 
 	  } //Is watching..

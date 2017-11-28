@@ -25,7 +25,10 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit() {
+	console.log('Contact us NGONINIT');
+	console.log(grecaptcha);
 
+    grecaptcha.reset();
 
 
   }
