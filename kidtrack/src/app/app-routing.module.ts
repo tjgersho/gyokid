@@ -14,6 +14,7 @@ import { TrackerComponent } from './tracker/tracker.component';
 
 
 import { ForgetpwComponent } from './forgetpw/forgetpw.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { BuyCreditsComponent } from './buy-credits/buy-credits.component';
@@ -33,6 +34,7 @@ import { TermsComponent } from './terms/terms.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ReturnsComponent } from './returns/returns.component';
 import { ContactComponent } from './contact/contact.component';
+
 
 import { ResetEmailComponent } from './reset-email/reset-email.component';
 import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
@@ -68,6 +70,10 @@ const appRoutes: Routes = [
 
 	path: 'getpw',
 	component: ForgetpwComponent
+   },
+    {
+	path: 'changepw/:name/code/:code',
+	component: ChangePasswordComponent
    },
    {
 	path: 'resetemail',
@@ -109,11 +115,11 @@ const appRoutes: Routes = [
 	component: ContactComponent
    },
    {
-	path: 'viewemail/:emailId/id/:id',
+	path: 'viewemail/:emailCode/id/:id',
 	component: ViewEmailComponent
    },
    {
-	path: 'confirmemail/:username/code/:code',
+	path: 'emailconfirm/:username/code/:code',
 	component: ConfirmEmailComponent
    },
    {

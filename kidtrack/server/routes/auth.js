@@ -78,6 +78,9 @@ router.get('/user/getAdminByToken', [bodyParser.json(), middleware.adminOnly],  
 router.post('/login',  bodyParser.json(),  function (req, res) {
   var body = _.pick(req.body, 'email_or_username', 'password');
 
+ console.log('login');
+	console.log(body);
+
   var userInstance;
 
 	body.email_or_username = body.email_or_username.toLowerCase();
@@ -85,14 +88,21 @@ router.post('/login',  bodyParser.json(),  function (req, res) {
   db.user.authenticate(body).then(function (user) {
 
     var token = user.generateToken('authentication');
+console.log('token');
+	console.log(token);
 
     userInstance = user;
 
     return db.token.create({
       token: token
     });
+
   }).then(function (tokenInstance) {
+	console.log('Token instance');
+	console.log(tokenInstance);
+
      res.header('Auth', tokenInstance.get('token')).json(userInstance.toPublicJSON());
+
   }).catch(function () {
     res.status(401).send();
   });

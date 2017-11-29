@@ -73,6 +73,8 @@ import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 
 //Directives ////
 import { ViewEmailDirective } from './admin/email/view-email.directive';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ReferralWidgetComponent } from './referral-widget/referral-widget.component';
 
 
 
@@ -110,7 +112,9 @@ import { ViewEmailDirective } from './admin/email/view-email.directive';
     ConfirmEmailComponent,
     ViewEmailDirective,
     CommentsComponent,
-    PingsalesComponent
+    PingsalesComponent,
+    ChangePasswordComponent,
+    ReferralWidgetComponent
   ],
   imports: [
     BrowserModule,

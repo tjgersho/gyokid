@@ -5,11 +5,25 @@
 <div class="container-fluid">
 
 <br/><br/>
-<div ng-if="self.ecloading"><img src="public/img/loading.gif"/></div>
-<div ng-if="!self.ecloading" class="container text-center">
-  <h3 ng-if="emailConfirmCtrl.emailConfirmed">YOUR EMAIL HAS BEEN CONFIRMED.</h3>
-  <h3> Get some <span><a ui-sref="play" class="btn btn-lg">XNUM</a><span>!</span></span></h3>
-  <h3 ng-if="!emailConfirmCtrl.emailConfirmed">Something weird happened and your email was not confirmed.</h3>
+<div *ngIf="loading"><img src="public/img/loading.gif"/></div>
+
+<div *ngIf="!loading" class="container text-center">
+  <h3 *ngIf="emailConfirmed">YOUR EMAIL HAS BEEN CONFIRMED.</h3>
+
+
+  <h3> Start Tracking your Kids - 
+
+	
+	<span *ngIf="user.isLoggedIn"><a routerLink="tracker" class="btn btn-lg">Go to Tracker</a><span>!</span></span>
+
+	<span *ngIf="!user.isLoggedIn"><a routerLink="login" class="btn btn-lg">Go to Login</a><span>!</span></span>
+
+
+
+   </h3>
+
+
+  <h3 *ngIf="!emailConfirmed">Something weird happened and your email was not confirmed.</h3>
 </div>
 
 

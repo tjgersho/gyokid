@@ -18,6 +18,8 @@
           ngModel
           class="form-control" required/>
       </div>
+      <div class="alert alert-warning" *ngIf="loginError !== ''">{{loginError}}</div>
+
       <button class="btn btn-default" type="submit" [disabled]="!f.valid">Login</button>
       <a class="btn pull-right" routerLink="/getpw" >Forget Login?</a>
       <a class="btn pull-right" (click)="gotoRegister()">Signup-></a>

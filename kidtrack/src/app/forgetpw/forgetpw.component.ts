@@ -4,6 +4,11 @@ import { NgForm } from '@angular/forms';
 import { UserService } from '../services/user.service';
 import { GlobalService } from '../services/global.service';
 
+
+declare var jquery:any;
+declare var $ :any;
+
+
 @Component({
   selector: 'app-forgetpw',
   templateUrl: './forgetpw.component.html',
@@ -12,6 +17,7 @@ import { GlobalService } from '../services/global.service';
 export class ForgetpwComponent implements OnInit {
 
  formCenter: number = 0;
+ forgetPwError: string = '';
 
   constructor(private router: Router, private userService: UserService, private global: GlobalService) { }
 		
@@ -36,29 +42,39 @@ export class ForgetpwComponent implements OnInit {
 	return offset;
   }
 
+  
+  forgetPwEmailSentOk(){
+
+  $('#forgetPasswordModal').modal('hide');
+
+     this.router.navigate(['/login']);
+
+   }
+
 	
-   onSignup(form: NgForm) {
-    const usernameoremail = form.value.usernameoremail;
-    const password = form.value.password;
+   onSubmit(form: NgForm) {
+       const usernameoremail = form.value.usernameoremail;
+	console.log('Username or email');
+	console.log(usernameoremail);
 
-      this.userService.login(usernameoremail, password)
+      this.userService.forgotPW(usernameoremail).subscribe((res) => {
+          	console.log('Response from subscribe to user server signup method');
+		console.log(res);
+                       $('#forgetPasswordModal').modal('toggle');
+
+          }, (err) => {
+
+		this.forgetPwError = "There was an error finding your username/email in our system.";
+		setTimeout(function(){
+			this.forgetPwError = '';
+		},3000);
 
 
+	}, () => {
+		console.log('Subscribe finished..');
 
-     //.subscribe((res) => {
 
-	//	console.log('Response from subscribe to user server signup method');
-	//	console.log(res);
-
-	//	if( res.status === 200){
-	//		this.userService.login();
-               		//this.router.navigate(['/tracker']);
-          //       }else{
-	//		alert('An error occured while signing up.');
-
-          //      }
-		
-      //});
+	});
 
    
   }

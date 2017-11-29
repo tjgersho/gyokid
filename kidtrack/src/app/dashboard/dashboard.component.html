@@ -111,6 +111,8 @@
 
 	</div>
 
+ 
+
 	  
 
 	</div>
@@ -153,9 +155,15 @@
  
     </div>
 
+
+
+ 	<app-referral-widget></app-referral-widget>
+
+
   </div>
 
  <div *ngIf="user.devices.length<1">
+  <div [ngStyle]="{'top': formCenter + 'px'}" style="position: relative; margin-top: 15px; margin-bottom:30px;">
 
 	<div class="formCard" style="position:relative;">
 	<h2  style="text-align:center;">You don't have any registered Devices</h2>
@@ -180,6 +188,7 @@
        </div>
 
     </div>
+  </div>
 
  </div>
 

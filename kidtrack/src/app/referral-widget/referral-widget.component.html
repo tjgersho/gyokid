@@ -1,0 +1,33 @@
+<div class="container">
+  <h4>Friends Referred:</h4><br/>
+  <div class="progress"> <!-- [aria-valuenow]="progVal()" -->
+    <div class="progress-bar" *ngClass="progressClass()" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="font-size: 15px; height: 30px; width:{{progVal()}}%">{{referralCount}}</div>
+  </div>
+  <div>
+    <div class="col-xs-3" style="padding:0; position:relative"> <span style="float:right; margin-right:3px; font-size:15px">Win @ 2</span>
+      <div class="referralWin1"><img src="" width="100%;"/></div>
+      <div class="referralBound"></div>
+    </div>
+    <div class="col-xs-3" style="padding:0; position:relative"><span style="float:right; margin-right:3px;  font-size:15px">Win @ 5</span>
+      <div class="referralWin1"><img src="" width="100%;"/></div>
+      <div class="referralBound"></div>
+    </div>
+    <div class="col-xs-3" style="padding:0; position:relative"><span style="float:right; margin-right:3px;  font-size:15px">Win @ 10</span>
+      <div class="referralWin1"><img src="" width="100%;"/></div>
+      <div class="referralBound"></div>
+    </div>
+    <div class="col-xs-3" style="padding:0; position:relative"><span style="float:right; margin-right:3px;  font-size:15px">Win @ 20</span>
+      <div class="referralWin1"><img src="" width="100%;"/></div>
+      <div class="referralBound"></div>
+    </div>
+  </div>
+  <div class="row"> 
+    <div class="userShippingAddress" style="width:300px; float:right" ng-if="canCollectPrize() && !referralWinCollect">
+      <label for="usersAddress">Prize Shipping Address:</label>
+      <!--<textarea class="form-control" rows="3" id="usersAddress" [(ngModel)]="user.shippingAddress"></textarea> -->
+      <button class="btn btn-warning pull-right" (click)="collectPrize()">Collect Prize</button>
+    </div>
+  </div><br/>
+  <div class="clr"></div>
+  <hr/>
+</div>

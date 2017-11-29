@@ -16,7 +16,8 @@ export class RegisterComponent implements OnInit {
   username: string = "";
   email: string = "";
   password: string = "";
-
+  signupError: string = "";
+  loading: boolean = false;
 
   constructor(private router: Router, private user: UserService,  private global: GlobalService) { }
 
@@ -44,6 +45,8 @@ export class RegisterComponent implements OnInit {
 
    onSignup(form: NgForm) {
 
+     this.loading = true;
+
 	console.log(form);
 	console.log('password');
 console.log(form.value.password);
@@ -64,29 +67,57 @@ console.log(this.email);
 
 		console.log(" Nested Signup success  -- login response");
 		console.log(resp);
-
+               this.loading = false;
 		 this.router.navigate(['/dashboard']);
 
 	}, (err) => {
              
 		console.log(" Nested Signup success  -- login ERR");
 		console.log(err);
-
+                    this.loading = false;
 	}, () => {
 
 		console.log(" Nested Signup success  -- login observable complete");
-			
+		  this.loading = false;	
 	});
 
   }, (err) => {
 
     console.log('Error on signup req.');
       console.log(err);
+	console.log(err.json());
+	var error = err.json();
 
+
+	for (var i=0; i< error.errors.length; i++){
+	        if(i > 0){
+		this.signupError += '<br />';
+		}
+
+		console.log(error.errors[i].message);
+
+		if(error.errors[i].message === "email must be unique"){
+			 this.signupError += "Email already registered. Please select another or reset your password.";
+		}
+
+		if(error.errors[i].message === "username must be unique"){
+		    this.signupError += "Username already registered. Please select another or reset your password.";
+		}
+	
+
+	}
+
+	 setTimeout(()=>{
+		 
+			this.signupError = "";
+
+		},3000);
+
+           this.loading = false;
   }, () => {
     console.log('signup request complete..');
 
-
+     this.loading = false;
   });
 
   }

@@ -88,6 +88,10 @@ export class UserService {
 	if(this.token === ""){
 	   reject(false);
 	}
+		
+	console.log('Token in get user from token');
+	console.log(this.token);
+
 
         let headers = new Headers({ 'Content-Type': 'application/json'});
         let options = new RequestOptions({ headers: headers });
@@ -302,6 +306,58 @@ export class UserService {
      }, () => {});
 
     //Destroy Token on server
+  }
+
+  forgotPW(usernameoremail: string){
+
+
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
+       return this.http.post("/api/v1/forgotPW", {usernameoremail: usernameoremail}, options).map((resp) =>{
+		return resp;
+	}).catch((err) => {
+		console.log('Catch Error in the login..');
+		console.log(err);
+		
+		return Observable.throw(err);
+
+	});
+
+
+  }
+
+  setNewPassword(newpw: string){
+	
+   let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.token});
+    let options = new RequestOptions({ headers: headers });
+       return this.http.put("/api/v1/user/pwreset", {password: newpw}, options).map((resp) =>{
+		return resp;
+	}).catch((err) => {
+		console.log('Catch Error in the login..');
+		console.log(err);
+		
+		return Observable.throw(err);
+
+	});
+
+  }
+
+   confirmEmail(username: string, code: string){
+
+
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({ headers: headers });
+       return this.http.post("/api/v1/confirmEmail", {username: username, validcode: code}, options).map((resp) =>{
+		return resp;
+	}).catch((err) => {
+		console.log('Catch Error in the login..');
+		console.log(err);
+		
+		return Observable.throw(err);
+
+	});
+
+
   }
 
 

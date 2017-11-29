@@ -42,7 +42,7 @@ usr.update({emailConfirmCode: emailConfirmationCode}).then(function(userup){
 		email.setUser(userup);
 
       var emailctx =  {name: userup.username,
-		        viewinbrowserlink: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com/viewEmail/'+emailcode+'/id/'+email.id,
+		        viewinbrowserlink: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com/viewemail/'+emailcode+'/id/'+email.id,
 		        verifyemaillink: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com/emailconfirm/'+usr.username+'/code/'+emailConfirmationCode,
 			domain: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com',
 			content: 'Test Content',
@@ -141,7 +141,7 @@ console.log(req.body);
 
         db.user.create(body).then(function(user){   
 		user.setReferralToken();
-		//sendEmailConfirmationEmail(user);
+		sendEmailConfirmationEmail(user);
 
 
 	  if(body.referralUserId !== null &&  body.referralUserId !== undefined){
@@ -242,6 +242,240 @@ router.get('/user/devices/',  [bodyParser.json(), middleware.requireAuthenticati
     });
 
 });
+
+
+
+
+
+
+function sendResetPasswordEmail(usr){
+
+
+var emailcode = Math.floor(Math.random()*100000)+1000;
+
+db.email.create({code: emailcode}).then(function(email){
+
+	 email.setUser(usr);
+
+  var emailctx =  {name: usr.username,
+		   viewinbrowserlink: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com/viewemail/'+emailcode+'/id/'+email.id,
+		   updatepasswordlink: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com/changepw/'+usr.username+'/code/'+usr.password,
+	           domain: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com',
+	           content: 'Reset Password',
+		   subject:  'KidTrack - Reset Password'
+		 };
+
+
+  var top = fs.readFileSync('./server/emailviews/emailhead.hbs').toString();
+  var body = fs.readFileSync('./server/emailviews/resetPWEmail.hbs').toString();
+  var footer = fs.readFileSync('./server/emailviews/emailfooter.hbs').toString();
+
+
+
+  var template = handlebars.compile(top + body + footer);
+  var html = template(emailctx);
+  var toEmail = usr.email;
+  var emailSubject = 'KidTrack - Reset Password';
+console.log('EMAIL');
+
+console.log(top + body + footer);
+
+
+email.update({email: html});
+
+
+nodemailerMailgun.sendMail({
+  from: 'kidtrack@kidtrack.io',
+  to: toEmail, // An array if you have multiple recipients. 
+  //cc:'',
+ // bcc:'',
+  subject: emailSubject,
+  'h:Reply-To': 'kidtrack@kidtrack.io', 
+   html: html,
+  // text: text,
+   attachments: [
+        {
+            cid: 'kidtracklogo.png',
+            content:  fs.readFileSync('./dist/assets/kidtracklogo.png')
+        },
+         {
+            cid: 'kidtrackicon.png',
+            content:  fs.readFileSync('./dist/assets/kidtrackicon.png')
+        },
+         {
+            cid: 'instagram.png',
+            content:  fs.readFileSync('./dist/assets/instagram.png')
+        },
+         {
+            cid: 'fb.png',
+            content:  fs.readFileSync('./dist/assets/fb.png')
+        },
+         {
+            cid: 'twitter.png',
+            content:  fs.readFileSync('./dist/assets/twitter.png')
+        }
+	]
+
+  }, function (err, info) {
+   if (err) {
+     console.log('Error: ' + err);
+   }
+   else {
+    console.log('Response: ' + info);
+   }
+ });
+
+
+ },function(err){
+    console.log('Err saving the email html file');
+    console.log(err);
+});
+     
+
+
+}
+
+
+
+
+router.post('/forgotPW',  bodyParser.json(),  function(req, res){
+///Signup Endpoint...
+console.log('Forgot PW');
+console.log(req.body);
+
+ var body = _.pick(req.body, 'usernameoremail');
+
+   body.usernameoremail = body.usernameoremail.toLowerCase();
+
+
+   var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var where_obj = {};
+
+    if(re.test(body.usernameoremail)){
+  	  where_obj.where = {email: body.usernameoremail};
+  	 }else{
+    	  where_obj.where = {username: body.usernameoremail};
+     }
+
+
+
+    
+
+        db.user.find(where_obj).then(function(user){ 
+
+		console.log('User');
+		console.log(user);
+
+		if(!!user){
+
+                   var tmp_pswd  = Math.floor((Math.random() * 100000) + 10000).toString(); 
+
+                   user.update({password: tmp_pswd}).then(function(user){
+
+			sendResetPasswordEmail(user);
+			 res.status(200).json(user);
+
+			},function(err){
+
+           		 res.status(400).json(err);
+
+       		      });
+
+		}else{
+
+		 	res.status(400).json('UserNotFound');
+		}  
+		      
+        },function(err){
+            res.status(400).json(err);
+        });
+});
+
+
+
+
+router.put('/user/pwreset/',  [bodyParser.json(), middleware.requireAuthentication],  function(req, res){
+  console.log('Update PW');
+  
+        var body = _.pick(req.body, 'password');
+        console.log('new password');
+	console.log(body);
+  
+     var user = req.user;
+	user.update(body).then(function(user){
+		console.log('The user password has been updated');
+		console.log(user);
+		 res.status(200).json(user);
+
+	},function(err){
+		console.log('User password update err');
+		console.log(err);
+ 		 res.status(400).json(err);
+
+	});
+
+		
+  
+
+});
+
+router.post('/confirmEmail',  [bodyParser.json()],  function(req, res){
+  console.log('Confirm email!');
+console.log('In Confirm Email Endpoint....');
+ 
+var body = _.pick(req.body, 'username', 'validcode');
+
+console.log(body);
+var where = {username: body.username,
+		emailConfirmCode: body.validcode};
+
+console.log(where);
+
+db.user.find({where: where }).then(function(usr){
+     console.log('Find user for confirmEmail...');
+	console.log(usr);
+ 
+	 usr.update({emailConfirmed: true}).then(function(resp){
+      
+
+		db.referral.find({where:{newUserId: usr.id}}).then(function(ref){
+
+			if(ref !== null){
+		        ref.update({newUserEmailValidated: true});
+
+			console.log('update confirmEmail...');
+	                console.log(ref);
+			
+
+			}
+
+		},function(err){
+			console.log(err);
+
+		});
+
+		res.json(resp);
+		
+
+	},function(err){
+
+       	console.log('Update Email Confirmed Err');
+		console.log(err);
+		res.status(400).json(err);
+
+	});
+},function(err){
+
+       console.log('Find user ERR');
+	console.log(err);
+	res.status(400).json(err);
+});
+
+
+  
+
+});
+
 
 
 module.exports = router;

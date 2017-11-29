@@ -24,6 +24,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   regDeviceAccordOpen: boolean = true;
   dataCredAccordOpen: boolean = true;
   timer: any;
+  formCenter: number = 0;
+
 
   constructor(private user: UserService, private global: GlobalService, private deviceService: DeviceService, private router: Router) {
 		if(user.pingCredits < 1){
@@ -39,8 +41,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
 	this.timer = setInterval(this.refreshData.bind(this), 10000);
+
+
+        this.formCenter = this.calculateFormCenter();
+
+	this.global.onWindowChange.subscribe((data: object) => {
+		console.log(data);
+		this.formCenter = this.calculateFormCenter();
+	});
   }
 
+  calculateFormCenter(){
+	var offset = (this.global.screenHeight-300)/2 - 110;
+	if(offset < 0){
+		offset = 0;
+         }
+	return offset;
+  }
 
 
  refreshData(){

@@ -56,7 +56,9 @@
 
     <div class="alert alert-warning" *ngIf="password2.touched && password.touched && password2.value !== password.value">Passwords do not match.</div>
 
-      <button class="btn btn-default" type="submit" [disabled]="!f.valid || password2.value !== password.value">Sign Up</button>
+   <div class="alert alert-danger" role="alert"  *ngIf="signupError !== ''">{{signupError}}</div>
+
+      <button class="btn btn-default" type="submit" [disabled]="!f.valid || password2.value !== password.value">Sign Up <span *ngIf="loading"><img src="assets/loader.gif" /></span></button>
       <a class="btn pull-right" (click)="gotoLogin()">Login-></a>
     </form>
 </div>
