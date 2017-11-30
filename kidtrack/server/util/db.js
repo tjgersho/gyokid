@@ -13,6 +13,8 @@ if (!isAmazon) {
 console.log('Is Amazon...');
 console.log(isAmazon);
 
+
+
 var dbConnect = require('./dbConnect.js');
 
 sequelize = new Sequelize(dbConnect.database, dbConnect.username, dbConnect.password, {
@@ -21,6 +23,9 @@ sequelize = new Sequelize(dbConnect.database, dbConnect.username, dbConnect.pass
 		dialect: dbConnect.dialect,
 		logging: false 
 });
+
+console.log(dbConnect.host);
+
 
 var db = {};
 
@@ -48,6 +53,9 @@ db.email.belongsTo(db.user);
 
 db.device.hasMany(db.gps);
 db.gps.belongsTo(db.device);
+
+db.user.hasMany(db.referral);
+db.referral.belongsTo(db.user);
 
 //////////////////////////////
 

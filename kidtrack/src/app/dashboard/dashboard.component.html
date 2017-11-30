@@ -4,7 +4,51 @@
   
  <div *ngIf="user.devices.length>0">
 
+  <div class="row">
+ <div  class="col-xs-12">
+
+    <div class="formCard" style="position:relative;">
 	<div class="row">
+
+  	<div  class="col-md-6">
+	
+		<button class="btn btn-default btn-lg btn-block" (click)="goToTrack()" [disabled]="user.pingCredits < 1">
+  			Track
+		</button>
+	  </div>
+		
+ 	<div  class="col-md-6">
+		<a  class="btn btn-default btn-lg btn-block" routerLink="/buy-credits">
+  			    Buy GPS Ping Credits
+		</a>
+ 	</div>
+	 <div  class="col-md-6">
+		
+		<a  class="btn btn-default btn-lg btn-block" routerLink="/register-device">
+  			Register More Devices
+		</a>
+
+	 </div>
+
+
+ 	 <div  class="col-md-6">
+	
+		<a class="btn btn-default btn-lg btn-block" routerLink="/buy-device">
+  			Buy More Devices
+		</a>
+	  </div>
+
+	
+
+       </div>
+ 
+    </div>
+        </div>
+  </div>
+
+
+
+	<div class="row" style="margin-top:30px;">
 
 	 <div  class="col-md-4">
 
@@ -111,56 +155,23 @@
 
 	</div>
 
- 
-
-	  
 
 	</div>
 
 
-    <div class="formCard" style="position:relative;">
-	<div class="row">
-
-  	<div  class="col-md-6">
-	
-		<button class="btn btn-default btn-lg btn-block" (click)="goToTrack()" [disabled]="user.pingCredits < 1">
-  			Track
-		</button>
-	  </div>
-		
- 	<div  class="col-md-6">
-		<a  class="btn btn-default btn-lg btn-block" routerLink="/buy-credits">
-  			    Buy Data Credits
-		</a>
- 	</div>
-	 <div  class="col-md-6">
-		
-		<a  class="btn btn-default btn-lg btn-block" routerLink="/register-device">
-  			Register More Devices
-		</a>
-
-	 </div>
 
 
- 	 <div  class="col-md-6">
-	
-		<a class="btn btn-default btn-lg btn-block" routerLink="/buy-device">
-  			Buy More Devices
-		</a>
-	  </div>
-
-	
-
-       </div>
- 
-    </div>
-
-
-
+     <div class="row" style="margin-top:30px;">
+        <div  class="col-xs-12">
  	<app-referral-widget></app-referral-widget>
-
-
+	</div>
   </div>
+
+
+
+
+
+</div>
 
  <div *ngIf="user.devices.length<1">
   <div [ngStyle]="{'top': formCenter + 'px'}" style="position: relative; margin-top: 15px; margin-bottom:30px;">

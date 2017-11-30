@@ -27,6 +27,7 @@ console.log('token', token);
              tokenHash: cryptojs.MD5(token).toString()
            }
         }).then(function (tokenInstance) {
+
           if (!tokenInstance) {
              res.status(401).json("Token Not Found");
           }
@@ -46,10 +47,28 @@ console.log('token', token);
 			user.dataValues.devices = devices;
 			
 			
-		       console.log(user.id);
+		     
+			db.referral.findAll({where:{userId: user.id}}).then(function(refs){
+
+			   console.log('User referrals');
+			   console.log(refs.length);
+
+				
+			  user.dataValues.referrals = refs;
+			
+			  user.dataValues.referralCount = refs.length;
+
+		           console.log(user.id);
+
 
 		
-			 res.status(200).json(user);
+			  res.status(200).json(user);
+                  
+                      },function(err){
+
+
+		     });
+
 
                 },function(err){
 

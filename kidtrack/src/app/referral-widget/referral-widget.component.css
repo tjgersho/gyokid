@@ -1,0 +1,21 @@
+
+.referralWin{
+ border-radius: 50%;
+margin:10px;
+position:absolute;
+top:0;
+left:0;
+overflow:hidden;
+}
+
+
+.referralBound{
+  position:absolute;
+  height: 120px;
+  top:-60px;
+  left:0;
+  width:100%;
+  margin:0;
+   padding:0;
+  border-right: 2px dotted #333;
+}

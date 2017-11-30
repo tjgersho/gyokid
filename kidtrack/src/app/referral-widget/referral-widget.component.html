@@ -1,33 +1,102 @@
-<div class="container">
+<div class="panel panel-default">
+             <div class="panel-heading" (click)="opeCloseReferralAccordian()">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse"><span class="glyphicon" [ngClass]="referralAccordOpenCloseButton()"></span> Referrals: </a>
+                </h4>
+            </div>
+            <div  class="panel-collapse collapse" [ngClass]="referralAccordOpenClose()">
+            <div class="panel-body">
+
+
+
+  <div class="row">
+    <div class="col-sm-4 col-sm-offset-4 text-center"> 
+      <h4>Get your friends to join and win some prizes!</h4>
+      <button class="btn btn-default btn-block" (click)="openReferralForm()">Invite Friends</button>
+    </div>
+  </div>
+
+
+
   <h4>Friends Referred:</h4><br/>
   <div class="progress"> <!-- [aria-valuenow]="progVal()" -->
-    <div class="progress-bar" *ngClass="progressClass()" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="font-size: 15px; height: 30px; width:{{progVal()}}%">{{referralCount}}</div>
+    <div class="progress-bar" [ngClass]="progressClass()" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="font-size: 15px; height: 30px;" [ngStyle]="{'width':progVal() + '%'}">{{referralCount}}</div>
   </div>
   <div>
     <div class="col-xs-3" style="padding:0; position:relative"> <span style="float:right; margin-right:3px; font-size:15px">Win @ 2</span>
-      <div class="referralWin1"><img src="" width="100%;"/></div>
+      <div class="referralWin1"><img src="assets/2RefPrize.png" width="100%;"/></div>
       <div class="referralBound"></div>
     </div>
     <div class="col-xs-3" style="padding:0; position:relative"><span style="float:right; margin-right:3px;  font-size:15px">Win @ 5</span>
-      <div class="referralWin1"><img src="" width="100%;"/></div>
+      <div class="referralWin1"><img src="assets/5RefPrize.png" width="100%;"/></div>
       <div class="referralBound"></div>
     </div>
     <div class="col-xs-3" style="padding:0; position:relative"><span style="float:right; margin-right:3px;  font-size:15px">Win @ 10</span>
-      <div class="referralWin1"><img src="" width="100%;"/></div>
+      <div class="referralWin1"><img src="assets/10RefPrize.png" width="100%;"/></div>
       <div class="referralBound"></div>
     </div>
     <div class="col-xs-3" style="padding:0; position:relative"><span style="float:right; margin-right:3px;  font-size:15px">Win @ 20</span>
-      <div class="referralWin1"><img src="" width="100%;"/></div>
+      <div class="referralWin1"><img src="assets/20RefPrize.png" width="100%;"/></div>
       <div class="referralBound"></div>
     </div>
   </div>
-  <div class="row"> 
+  <!-- <div class="row"> 
     <div class="userShippingAddress" style="width:300px; float:right" ng-if="canCollectPrize() && !referralWinCollect">
       <label for="usersAddress">Prize Shipping Address:</label>
-      <!--<textarea class="form-control" rows="3" id="usersAddress" [(ngModel)]="user.shippingAddress"></textarea> -->
+      <textarea class="form-control" rows="3" id="usersAddress" [(ngModel)]="user.shippingAddress"></textarea> 
       <button class="btn btn-warning pull-right" (click)="collectPrize()">Collect Prize</button>
-    </div>
-  </div><br/>
+    </div>  
+
+  </div> -->
+
+   <br/>
   <div class="clr"></div>
-  <hr/>
+
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="GetAFriendToJoinModal" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content mapfinish-modal">
+      <div class="modal-header">
+        <button class="close" type="button" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Refer Kidtrack to a friend</h4>
+      </div>
+      <div class="modal-body">
+
+	<div style="text-align:center; margin-top:30px; margin-bottom:30px;">
+
+               <a class="btn btn-default btn-lg" style="position:relative; font-size: 20px; top:-10px; width: 80px;margin-left: 15px; height: 28px" [href]="mailtoBody" title="Share by Email"><span class="glyphicon glyphicon-envelope" style="position:relative; top:-8px"></span></a>
+
+
+           <span id="twitterContainer" style="margin-left: 15px">
+           <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Kidtrack is an awesome GPS tracking App! Signup with my referral link:" data-size="large">
+	      Tweet
+              <link rel="canonical" [href]="twitterURL" /></a></span><span style="margin-left: 15px">
+           </span> 
+        <iframe [src]="facebookShareLink" width="84" height="28" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+      </div>
+       
+         
+
+        <p>Send your referral link!!
+                <br />
+	 Have friends use this link (copy & paste) when signing up so you can get credit for the referral:</p>
+        <div class="well" style="word-wrap: break-word">
+          <p>https://kidtrack.io/register?code={{user.referralCode}}</p>
+        </div>
+
+	
+        <div class="clr"></div><br/>
+      </div>
+      <div class="modal-footer">
+	
+	 <a class="btn btn-default" role="button" data-dismiss="modal" style="float:right">Close</a>
+
+
+      </div>
+    </div>
+  </div>
 </div>

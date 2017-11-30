@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-	this.timer = setInterval(this.refreshData.bind(this), 10000);
+	this.timer = setInterval(this.refreshData.bind(this), 20000);
 
 
         this.formCenter = this.calculateFormCenter();

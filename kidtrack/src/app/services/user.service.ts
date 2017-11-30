@@ -18,8 +18,9 @@ export class UserService {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
   pingCredits: number = 1000;
-
-
+  referralCode: string = '';
+  referrals: object[] = [];
+  referralCount: number;
 
 
   constructor(private router: Router, private http: Http, private deviceService: DeviceService) {
@@ -129,8 +130,12 @@ export class UserService {
   	this.email = userData.email;
 	this.pingCredits =  userData.pingCredits;
   	this.isLoggedIn = true;
+        this.referralCode = userData.referralCode;
 
 	var deviceArray: Device[] = [];
+	this.referralCount = userData.referralCount;
+        this.referrals =   userData.referrals;
+	
 
 	for(var i=0; i<userData.devices.length; i++){
 		let dev = new Device();
@@ -204,17 +209,19 @@ export class UserService {
   }
   
 
-  signup(username: string, email: string, password: string){
+  signup(username: string, email: string, password: string, refCode: string){
 	console.log('username');
 	console.log(username);
         console.log('email');
 	console.log(email);
 	console.log('password');
 	console.log(password);
+	console.log('Ref Code');
+	console.log(refCode);
 
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-	    let data = {username: username, email: email, password: password};
+	    let data = {username: username, email: email, password: password, referralCode: refCode};
 
 	return this.http.post("/api/v1/user", data, options);
 

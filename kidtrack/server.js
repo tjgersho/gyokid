@@ -44,9 +44,6 @@ endPointUse('./server/routes/', '/api/v1');
 
 
 
-
-
-
 // Set our api routes
 //app.use('/api', api);
 

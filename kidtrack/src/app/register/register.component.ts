@@ -1,7 +1,7 @@
 import { Component, OnInit , ViewChild} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../services/user.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute  } from '@angular/router';
 import { GlobalService } from '../services/global.service';
 import { Http } from '@angular/http';
 
@@ -12,6 +12,9 @@ import { Http } from '@angular/http';
 })
 export class RegisterComponent implements OnInit {
    
+  params: object;
+
+
   formCenter: number = 0;
   username: string = "";
   email: string = "";
@@ -19,7 +22,10 @@ export class RegisterComponent implements OnInit {
   signupError: string = "";
   loading: boolean = false;
 
-  constructor(private router: Router, private user: UserService,  private global: GlobalService) { }
+  referralCode: string = '';
+
+
+  constructor(private router: Router, private route: ActivatedRoute, private user: UserService,  private global: GlobalService) { }
 
   ngOnInit() {
 	console.log('Globals');
@@ -31,6 +37,28 @@ export class RegisterComponent implements OnInit {
 		console.log(data);
 		this.formCenter = this.calculateFormCenter();
 	});
+
+
+      this.params = this.route.snapshot.params;
+
+	console.log('URL PARAMS in confirm email');
+	console.log(this.params);
+
+
+  this.route.queryParams.subscribe(params => {
+
+	console.log('Query param... code ?');
+	console.log(params);
+       
+	if(params.hasOwnProperty('code')){
+
+   		 this.referralCode =  params['code'];
+
+         }
+    	console.log(this.referralCode);
+
+
+      });
 
   }
 
@@ -59,7 +87,10 @@ console.log(this.password);
 console.log(this.username);
 console.log(this.email);
 
-  this.user.signup(this.username, this.email, this.password).subscribe((resp) => {
+
+
+
+  this.user.signup(this.username, this.email, this.password, this.referralCode).subscribe((resp) => {
 
     console.log('Signup response');
       console.log(resp);
@@ -119,6 +150,9 @@ console.log(this.email);
 
      this.loading = false;
   });
+
+
+ 
 
   }
 

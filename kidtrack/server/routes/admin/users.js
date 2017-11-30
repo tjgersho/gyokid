@@ -73,7 +73,7 @@ router.get('/users', middleware.adminOnly, function (req, res) {
     
    var where = {};
 
-   var include = [{model: db.device}];
+   var include = [{model: db.device}, {model: db.referral}];
 
 
     var limit;
