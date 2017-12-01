@@ -33,6 +33,7 @@ import { PingsalesComponent } from './admin/pingsales/pingsales.component';
 import { TermsComponent } from './terms/terms.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { ReturnsComponent } from './returns/returns.component';
+import { FaqsComponent } from './faqs/faqs.component';
 import { ContactComponent } from './contact/contact.component';
 
 
@@ -109,6 +110,10 @@ const appRoutes: Routes = [
    {
 	path: 'privacy',
 	component: PrivacyComponent
+   },
+   {
+	path: 'faqs',
+	component: FaqsComponent
    },
    {
 	path: 'contact',

@@ -75,6 +75,7 @@ import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ViewEmailDirective } from './admin/email/view-email.directive';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ReferralWidgetComponent } from './referral-widget/referral-widget.component';
+import { FaqsComponent } from './faqs/faqs.component';
 
 
 
@@ -114,7 +115,8 @@ import { ReferralWidgetComponent } from './referral-widget/referral-widget.compo
     CommentsComponent,
     PingsalesComponent,
     ChangePasswordComponent,
-    ReferralWidgetComponent
+    ReferralWidgetComponent,
+    FaqsComponent
   ],
   imports: [
     BrowserModule,

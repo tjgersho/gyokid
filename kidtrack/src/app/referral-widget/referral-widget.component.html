@@ -11,16 +11,16 @@
 
   <div class="row">
     <div class="col-sm-4 col-sm-offset-4 text-center"> 
-      <h4>Get your friends to join and win some prizes!</h4>
+      <h4>Get your friends to join and get FREE GPS Tracking!</h4>
       <button class="btn btn-default btn-block" (click)="openReferralForm()">Invite Friends</button>
     </div>
   </div>
 
 
 
-  <h4>Friends Referred:</h4><br/>
+  <h4>Number of Friends Referred:</h4><br/>
   <div class="progress"> <!-- [aria-valuenow]="progVal()" -->
-    <div class="progress-bar" [ngClass]="progressClass()" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="font-size: 15px; height: 30px;" [ngStyle]="{'width':progVal() + '%'}">{{referralCount}}</div>
+    <div class="progress-bar" [ngClass]="progressClass()" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style="font-size: 15px; height: 30px;" [ngStyle]="{'width':progVal() + '%'}">{{user.referralCount}}</div>
   </div>
   <div>
     <div class="col-xs-3" style="padding:0; position:relative"> <span style="float:right; margin-right:3px; font-size:15px">Win @ 2</span>

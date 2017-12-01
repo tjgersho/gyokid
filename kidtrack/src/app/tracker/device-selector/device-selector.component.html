@@ -77,10 +77,10 @@
 		     <div class="devlabel" style="margin:5px; padding:5px;"  *ngIf="dev.watching">
  			
 				<p>DEV: {{dev.imei | truncate}} 
-				  <button class="btn btn-xs btn-danger" (click)="removeDev(dev)">
+				  <button class="btn btn-sm btn-danger" (click)="removeDev(dev)">
 					<span class="glyphicon glyphicon-remove"></span>
 				 </button>
-				  <button class="btn btn-xs btn-default" (click)="editTagClick(dev)">
+				  <button class="btn btn-sm btn-default" (click)="editTagClick(dev)">
 					<span class="glyphicon glyphicon-pencil" *ngIf="!dev.editTagBoolean"></span>
 					<span class="glyphicon glyphicon-ok" *ngIf="dev.editTagBoolean"></span>
 				 </button>

@@ -13,31 +13,45 @@
 
   <div class="btn-group-vertical">
     <button type="button" class="btn btn-default  btn-block" (click)="changeOption(1)" [ngClass]="{'optSelect':  optionSelect === 1}">
-
-	Apple asd fasdf aasd as dfasd asd fasdf asdf asdf asd fasdf asd fasd ff asdf 
+	<h3> {{global.cellCreditFactor * 2 | number}} GPS Credits </h3>
+	<h4> {{2 | currency:"USD":"$"}} </h4>
+	<p>Get {{global.cellCreditFactor * 2 | number}} GPS Credits for {{2 | currency}}. This amount of GPS credits is sufficent for a single event out with your kidtrack GPS</p>
+	
+	
     </button>
     <button type="button" class="btn btn-default  btn-block" (click)="changeOption(2)"  [ngClass]="{'optSelect':  optionSelect === 2}">
 
-	Sams asd fasd fasdf asdf asdf asdf asdf asdf asdf asdf asdf asd fasdf asd fasung
+	<h3> {{global.cellCreditFactor * 5 | number}} GPS Credits </h3>
+	<h4> {{5 | currency :"USD":"$"}} </h4>
+	<p>Get {{global.cellCreditFactor * 5| number}} GPS Credits for {{5  | currency:"USD":"$"}}. This amount of GPS credits is sufficent for a single event out with your family of kidtrack GPS, or for several days out for one GPS tracker.</p>
+	
 
     </button>
     <button type="button" class="btn btn-default  btn-block" (click)="changeOption(3)" [ngClass]="{'optSelect': optionSelect === 3}">
 
-	Sony asd fasd fasdf asd fasdf sad fsad fsdf sadfa ads fasd fasd 
-
-
+	<h3> {{global.cellCreditFactor * 10 | number}} GPS Credits </h3>
+	<h4> {{10 | currency:"USD":"$"}} </h4>
+	<p>Get {{global.cellCreditFactor * 10 | number}} GPS Credits for {{10  | currency:"USD":"$"}}.  This amount of GPS credits is more than enough for a class field trip with a class size amount of GPS trackers. Or if you have one tracker this will last quite some time if you make sure to turn off your GPS when not in use.</p>
+	
     </button>
 
        <button type="button" class="btn btn-default  btn-block" (click)="changeOption(4)" [ngClass]="{'optSelect': optionSelect === 4}">
 
-	Sony asd fasd fasdf asd fasdf sad fsad fsdf sadfa ads fasd fasd 
-
+	
+	<h3> {{global.cellCreditFactor * 50 | number}} GPS Credits </h3>
+	<h4> {{50 | currency:"USD":"$"}} </h4>
+	<p>Get {{global.cellCreditFactor * 50 | number}} GPS Credits for {{50  | currency:"USD":"$"}}.  This amount of GPS credits is good for an entire schools field trips for a month. Or if you have one tracker this could last a years time or more if you make sure to turn off your GPS when not in use.</p>
+	
 
     </button>
 
          <button type="button" class="btn btn-default  btn-block" (click)="changeOption(5)" [ngClass]="{'optSelect': optionSelect === 5}">
 
-	Sony asd fasd fasdf asd fasdf sad fsad fsdf sadfa ads fasd fasd 
+		
+	<h3> {{global.cellCreditFactor * 100 | number}} GPS Credits </h3>
+	<h4> {{100 | currency:"USD":"$"}} </h4>
+	<p>Get {{global.cellCreditFactor * 100 | number}} GPS Credits for {{100  | currency:"USD":"$"}}.  This is a lot of GPS credits, and is probably good for an entire schools field trips for a semester. Or if you have one tracker this could last 3 years time or more if you make sure to turn off your GPS when not in use.</p>
+	
 
 
     </button>
@@ -45,12 +59,14 @@
   
 
    <br />   <br />
-	<p>{{buyAmount | currency:'USD':true}}</p>
+	<h1>{{buyAmount | currency:'USD':true}}</h1>
+
+<p style="font-size: 10px;">You are paying by the GPS Ping, and how long the credits will last will vary on the amount of tracker usage and how long the device is left idly On, and the number of trackers in use.<p>
+
   <br />
 
   <div id="paypal-button"></div>
 	
-
 
 </div>
 </div>

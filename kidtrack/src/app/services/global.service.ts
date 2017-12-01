@@ -10,7 +10,7 @@ declare var $ :any;
 
 export class GlobalService{
 
-	cellCreditFactor: number = 1024;
+	cellCreditFactor: number = 1000;
 
 	screenWidth: number;
 	screenHeight: number;

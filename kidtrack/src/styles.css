@@ -75,8 +75,24 @@ margin-right:auto;
 
 }
 
-a{
-color: #00954a;
+
+a:link {
+   color: #000099
+}
+
+/* visited link */
+a:visited {
+    color: #0066cc;
+}
+
+/* mouse over link */
+a:hover {
+    color: #33cccc;
+}
+
+/* selected link */
+a:active {
+    color: #00954a;
 }
 
 .clr{

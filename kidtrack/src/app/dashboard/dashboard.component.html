@@ -10,21 +10,23 @@
     <div class="formCard" style="position:relative;">
 	<div class="row">
 
-  	<div  class="col-md-6">
+  	<div  class="col-md-12">
 	
 		<button class="btn btn-default btn-lg btn-block" (click)="goToTrack()" [disabled]="user.pingCredits < 1">
   			Track
 		</button>
+	     <br />
 	  </div>
+	
 		
  	<div  class="col-md-6">
-		<a  class="btn btn-default btn-lg btn-block" routerLink="/buy-credits">
+		<a  class="btn btn-default btn-lg btn-block" routerLink="/buy-credits" style="color:#fff;">
   			    Buy GPS Ping Credits
 		</a>
  	</div>
 	 <div  class="col-md-6">
 		
-		<a  class="btn btn-default btn-lg btn-block" routerLink="/register-device">
+		<a  class="btn btn-default btn-lg btn-block" routerLink="/register-device" style="color:#fff;">
   			Register More Devices
 		</a>
 
@@ -33,10 +35,16 @@
 
  	 <div  class="col-md-6">
 	
-		<a class="btn btn-default btn-lg btn-block" routerLink="/buy-device">
+		<a class="btn btn-default btn-lg btn-block" routerLink="/buy-device" style="color:#fff;">
   			Buy More Devices
 		</a>
 	  </div>
+
+ 	<div  class="col-md-6">
+		<a  class="btn btn-default btn-lg btn-block" routerLink="/faqs" style="color:#fff;">
+  			    FAQs
+		</a>
+ 	</div>
 
 	
 
@@ -140,8 +148,8 @@
 	 		 </div>
 
 		<div [ngStyle]="{'display': user.userHasTrakingDevices()?'block':'none'}" class="pull-right">
-    		 <a routerLink="/tracker"><img src="assets/datause.png" style="margin-right:35px; width:30px; height:30px;" data-toggle="tooltip" data-placement="bottom" title="Device tracking on and using data!"/></a>
-    		 <button class="btn btn-xs btn-warning pull-right" style="margin-top:4px;" (click)="user.clearWatching()" data-toggle="tooltip" data-placement="bottom" title="Turn off all device tracking!">
+    		 <a routerLink="/tracker"><img src="assets/datause.png" style="margin-right:45px; width:40px; height:40px;" data-toggle="tooltip" data-placement="bottom" title="Device tracking on and using data!"/></a>
+    		 <button class="btn btn-md btn-warning pull-right" style="margin-top:4px;" (click)="user.clearWatching()" data-toggle="tooltip" data-placement="bottom" title="Turn off all device tracking!">
 			<span style="color:red;"  class="glyphicon glyphicon-off"></span>
      		</button>
    		</div>

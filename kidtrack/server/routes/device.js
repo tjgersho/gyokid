@@ -206,6 +206,14 @@ var deviceId = parseInt(req.params.id, 10);
 console.log('User id');
 	console.log(usr.id);
 
+ var query  = req.query;
+ var limit;
+ if(query.hasOwnProperty('limit')){
+		  limit = parseInt(query.limit);
+  	 }else{
+
+	limit = 100;
+    }
 
 
 
@@ -224,7 +232,7 @@ console.log('User id');
 				order: [
    					 ['createdAt', 'DESC']
 				],
-				limit: 10 
+				limit: limit 
 				}).then(function(gpsData){
 					console.log('GPS Data');
 					console.log(gpsData);
