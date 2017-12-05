@@ -36,14 +36,13 @@ var handlebars = require('handlebars');
 function sendEmailnewComment(usr, com, em, cname){
 
 var emailcode = Math.floor(Math.random()*100000)+1000;
-var emailConfirmationCode = Math.floor(Math.random()*100000)+1000;
 
-usr.update({emailConfirmCode: emailConfirmationCode}).then(function(userup){
+
    db.email.create({code: emailcode}).then(function(email){
 
-		email.setUser(userup);
+		email.setUser(usr);
 
-var emailctx =  {name: userup.username,
+var emailctx =  {name: usr.username,
 		comment: com,
 		cemail:em,
 		cname: cname,
@@ -57,7 +56,7 @@ var emailctx =  {name: userup.username,
 
   var template = handlebars.compile(top+body+footer);
   var html = template(emailctx);
-  var toEmail = ['travis.g@paradigmmotion.com', 'kidtrack@kidtrack.io'];
+  var toEmail = ['travis.g@paradigmmotion.com'];
   var emailSubject = 'KidTrack - New Comment';
 
 
@@ -111,11 +110,7 @@ nodemailerMailgun.sendMail({
 		console.log(err);
 
 	});
-     },function(err){
-	console.log('Err updating the user confirmation code');
-	console.log(err);
-
-  });
+ 
 
 }
 

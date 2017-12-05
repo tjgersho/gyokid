@@ -293,10 +293,10 @@ function sendCmds(cmd, client){
   break;
   case "checkSituation": // set time interval to 20 sec..
 
-    client.write("*HQ,"+client.imei+",S34,"+getTimeString+"0#");
+    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",20,1#");
 	
     console.log('-----------------CMD Sent: CHECK SITUAITION-----------------');
-    console.log("*HQ,"+client.imei+",CK,"+getTimeString+"#");
+    console.log("*HQ,"+client.imei+",D1,"+getTimeString+",20,1#");
 
     db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
@@ -379,15 +379,15 @@ function sendCmds(cmd, client){
   case "setToSleep":  // Put device to sleep..
 
     
-    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",100#");
+    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",1000#");
 
     console.log('-----------------CMD Sent: SET TO SLEEP -----------------');
-    console.log("*HQ,"+client.imei+",D1,"+getTimeString+",100#");
+    console.log("*HQ,"+client.imei+",D1,"+getTimeString+",1000#");
 
         db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
-        updateGpsDev(dev,{interval: 100, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false, lastCmd: "setToSleep"});
+        updateGpsDev(dev,{interval: 1000, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false, lastCmd: "setToSleep"});
 
     },function(err){
         console.log('Couldnt find dev to update time cmd');
@@ -399,15 +399,15 @@ function sendCmds(cmd, client){
   case "shutDownDevice":  // Put device to sleep..
 
     
-    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",500#");
+    client.write("*HQ,"+client.imei+",D1,"+getTimeString+",5000#");
     console.log('-----------------CMD Sent: SHUT DOWN DEVICE -----------------');
-    console.log("*HQ,"+client.imei+",D1,"+getTimeString+",500#");
+    console.log("*HQ,"+client.imei+",D1,"+getTimeString+",5000#");
 
 
         db.device.find({where:{imei: client.imei}}).then(function(dev){
         console.log('found device to update the time cmd sent');
         console.log(dev.imei);
-        updateGpsDev(dev,{interval: 500, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false, lastCmd: "shutDownDevice"});
+        updateGpsDev(dev,{interval: 5000, lastCmdTimeStamp: now.format("YYYY-MM-DD HH:mm:ss"), lastCmdConfirmed: false, lastCmd: "shutDownDevice"});
 
     },function(err){
         console.log('Couldnt find dev to update time cmd');
