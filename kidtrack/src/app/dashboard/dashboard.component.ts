@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   dataCredAccordOpen: boolean = true;
   timer: any;
   formCenter: number = 0;
-
+  allWatching: boolean = false;
 
   constructor(private user: UserService, private global: GlobalService, private deviceService: DeviceService, private router: Router) {
 		if(user.pingCredits < 1){
@@ -132,6 +132,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	}
  }
 
+  trackingAllStatusImg(){
+	if(this.user.allDeviceWatching){
+		return 'assets/signalon.png';
+	}else{
+		return 'assets/signaloff.png';
+	}
+ }
+
 
  onTagChange(dev: Device){
 	console.log('ON device tag change, input blur');
@@ -146,6 +154,35 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 
  }
+
+ onTrackStatusToggleALL(){
+	if(this.user.allDeviceWatching){
+		var watchingStatus = false;
+		this.user.allDeviceWatching = false;
+
+	}else{
+		var watchingStatus = true;
+		this.user.allDeviceWatching = true;
+	}
+
+	for(var i=0; i<this.user.devices.length; i++){
+
+		if(this.user.devices[i].watching && watchingStatus){
+
+			 this.user.devices[i].watching = false;
+		 }
+
+		 if(!this.user.devices[i].watching && !watchingStatus){
+
+			 this.user.devices[i].watching = true;
+		 }
+
+		this.deviceService.updateWatching(this.user.devices[i], this.user.token);
+
+	}
+
+
+  }
 
  goToTrack(){
 

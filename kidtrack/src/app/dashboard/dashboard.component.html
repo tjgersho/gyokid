@@ -146,13 +146,30 @@
 					</button>
 				</div>
 	 		 </div>
+		  <br />
+		  <div class="row" style="border-top: 1px solid #ccc;">
+				<div class="col-xs-5 col-xs-offset-2">
+				  <div [ngStyle]="{'display': user.userHasTrakingDevices()?'block':'none'}" style="float:right;">
+    		                       <a routerLink="/tracker"><img src="assets/datause.png" style="margin-top:5px; width:40px; height:40px;" data-toggle="tooltip" data-placement="bottom" title="Device tracking on and using data!"/></a>
+    		                      <button class="btn btn-md btn-warning" style="margin-top:5px; margin-left:10px;" (click)="user.clearWatching()" data-toggle="tooltip" data-placement="bottom" title="Turn off all device tracking!">
+			                <span style="color:red;"  class="glyphicon glyphicon-off"></span>
+     		                    </button>
+   		                  </div>
+	                        </div>
+				<div class="col-xs-5">
+					<p>
 
-		<div [ngStyle]="{'display': user.userHasTrakingDevices()?'block':'none'}" class="pull-right">
-    		 <a routerLink="/tracker"><img src="assets/datause.png" style="margin-right:45px; width:40px; height:40px;" data-toggle="tooltip" data-placement="bottom" title="Device tracking on and using data!"/></a>
-    		 <button class="btn btn-md btn-warning pull-right" style="margin-top:4px;" (click)="user.clearWatching()" data-toggle="tooltip" data-placement="bottom" title="Turn off all device tracking!">
-			<span style="color:red;"  class="glyphicon glyphicon-off"></span>
-     		</button>
-   		</div>
+					<button class="btn pull-right" (click)="onTrackStatusToggleALL()" style="margin-top:5px; float:right;" [disabled]="user.pingCredits < 1">
+					    <img [src]="trackingAllStatusImg()" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
+					</button>
+						<span style="float:right;"><div style="position:relative; top:10px;">Toggle All:</div></span>
+					
+                                        </p>
+				</div>
+                 </div>
+		
+
+		
 
 
                   </div>
@@ -190,7 +207,7 @@
 		
 	 <div  class="col-md-6">
 		
-		<a  class="btn btn-default btn-lg btn-block" routerLink="/register-device">
+		<a  class="btn btn-default btn-lg btn-block" routerLink="/register-device" style="color:#fff;">
   			Register Device
 		</a>
 
@@ -199,7 +216,7 @@
 
  	 <div  class="col-md-6">
 	
-		<a class="btn btn-default btn-lg btn-block" routerLink="/buy-device">
+		<a class="btn btn-default btn-lg btn-block" routerLink="/buy-device" style="color:#fff;">
   			Buy Tracker Now
 		</a>
 	</div>

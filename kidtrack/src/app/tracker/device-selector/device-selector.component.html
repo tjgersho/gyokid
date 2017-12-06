@@ -57,7 +57,7 @@
                 </div>
 		<div class="col-xs-8">
 
-		   <button (click)="onDeviceSelected(dev)" class="btn btn-default btn-lg btn-block" [disabled]="user.cellularCredits < 1">
+		   <button (click)="onDeviceSelected(dev)" class="btn btn-default btn-lg btn-block" [disabled]="user.pingCredits < 1">
  			Device: {{ dev.imei | truncate}}
 		   </button>
 
@@ -103,6 +103,18 @@
 <div class="clr"></div>
 <br />
 <br />
+
+<div class="row" *ngIf="user.devices.length > 1">
+
+<div class="col-md-4 col-sm-6 col-xs-8 col-md-offset-4 col-sm-offset-3 col-xs-offset-2">
+ 					<button class="btn pull-right" (click)="onTrackStatusToggleALL()" style="margin-top:5px; float:right;" [disabled]="user.pingCredits < 1">
+					    <img [src]="trackingAllStatusImg()" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
+					</button>
+						<span style="float:right;"><div style="position:relative; top:10px;">Toggle All:</div></span>
+
+</div>
+
+</div>
 
    <div class="row" style="margin-top:20px; margin-bottom:50px;">
        <hr>

@@ -21,8 +21,8 @@ export class UserService {
   referralCode: string = '';
   referrals: object[] = [];
   referralCount: number;
-
-
+  allDeviceWatching: boolean = false;
+ 
   constructor(private router: Router, private http: Http, private deviceService: DeviceService) {
 
 	var self = this;
@@ -152,6 +152,17 @@ export class UserService {
         }
 	
 	this.devices = deviceArray;
+
+	this.allDeviceWatching = true;
+	for(var i=0; i < this.devices.length; i++){
+		if(!this.devices[i].watching){
+		   		this.allDeviceWatching = false;
+				break;
+		}
+		
+	}
+
+	
 
   	this.isAdminUser().then(function(resp){
 		console.log('In initialize user isADMIN user response');
@@ -397,6 +408,7 @@ export class UserService {
 	this.devices[i].watching = false;
 	
        }
+   this.allDeviceWatching = false;
 
        this.deviceService.turnOffAllWatching(this.token).subscribe((resp)=> {
 		console.log('Header Clear watching');

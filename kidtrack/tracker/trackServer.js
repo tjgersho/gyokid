@@ -443,7 +443,8 @@ const server = net.createServer((socc) => {
   console.log('client connected');
   //console.log(socc);
    socc.id = makeid();
-
+   socc.errors = {};
+	
   clients.push(socc);
 
   var clientAddr = socc.remoteAddress + ":" + socc.remotePort;
@@ -480,28 +481,44 @@ const server = net.createServer((socc) => {
 	console.log(status);
      	console.log(status[3]);
 
+      getGpsDev(imei).then(function(dev){
 
 	if(status[3] === "B"){
-	  getGpsDev(imei).then(function(dev){
   	        updateGpsDev(dev, {alarm: true});
-	  },function(err){
-		console.log('Couldnt get Device for update on alarm status true');
-		console.log(err);
-	  });
 	}
 
 	
 	if(status[3] === "E"){
-             sendCmds("resetDevice", socc);
 		
-        }
+	   if(!socc.errors.v3Eerror){
+ 		 socc.errors.v3Eerror = true;
+	     	 socc.errors.v3EerrorTime = moment().format("YYYY-MM-DD HH:mm:ss");
+	    }
 
+	       var now = moment();
+               var lastConn =  moment( socc.errors.v3EerrorTime );
 
+               console.log('Last Conn Diff');
+               console.log(now.diff(lastConn, 'minutes'));
+
+              if (now.diff(lastConn, 'minutes') > 10){
+                  sendCmds("resetDevice", socc);
+		}
+	
+		
+
+		if (now.diff(lastConn, 'minutes') > 2 && dev.watching){
+                  sendCmds("resetDevice", socc);
+		}
+		
+           }else{
+               socc.errors.v3Eerror = false;
+	    }
    
-  
+
 	//Check if the user has credits to log this data.. otherwise .. send cmd to shut down device..
 
-	db.device.find({where:{imei: imei}, include: [{model: db.user}]}).then(function(dev){
+	
 
 		console.log('Device to check if user has credits');
 
@@ -523,13 +540,13 @@ const server = net.createServer((socc) => {
 		}else{
 			sendCmds("setToSleep", socc);
 		}
-        },function(err){
-		console.log('Err Finding device..');
+
+             
+	 },function(err){
+		console.log('Couldnt get Device with IEMI for to do work..');
 		console.log(err);
-
-        });
-     
-
+	});
+  
 
      }else{
       socc.write('You are not allowed');

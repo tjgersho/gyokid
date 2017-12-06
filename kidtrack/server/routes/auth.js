@@ -39,7 +39,7 @@ console.log('token', token);
 		console.log('USER find by token');
 		console.log(user.id);
 
-		db.device.findAll({where:{userId: user.id}}).then(function(devices){
+		db.device.findAll({where:{userId: user.id}, orderBy:['id', 'ASC']}).then(function(devices){
 			console.log('Users');
 			console.log(devices.length);
 
