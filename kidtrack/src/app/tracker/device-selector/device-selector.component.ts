@@ -85,6 +85,44 @@ export class DeviceSelectorComponent implements OnInit {
      }
 
 
+
+  trackingAllStatusImg(){
+	if(this.user.allDeviceWatching){
+		return 'assets/signalon.png';
+	}else{
+		return 'assets/signaloff.png';
+	}
+   }
+
+   onTrackStatusToggleALL(){
+	if(this.user.allDeviceWatching){
+		var watchingStatus = false;
+		this.user.allDeviceWatching = false;
+
+	}else{
+		var watchingStatus = true;
+		this.user.allDeviceWatching = true;
+	}
+
+	for(var i=0; i<this.user.devices.length; i++){
+
+		if(this.user.devices[i].watching && watchingStatus){
+
+			 this.user.devices[i].watching = false;
+		 }
+
+		 if(!this.user.devices[i].watching && !watchingStatus){
+
+			 this.user.devices[i].watching = true;
+		 }
+
+		this.deviceService.updateWatching(this.user.devices[i], this.user.token);
+
+	}
+
+
+  }
+
   goTrack(){
 	     this.onTrackGo.emit();
   }

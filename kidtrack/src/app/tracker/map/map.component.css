@@ -13,3 +13,83 @@
 	width:100px;
 }
 
+  .circle-timer, .pie-timer {
+        width: 50px;
+        height: 50px;
+        position: relative;
+        box-shadow: #ccc 0 0 25px;
+        -webkit-border-radius: 200px;
+        margin: 20px;
+        display: inline-block;
+      }
+      @-webkit-keyframes timer-spin {
+        0%   { -webkit-transform: rotateY(540deg);}
+        100% { -webkit-transform: rotateY(0deg);  }
+      }
+      @-webkit-keyframes timer-spin2 {
+        0%   { -webkit-transform: scale(0.6) rotate(0deg); }
+        100% { -webkit-transform: scale(1.0) rotate(360deg);  }
+      }
+      @-webkit-keyframes timer-slide {
+        0%   { -webkit-transform: rotate(-225deg); }
+        50%  { -webkit-transform: rotate(-45deg);  }
+        100% { -webkit-transform: rotate(-45deg);  }
+      }
+      @-webkit-keyframes timer-toggle {
+        0%  { opacity: 0; }
+        50% { opacity: 0; }
+        51% {
+          -webkit-transform: rotate(-45deg);
+          opacity: 1;
+        }
+        75% {
+          border-top-color: transparent;
+        }
+        76% {
+          border-top-color: #00954a;
+        }
+        100% {
+          -webkit-transform: rotate(137deg);
+          opacity: 1;
+          border-top-color: #00954a;
+        }
+      }
+      .timer-l, .timer-r {
+        border-radius: 60px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: 15;
+        border: 10px solid #00954a;
+        width: 20px;
+        height: 20px;
+        margin-left: -20px;
+        margin-top: -20px;
+        border-left-color: transparent;
+        border-top-color: transparent;
+        -webkit-animation-duration: 10s;
+        -webkit-animation-iteration-count: infinite;
+      }
+      .timer-l {
+        -webkit-animation-name: timer-slide;
+        -webkit-animation-timing-function: ease-in;
+        z-index: 5;
+        left: 0;
+      }
+      .timer-r {
+        -webkit-animation-name: timer-toggle;
+        -webkit-animation-timing-function: ease-out;
+      }
+      .timer-slot {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        top: 0;
+        left: 50%;
+        overflow: hidden;
+      }
+  
+      
+      
+     
+            
