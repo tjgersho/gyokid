@@ -26,17 +26,24 @@ export class MapComponent implements OnInit {
   maxLat:number = -900;
   minLon:number = 900;
   maxLon:number = -900;
- 
+  timertimer: any;
+
+  seconds:number = 100;
+  loader: any;
+  alpha: number = 0;
+  pie:number = Math.PI;
+  t:number = (this.seconds/360 * 1000);
+
 
   constructor(private user: UserService, private deviceService: DeviceService) { 
-
-
 
 
   }
 
   ngOnInit() {      
 	var self = this;
+
+      this.loader = document.getElementById('loader');
 
     this.map = new google.maps.Map(document.getElementById('map'), {
           zoom: 10,
@@ -52,7 +59,7 @@ export class MapComponent implements OnInit {
 
      
 
-       self.timer = setInterval(()=>{
+    self.timer = setInterval(()=>{
 
            self.gameloop();
   
@@ -72,6 +79,13 @@ export class MapComponent implements OnInit {
 
 	self.initializeMarkers();
 
+	self.timertimer = setInterval(()=>{
+
+                 self.timerDraw();
+
+           },100);
+
+
 
     },function(err){
 
@@ -80,8 +94,31 @@ export class MapComponent implements OnInit {
 
 	});
 
+
   }
 
+
+
+  timerDraw() {
+
+     this.alpha += 3.6;
+
+
+     this.alpha %= 360;
+
+  var r = ( this.alpha * this.pie / 180 );
+
+    var x = Math.sin( r ) * 15;
+   var y = Math.cos( r ) * - 15;
+   var mid = ( this.alpha > 180 ) ? 1 : 0;
+
+
+   var anim = 'M 0 0 v -15 A 15 15 1 '  + mid + ' 1 '  +  x  + ' '  +  y  + ' z';
+
+     this.loader.setAttribute( 'd', anim );
+  
+  
+  }
 
 
   initializeMap(){
@@ -428,6 +465,7 @@ export class MapComponent implements OnInit {
 	console.log('ON DESTROY MAP BABY');
 
     clearInterval(this.timer);
+	clearInterval(this.timertimer);
 
   }
 

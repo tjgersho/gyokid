@@ -82,6 +82,19 @@ export class TrackerComponent implements OnInit {
 
       }
 
+     refreshMapComponent(){
+		 this.runMap = false;
+		setTimeout(() =>{
+
+                	 this.runMap = true;
+
+               },500);
+
+
+
+     }
+
+
 }
 
 
