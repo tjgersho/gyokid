@@ -99,7 +99,8 @@ export class DevicesComponent implements OnInit {
 
 		  	  var imeiandsim = devarray[i].split(',');
 
-		  	   self.addNewDevice(imeiandsim[0], imeiandsim[1])
+
+		  	   self.addNewDevice(imeiandsim[0], imeiandsim[1].replace(/(\r\n|\n|\r)/gm,""));
 			
 		  }
 
