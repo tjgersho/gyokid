@@ -25,7 +25,7 @@ export class DevicesComponent implements OnInit {
   imeinumber: string;
   simnumber: string;
 
-  limit:number = 10;
+  limit:number = 300;
   page:number = 0
   order:string = '';
 
