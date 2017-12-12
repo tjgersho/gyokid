@@ -42,9 +42,9 @@ usr.update({emailConfirmCode: emailConfirmationCode}).then(function(userup){
 		email.setUser(userup);
 
       var emailctx =  {name: userup.username,
-		        viewinbrowserlink: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com/viewemail/'+emailcode+'/id/'+email.id,
-		        verifyemaillink: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com/emailconfirm/'+usr.username+'/code/'+emailConfirmationCode,
-			domain: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com',
+		        viewinbrowserlink: 'https://kidtrack.io/viewemail/'+emailcode+'/id/'+email.id,
+		        verifyemaillink: 'https://kidtrack.io/emailconfirm/'+usr.username+'/code/'+emailConfirmationCode,
+			domain: 'https://kidtrack.io',
 			content: 'Test Content',
 			subject: 'Test Subject'
 			};
@@ -264,9 +264,9 @@ db.email.create({code: emailcode}).then(function(email){
 	 email.setUser(usr);
 
   var emailctx =  {name: usr.username,
-		   viewinbrowserlink: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com/viewemail/'+emailcode+'/id/'+email.id,
-		   updatepasswordlink: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com/changepw/'+usr.username+'/code/'+usr.password,
-	           domain: 'http://ec2-13-56-171-193.us-west-1.compute.amazonaws.com',
+		   viewinbrowserlink: 'https://kidtrack.io/viewemail/'+emailcode+'/id/'+email.id,
+		   updatepasswordlink: 'https://kidtrack.io/changepw/'+usr.username+'/code/'+usr.password,
+	           domain: 'https://kidtrack.io',
 	           content: 'Reset Password',
 		   subject:  'KidTrack - Reset Password'
 		 };
