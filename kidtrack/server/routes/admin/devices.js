@@ -94,12 +94,17 @@ router.post('/device/:id',  [bodyParser.json(), middleware.adminOnly],  function
 
 var deviceId = parseInt(req.params.id, 10);
 
-var body = _.pick(req.body, 'userId');
+var body = _.pick(req.body, 'userId', 'deregister');
 ///Some Validation on the post.
 
     
  console.log('in device de register...');
   console.log(deviceId);
+
+  console.log('Deregister...');
+
+  console.log(body.deregister);
+
 
   db.device.findById(deviceId).then(function(device) {
     if (!!device) {
@@ -109,15 +114,33 @@ var body = _.pick(req.body, 'userId');
 	 console.log('Found Device user');
          console.log(u);
 
-	  device.setUser(null);
+	     device.setUser(null);
 
-	res.status(204).send();
+       if(body.deregister){
+        db.gps.destroy({where:{deviceId: deviceId}}).then(function(des){
+            console.log('Destory gps dev');
+            console.log(des);
+
+                res.status(204).send();
+
+        },function(err){
+            console.log('ERR');
+            console.log(err);
+              res.status(404).send(err);
+        });
+
+       }else{
+
+               res.status(204).send();
+       }
+
+
 
        },function(err){
 
           console.log('Found Device user ERR');
          console.log(err);
-
+          res.status(404).send(err);
 
        });
 

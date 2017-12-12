@@ -188,7 +188,7 @@ export class DevicesComponent implements OnInit {
    let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
    let options = new RequestOptions({ headers: headers });
 
-     let data = {id: id};
+     let data = {id: id, deregister: true};
 
      this.http.post('/api/v1/admin/device/'+id, data, options).subscribe((response) => {
 
