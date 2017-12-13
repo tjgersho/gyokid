@@ -10,8 +10,27 @@ import { UserService } from '../../services/user.service';
 })
 export class CommentsComponent implements OnInit {
 
-  comments: object[] = []
-  constructor(private http: Http, private user: UserService) { }
+  comments: object[] = [];
+
+
+  limit:number = 50;
+  page:number = 0
+  order:string = '';
+  numPages:number = 0;
+
+
+  constructor(private http: Http, private user: UserService) { 
+
+    this.setNumberOfPages().subscribe((resp) =>{
+	   console.log('setNumPages in admin user');
+	    console.log(resp);
+		 this.numPages = Math.ceil(resp.json()/this.limit);
+        },(err)=>{console.log('Setting Num Pages in admin user err'); console.log(err);}, ()=>{});
+
+
+
+
+   }
 
   ngOnInit() {
 	this.getComments();
@@ -22,8 +41,9 @@ export class CommentsComponent implements OnInit {
 
         let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
         let options = new RequestOptions({ headers: headers });
+         let getCommentsURL = '/api/v1/admin/comments?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
 
-	this.http.get('/api/v1/admin/comments', options).subscribe((resp) => {
+	this.http.get(getCommentsURL, options).subscribe((resp) => {
 		console.log('Response from getting admin comments');
 		console.log(resp);
 		console.log(resp.json());
@@ -36,6 +56,23 @@ export class CommentsComponent implements OnInit {
 	
 	}, () =>{});
 
+  }
+
+   setNumberOfPages(){
+
+	       let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+               let options = new RequestOptions({ headers: headers });
+		return this.http.get('/api/v1/admin/commentspagecount', options);
+
+   }
+
+  onPageChange(pg:number){
+
+	console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
+	console.log(pg);
+	
+	this.page = pg;
+	this.getComments();
   }
 
 

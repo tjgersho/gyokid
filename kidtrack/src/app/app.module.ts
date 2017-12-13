@@ -76,6 +76,8 @@ import { ViewEmailDirective } from './admin/email/view-email.directive';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ReferralWidgetComponent } from './referral-widget/referral-widget.component';
 import { FaqsComponent } from './faqs/faqs.component';
+import { PaginatorComponent } from './util/paginator/paginator.component';
+import { PagearrPipe } from './util/pagearr.pipe';
 
 
 
@@ -116,7 +118,9 @@ import { FaqsComponent } from './faqs/faqs.component';
     PingsalesComponent,
     ChangePasswordComponent,
     ReferralWidgetComponent,
-    FaqsComponent
+    FaqsComponent,
+    PaginatorComponent,
+    PagearrPipe
   ],
   imports: [
     BrowserModule,

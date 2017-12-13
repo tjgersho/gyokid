@@ -35,7 +35,46 @@ router.get('/emails', [middleware.adminOnly],  function(req, res){
  console.log("Emails");
 
 
-db.email.findAll().then(function(emails) {
+var query  = req.query;
+    
+   var where = {};
+
+   var include = [];
+
+
+    var limit;
+    var offset;
+    var order;
+	
+   
+ 	 if(query.hasOwnProperty('limit')){
+		  limit = parseInt(query.limit);
+  	 }
+  	 if(query.hasOwnProperty('page')){
+    		 offset =  parseInt(query.page)*limit;
+  	 }
+  	 if(query.hasOwnProperty('order')){
+		if(query.order !== ''){
+	    	   order = query.order; 
+		}else{
+		   order =  [['id', 'DESC']];
+		}
+  	  }else{
+		 order =  [['id', 'DESC']];
+	}
+
+
+  
+        console.log('Devices Order');
+	console.log(order);
+
+          db.email.findAll({
+              where: where,
+              limit: limit,
+              offset: offset,
+              order: order,
+              include: include
+            }).then(function(emails) {
       res.json(emails);
           }, function() {
     res.status(500).send();
@@ -43,6 +82,18 @@ db.email.findAll().then(function(emails) {
 
 });
 
+
+router.get('/emailpagecount', middleware.adminOnly, function(req,res){
+  var where = {};
+  db.email.findAndCountAll({
+    where: where
+  }).then(function(em) {
+    res.json(em.count);
+  }, function(e) {
+    res.status(500).json(e);
+  });
+
+});
 
 
 

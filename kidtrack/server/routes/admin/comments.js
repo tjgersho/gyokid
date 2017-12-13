@@ -15,13 +15,63 @@ var cryptojs = require('crypto-js');
 
 router.get('/comments', [middleware.adminOnly],  function(req, res){
 
- console.log("comments");
+var query  = req.query;
+    
+   var where = {};
+
+   var include = [];
 
 
-db.comment.findAll().then(function(comments) {
-      res.json(comments);
-          }, function() {
-    res.status(500).send();
+    var limit;
+    var offset;
+    var order;
+	
+   
+ 	 if(query.hasOwnProperty('limit')){
+		  limit = parseInt(query.limit);
+  	 }
+  	 if(query.hasOwnProperty('page')){
+    		 offset =  parseInt(query.page)*limit;
+  	 }
+  	 if(query.hasOwnProperty('order')){
+		if(query.order !== ''){
+	    	   order = query.order; 
+		}else{
+		   order =  [['id', 'DESC']];
+		}
+  	  }else{
+		 order =  [['id', 'DESC']];
+	}
+
+
+  
+        console.log('Devices Order');
+	console.log(order);
+
+          db.comment.findAll({
+              where: where,
+              limit: limit,
+              offset: offset,
+              order: order,
+              include: include
+            }).then(function(comments) {
+                res.json(comments);
+           }, function() {
+              res.status(500).send();
+          });
+
+});
+
+
+
+router.get('/commentspagecount', middleware.adminOnly, function(req,res){
+  var where = {};
+  db.comment.findAndCountAll({
+    where: where
+  }).then(function(c) {
+    res.json(c.count);
+  }, function(e) {
+    res.status(500).json(e);
   });
 
 });

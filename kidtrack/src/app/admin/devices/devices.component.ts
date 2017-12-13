@@ -25,9 +25,10 @@ export class DevicesComponent implements OnInit {
   imeinumber: string;
   simnumber: string;
 
-  limit:number = 300;
+  limit:number = 50;
   page:number = 0
   order:string = '';
+  numPages:number = 0;
 
   constructor(private user: UserService, private http: Http) { 
     var self = this;
@@ -35,6 +36,14 @@ export class DevicesComponent implements OnInit {
 
 
     this.getDevices();
+ 
+    
+   this.setNumberOfPages().subscribe((resp) =>{
+	   console.log('setNumPages in admin user');
+	    console.log(resp);
+		 this.numPages = Math.ceil(resp.json()/this.limit);
+        },(err)=>{console.log('Setting Num Pages in admin user err'); console.log(err);}, ()=>{});
+
 
 
  
@@ -148,6 +157,29 @@ export class DevicesComponent implements OnInit {
 
 
  }
+
+
+
+
+  setNumberOfPages(){
+
+	       let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+               let options = new RequestOptions({ headers: headers });
+		return this.http.get('/api/v1/admin/devicespagecount', options);
+
+   }
+
+  onPageChange(pg:number){
+
+	console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
+	console.log(pg);
+	
+	this.page = pg;
+	this.getDevices();
+  }
+
+
+
 
 
  updateOwner(dev){

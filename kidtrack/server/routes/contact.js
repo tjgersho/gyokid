@@ -46,7 +46,8 @@ var emailctx =  {name: usr.username,
 		comment: com,
 		cemail:em,
 		cname: cname,
-		viewinbrowserlink: 'https://kidtrack.io/viewemail/'+emailcode+'/id/'+email.id
+		viewinbrowserlink: 'https://kidtrack.io/viewemail/'+emailcode+'/id/'+email.id,
+		domain: 'https://kidtrack.io'
 			};
 
   var top = fs.readFileSync('./server/emailviews/emailhead.hbs').toString();

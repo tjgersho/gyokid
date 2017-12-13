@@ -133,7 +133,7 @@ ngOnInit(){
 
 
 adjustNavBox() {
-    console.log('AjustingNavBox...');
+   
 
   // do something with the scroll position
 

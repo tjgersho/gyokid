@@ -6,14 +6,14 @@
      	 <div class="form-group">
             <label for="imei">IMEI #:</label>
       
-              <input type="text" id="imei" name="imei" [(ngModel)]="imeinumber" class="form-control"/>
+              <input type="number" id="imei" name="imei" [(ngModel)]="imeinumber" class="form-control"/>
  
          </div>
 
           <div class="form-group">
             <label for="sim">SIM #:</label>
       
-              <input type="text" id="sim" name="sim" [(ngModel)]="simnumber" class="form-control"/>
+              <input type="number" id="sim" name="sim" [(ngModel)]="simnumber" class="form-control"/>
  
          </div>
 	<br />
@@ -33,6 +33,8 @@
 
 
 <h3>Devices:</h3>
+
+<app-paginator [page]="page" [numPages]="numPages" (onPageChange)="onPageChange($event)"></app-paginator>
 
 <div class="styleTable">
   <table>
@@ -65,7 +67,7 @@
   </table>
 </div>
 
-
+<app-paginator [page]="page" [numPages]="numPages" (onPageChange)="onPageChange($event)"></app-paginator>
 
 
 <br />

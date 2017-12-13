@@ -27,6 +27,9 @@ export class ViewEmailDirective {
 
 	      var doc = this.elementRef.nativeElement.contentWindow.document;
                var $body = $('body',doc);
+
+		this.emailData = this.emailData.replace(/cid:/g, "assets/");
+
                $body.html(this.emailData);
 
 
