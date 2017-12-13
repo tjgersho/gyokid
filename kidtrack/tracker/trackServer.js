@@ -501,13 +501,13 @@ const server = net.createServer((socc) => {
                console.log('Last Conn Diff');
                console.log(now.diff(lastConn, 'minutes'));
 
-              if (now.diff(lastConn, 'minutes') > 10){
+              if (now.diff(lastConn, 'minutes') > 30){
                   sendCmds("resetDevice", socc);
 		}
 	
 		
 
-		if (now.diff(lastConn, 'minutes') > 2 && dev.watching){
+		if (now.diff(lastConn, 'minutes') > 5 && dev.watching){
                   sendCmds("resetDevice", socc);
 		}
 		
