@@ -83,10 +83,33 @@ color: #333;
 }
 
 h1, h2, h3, h4{
+ font-size:80px;
 
-  color: #00e600;
-     text-shadow: 2px 2px 8px #000;
+  /*color: #00e600;*/
+     text-shadow: 2px 2px 8px #fff;
 }
+
+
+
+@media screen and (min-width: 960px) {
+    h1, h2, h3, h4{
+        font-size: 80px;
+    }
+}
+ 
+@media screen and (max-width: 959px) and (min-width: 600px) {
+ h1, h2, h3, h4{
+        font-size: 50px;
+    }
+}
+ 
+@media screen and (max-width: 599px) and (min-width: 320px) {
+   h1, h2, h3, h4{
+        font-size: 40px;
+    }
+ 
+}
+
 
 .pop{
 height:100%;
@@ -98,10 +121,10 @@ paddding:0;
 top:0;
 line-height: 200px;
 
-/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+31,ffffff+100&0.7+0,0.7+31,0+100 */
-background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.7) 31%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
-background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.7) 31%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
-background: radial-gradient(ellipse at center, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.7) 31%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b3ffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+1,ffffff+61,ffffff+100&0.8+0,0.7+61,0+100 */
+background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.8) 1%, rgba(255,255,255,0.7) 61%, rgba(255,255,255,0) 100%); /* FF3.6-15 */
+background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 1%,rgba(255,255,255,0.7) 61%,rgba(255,255,255,0) 100%); /* Chrome10-25,Safari5.1-6 */
+background: radial-gradient(ellipse at center, rgba(255,255,255,0.8) 0%,rgba(255,255,255,0.8) 1%,rgba(255,255,255,0.7) 61%,rgba(255,255,255,0) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ccffffff', endColorstr='#00ffffff',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 
 }
