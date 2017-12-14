@@ -206,7 +206,7 @@ router.get('/devices', middleware.adminOnly, function (req, res) {
               include: include
             }).then(function(devices) {	
 			console.log('devices Dump..');
-			console.log(devices)	
+			console.log(devices.length);	
  	
         		res.status(200).json(devices);
                      

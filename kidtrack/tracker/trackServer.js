@@ -534,23 +534,31 @@ const server = net.createServer((socc) => {
 		console.log('Device to check if user has credits');
 
 		if(dev.user !==  undefined && dev.user !== null){
-
+      socc.errors.noUser = false;
 		   console.log(dev.user.pingCredits);
 
 		  if(dev.user.pingCredits > 0) {
+              socc.errors.noPingCredits = false;
+		      	  dev.user.update({pingCredits: dev.user.pingCredits-1});
 
-		      	dev.user.update({pingCredits: dev.user.pingCredits-1});
-
-		         logData(message);
+		          logData(message);
 		
 		  }else{
-			
-			sendCmds("shutDownDevice", socc);
-		      dev.update({watching: false});
-                      dev.user.update({pingCredits: dev.user.pingCredits-1});
+           if(!socc.errors.noPingCredits){
+			       console.log('SHUT DOWN!');
+			       sendCmds("shutDownDevice", socc);
+		         dev.update({watching: false});
+             dev.user.update({pingCredits: dev.user.pingCredits-1});
+             socc.errors.noPingCredits = true;
+          }
 		  }
 		}else{
-			sendCmds("setToSleep", socc);
+
+          if(!socc.errors.noUser){
+           console.log('NO USER -- SHIT SHUT DOWN!');
+			      sendCmds("setToSleep", socc);
+             socc.errors.noUser = true;
+          }
 		}
    }else{
 
