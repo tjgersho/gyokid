@@ -640,8 +640,8 @@ function getGpsDev(imei){
 
   return new Promise(function(resolve, reject){
 	db.device.find({where: {imei: imei}, include:[{model: db.user}]}).then(function(dev){
-		console.log("Found Device in DB");
-		resolve(dev);
+		    console.log("Found Device in DB");
+		    resolve(dev);
         },function(err){
 		       reject(err);
         });
@@ -673,7 +673,7 @@ function runCmds(client){
 	getGpsDev(client.imei).then(function(dev){
 
    if(!dev){
-    if(dev.user !==  undefined && dev.user !== null && dev.userId !== null){
+    if(dev.user !==  undefined && dev.user !== null){
 	    console.log('Device in runCmds');
 	     console.log(dev.id);
 	     console.log('Dev user ping Credits');
