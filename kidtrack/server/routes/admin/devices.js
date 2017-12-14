@@ -16,7 +16,10 @@ router.post('/device', [bodyParser.json(), middleware.adminOnly],  function(req,
 
 
 var body = _.pick(req.body, 'imei', 'sim');
-
+console.log('Admin post device new');
+console.log(body);
+body.imei = body.imei.toString();
+body.sim = body.sim.toString();
 body.ktc = body.sim.substr(body.sim.length - 3);
 
 console.log("create Device");

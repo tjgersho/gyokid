@@ -159,6 +159,9 @@ router.post('/register-device', [bodyParser.json(), middleware.requireAuthentica
 
 var body = _.pick(req.body, 'imei', 'ktc');
 
+body.imei = body.imei.toString();
+body.ktc = body.ktc.toString();
+
 var usr = req.user;
 
 console.log('USER in device registration');
