@@ -483,6 +483,9 @@ const server = net.createServer((socc) => {
 
       getGpsDev(imei).then(function(dev){
 
+
+        if(!dev){ 
+
 	      if(status[3] === "B"){
   	          updateGpsDev(dev, {alarm: true});
 	        }
@@ -528,7 +531,7 @@ const server = net.createServer((socc) => {
 
 		  if(dev.user.pingCredits > 0) {
 
-			dev.user.update({pingCredits: dev.user.pingCredits-1});
+		      	dev.user.update({pingCredits: dev.user.pingCredits-1});
 
 		         logData(message);
 		
@@ -541,7 +544,7 @@ const server = net.createServer((socc) => {
 		}else{
 			sendCmds("setToSleep", socc);
 		}
-
+   }
              
 	 },function(err){
 		console.log('Couldnt get Device with IEMI for to do work..');
@@ -647,26 +650,30 @@ function runCmds(client){
 
 	getGpsDev(client.imei).then(function(dev){
 
-
+   if(!dev){
     if(dev.user !==  undefined && dev.user !== null && dev.userId !== null){
-	 console.log('Device in runCmds');
-	console.log(dev.id);
-	console.log('Dev user ping Credits');
-	console.log(dev.user.pingCredits);
+	    console.log('Device in runCmds');
+	     console.log(dev.id);
+	     console.log('Dev user ping Credits');
+	     console.log(dev.user.pingCredits);
 
-	if(dev.user.pingCredits > 0) {
+	    if(dev.user.pingCredits > 0) {
 
 
             var command = getRunningDevCmd(dev);
 
-		console.log('Next Command');
-		console.log(command);
+		     console.log('Next Command');
+		     console.log(command);
 	
-		sendCmds(command, client);
+		     sendCmds(command, client);
 
-	}
+	      }
 
-    }
+       }
+
+     }
+
+
         },function(err){
 		console.log('Could not get GPS Device');
 		console.log(err);
