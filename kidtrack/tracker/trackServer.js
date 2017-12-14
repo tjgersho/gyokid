@@ -484,21 +484,21 @@ const server = net.createServer((socc) => {
       getGpsDev(imei).then(function(dev){
 
 
-        if(!dev){ 
+      if(!dev){ 
 
-	      if(status[3] === "B"){
+	       if(status[3] === "B"){
   	          updateGpsDev(dev, {alarm: true});
 	        }
 
 	
-	if(status[3] === "E"){
+	      if(status[3] === "E"){
 		
-	   if(!socc.errors.v3Eerror){
- 		     socc.errors.v3Eerror = true;
-	     	 socc.errors.v3EerrorTime = moment().format("YYYY-MM-DD HH:mm:ss");
-	    }
+	         if(!socc.errors.v3Eerror){
+ 		         socc.errors.v3Eerror = true;
+	     	    socc.errors.v3EerrorTime = moment().format("YYYY-MM-DD HH:mm:ss");
+	         }
 
-	       var now = moment();
+	            var now = moment();
                var lastConn =  moment( socc.errors.v3EerrorTime );
 
                console.log('Last Conn Diff');
@@ -506,17 +506,17 @@ const server = net.createServer((socc) => {
 
               if (now.diff(lastConn, 'minutes') > 30){
                   sendCmds("resetDevice", socc);
-		}
+		          }
 	
 		
 
-		if (now.diff(lastConn, 'minutes') > 5 && dev.watching){
+		      if (now.diff(lastConn, 'minutes') > 5 && dev.watching){
                   sendCmds("resetDevice", socc);
-		}
+		      }
 		
            }else{
                socc.errors.v3Eerror = false;
-	    }
+	        }
    
 
 	//Check if the user has credits to log this data.. otherwise .. send cmd to shut down device..
@@ -544,6 +544,10 @@ const server = net.createServer((socc) => {
 		}else{
 			sendCmds("setToSleep", socc);
 		}
+   }else{
+
+      console.log('Device is not in database.. or was not found.');
+
    }
              
 	 },function(err){
