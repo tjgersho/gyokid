@@ -121,8 +121,9 @@ export class RegisterDeviceComponent implements OnInit {
 
 
 registerFormOk(){
-
- return this.imeinumber === '' || this.imeinumber.length < 15 || this.ktcnumber.length !== 3;
+  var imeiNum = this.imeinumber.toString();
+  var ktcNum = this.ktcnumber.toString();
+ return imeiNum === '' || imeiNum.length < 15 || ktcNum.length !== 3;
 
 }
  
