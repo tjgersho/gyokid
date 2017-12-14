@@ -455,12 +455,12 @@ const server = net.createServer((socc) => {
 
   socc.on('data', (data) => {
 
-    console.log('Data');
-    console.log(data.toString());
-    var message = data.toString();
+     console.log('Data');
+     console.log(data.toString());
+      var message = data.toString();
   
      var dataArray = message.split(",");
-	console.log(dataArray);
+	   console.log(dataArray);
 
 
      if(isValidClient(dataArray)){
@@ -468,23 +468,30 @@ const server = net.createServer((socc) => {
         var imei = dataArray[1];
 
 	
-	if(socc.imei === undefined){
-  		 socc.imei = imei;
+	      if(socc.imei === undefined){
+  		     socc.imei = imei;
 
          }else if(socc.imei !== imei){
 
-   		socc.imei = imei;
+   		     socc.imei = imei;
          }
 
         var status = dataArray[dataArray.length-1].slice(0,-1);
-	console.log("DEVICE STATUS");
-	console.log(status);
-     	console.log(status[3]);
+	      console.log("DEVICE STATUS");
+	       console.log(status);
+        	console.log(status[3]);
 
       getGpsDev(imei).then(function(dev){
 
+        console.log('DEV in find dev in the data tcp callback..');
+        console.log(dev.id);
+        console.log(dev.ktc);
+        console.log(dev.user);
+        console.log('The imei associated.')
+        console.log(dev.imei);
+        console.log(imei);
 
-      if(!dev){ 
+        if(!dev){ 
 
 	       if(status[3] === "B"){
   	          updateGpsDev(dev, {alarm: true});
@@ -525,7 +532,7 @@ const server = net.createServer((socc) => {
 
 		console.log('Device to check if user has credits');
 
-		if(dev.user !==  undefined && dev.user !== null && dev.userId !== null){
+		if(dev.user !==  undefined && dev.user !== null){
 
 		   console.log(dev.user.pingCredits);
 
