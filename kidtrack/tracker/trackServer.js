@@ -483,7 +483,7 @@ const server = net.createServer((socc) => {
 
       getGpsDev(imei).then(function(dev){
         console.log(dev);
-       if(!dev){ 
+       if(!!dev){ 
         console.log('DEV in find dev in the data tcp callback..');
         console.log(dev.id);
         console.log(dev.ktc);
