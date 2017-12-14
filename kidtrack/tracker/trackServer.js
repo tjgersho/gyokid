@@ -482,7 +482,8 @@ const server = net.createServer((socc) => {
         	console.log(status[3]);
 
       getGpsDev(imei).then(function(dev){
-
+        console.log(dev);
+       if(!dev){ 
         console.log('DEV in find dev in the data tcp callback..');
         console.log(dev.id);
         console.log(dev.ktc);
@@ -491,7 +492,7 @@ const server = net.createServer((socc) => {
         console.log(dev.imei);
         console.log(imei);
 
-        if(!dev){ 
+    
 
 	       if(status[3] === "B"){
   	          updateGpsDev(dev, {alarm: true});
@@ -554,7 +555,9 @@ const server = net.createServer((socc) => {
    }else{
 
       console.log('Device is not in database.. or was not found.');
-
+      socc.write('You are not allowed');
+      removeClient(socc);
+      socc.end();
    }
              
 	 },function(err){
