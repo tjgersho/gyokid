@@ -671,8 +671,9 @@ function runCmds(client){
 	console.log(client.imei);
 
 	getGpsDev(client.imei).then(function(dev){
-
-   if(!dev){
+      console.log('In runCmds.. got gps dev...');
+      
+   if(!!dev){
     if(dev.user !==  undefined && dev.user !== null){
 	    console.log('Device in runCmds');
 	     console.log(dev.id);
@@ -684,10 +685,10 @@ function runCmds(client){
 
             var command = getRunningDevCmd(dev);
 
-		     console.log('Next Command');
-		     console.log(command);
+		        console.log('Next Command');
+		        console.log(command);
 	
-		     sendCmds(command, client);
+		        sendCmds(command, client);
 
 	      }
 
