@@ -483,15 +483,15 @@ const server = net.createServer((socc) => {
 
       getGpsDev(imei).then(function(dev){
 
-	if(status[3] === "B"){
-  	        updateGpsDev(dev, {alarm: true});
-	}
+	      if(status[3] === "B"){
+  	          updateGpsDev(dev, {alarm: true});
+	        }
 
 	
 	if(status[3] === "E"){
 		
 	   if(!socc.errors.v3Eerror){
- 		 socc.errors.v3Eerror = true;
+ 		     socc.errors.v3Eerror = true;
 	     	 socc.errors.v3EerrorTime = moment().format("YYYY-MM-DD HH:mm:ss");
 	    }
 
@@ -522,8 +522,9 @@ const server = net.createServer((socc) => {
 
 		console.log('Device to check if user has credits');
 
-		if(dev.user !==  undefined && dev.user !== null){
-		 console.log(dev.user.pingCredits);
+		if(dev.user !==  undefined && dev.user !== null && dev.userId !== null){
+
+		   console.log(dev.user.pingCredits);
 
 		  if(dev.user.pingCredits > 0) {
 
@@ -617,7 +618,7 @@ function getGpsDev(imei){
 		console.log("Found Device in DB");
 		resolve(dev);
         },function(err){
-		reject(err);
+		       reject(err);
         });
   });
 
@@ -645,6 +646,9 @@ function runCmds(client){
 	console.log(client.imei);
 
 	getGpsDev(client.imei).then(function(dev){
+
+
+    if(dev.user !==  undefined && dev.user !== null && dev.userId !== null){
 	 console.log('Device in runCmds');
 	console.log(dev.id);
 	console.log('Dev user ping Credits');
@@ -662,7 +666,7 @@ function runCmds(client){
 
 	}
 
-            	 
+    }
         },function(err){
 		console.log('Could not get GPS Device');
 		console.log(err);
