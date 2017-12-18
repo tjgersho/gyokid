@@ -482,12 +482,12 @@ const server = net.createServer((socc) => {
         	console.log(status[3]);
 
       getGpsDev(imei).then(function(dev){
-        console.log(dev);
+        console.log(dev.imei);
        if(!!dev){ 
         console.log('DEV in find dev in the data tcp callback..');
         console.log(dev.id);
         console.log(dev.ktc);
-        console.log(dev.user);
+        console.log(dev.user.id);
         console.log('The imei associated.')
         console.log(dev.imei);
         console.log(imei);
@@ -534,23 +534,28 @@ const server = net.createServer((socc) => {
 		console.log('Device to check if user has credits');
 
 		if(dev.user !==  undefined && dev.user !== null){
-      socc.errors.noUser = false;
+                   socc.errors.noUser = false;
 		   console.log(dev.user.pingCredits);
+                   dev.user.update({pingCredits: dev.user.pingCredits-1});
 
 		  if(dev.user.pingCredits > 0) {
-              socc.errors.noPingCredits = false;
-		      	  dev.user.update({pingCredits: dev.user.pingCredits-1});
+                          socc.errors.noPingCredits = false;
+		      	 
 
 		          logData(message);
 		
 		  }else{
-           if(!socc.errors.noPingCredits){
-			       console.log('SHUT DOWN!');
-			       sendCmds("shutDownDevice", socc);
+ 		     console.log('User has no ping Credits..');
+			console.log('client errors');
+			console.log(socc.errors);
+
+                      if(!socc.errors.noPingCredits){
+			 console.log('SHUT DOWN!');
+			 sendCmds("shutDownDevice", socc);
 		         dev.update({watching: false});
-             dev.user.update({pingCredits: dev.user.pingCredits-1});
-             socc.errors.noPingCredits = true;
-          }
+                         dev.user.update({pingCredits: dev.user.pingCredits-1});
+                         socc.errors.noPingCredits = true;
+                        }
 		  }
 		}else{
 

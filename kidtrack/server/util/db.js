@@ -41,6 +41,8 @@ db.comment = sequelize.import('../../models/comment.js');
 db.referral = sequelize.import('../../models/referral.js');
 db.pingSale = sequelize.import('../../models/pingsales.js');
 
+db.admin = sequelize.import('../../models/admin.js');
+
 //////////////////////////////////
 
 ///////RelationShips/////////

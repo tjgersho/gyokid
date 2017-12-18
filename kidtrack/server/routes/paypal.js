@@ -47,7 +47,7 @@ router.post('/logTransaction',  [middleware.requireAuthentication, bodyParser.js
 		////Now Update user ping credits!!
 
 		var userCurrentPingCredits = usr.pingCredits;
-		var newPingCredits = userCurrentPingCredits + transobject.amount * 1024;
+		var newPingCredits = userCurrentPingCredits + transobject.amount * 1000;
 		usr.update({pingCredits: newPingCredits}).then(function(usr){
 		
 			console.log('USer ping credits updated');

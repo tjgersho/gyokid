@@ -21,7 +21,7 @@ optionSelect: number = 1;
 var self = this;
    paypal.Button.render({
 
-        env: 'sandbox', //'production', // Or 'sandbox'
+        env: 'production', //'production', // Or 'sandbox'
 
         client: {
             sandbox:    'AQLrw2lq78u6UcOqyQbGpEPyScKBxe-vEdcZoHBlGR2h1g8mAJG-bd9biVhkgEwiulxVb2NLVdd17G4S',
