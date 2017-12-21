@@ -58,6 +58,95 @@
 
 	<div class="row" style="margin-top:30px;">
 
+
+
+
+
+       	 <div  class="col-md-8">
+
+
+          <div class="panel panel-default">
+             <div class="panel-heading" (click)="openCloseDeviceAccordian()">
+                <h4 class="panel-title">
+                    <a data-toggle="collapse"><span class="glyphicon" [ngClass]="accordOpenCloseButton()"></span> Registered Devices: </a>
+                </h4>
+              </div>
+              <div  class="panel-collapse collapse" [ngClass]="accordOpenClose()">
+                  <div class="panel-body">
+                               <div class="col-xs-5">
+					<h4 style="color:#000;">Devices:</h4>
+				</div>
+                               <div class="col-xs-4">
+					<h4 style="color:#000;">Tag:</h4>
+				</div>
+				<div class="col-xs-3">
+					<h4 style="color:#000;" class="pull-right"> Status: </h4>
+				</div>
+			<div class="clr"></div>
+	 		 <div class="row"  *ngFor="let dev of user.devices" style="border-top: 1px solid #ccc;">
+	      
+				<div class="col-xs-5">
+					<p style="margin-top:5px;">Device: {{ dev.imei | truncate}} </p>
+				</div>
+				<div class="col-xs-4">
+				  
+					<div class="form-group" style="margin-top:5px;">
+
+						  <input class="form-control" (blur)="onTagChange(dev)" [(ngModel)]="dev.tag" placeholder="Tag" maxlength="10"/>
+					</div>
+ 				   
+			
+				</div>
+				
+				<div class="col-xs-3">
+					<button class="btn pull-right" (click)="onTrackStatusToggle(dev)" style="margin-top:5px;" [disabled]="user.pingCredits < 1">
+					    <img [src]="trackingStatusImg(dev.watching)" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
+					</button>
+				</div>
+	 		 </div>
+		         <br />
+		         <div class="row" style="border-top: 1px solid #ccc;">
+
+				<div style="width:150px; float:right; margin-right:15px;">
+					<p>
+
+					<button class="btn pull-right" (click)="onTrackStatusToggleALL()" style="margin-top:5px; float:right;" [disabled]="user.pingCredits < 1">
+					    <img [src]="trackingAllStatusImg()" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
+					</button>
+					   <span style="float:right;"><div style="position:relative; top:10px; padding-right:5px;">Toggle All:</div></span>
+					
+                                        </p>
+				</div>
+				<div style="width:150px; float:right;">
+				  <div [ngStyle]="{'display': user.userHasTrakingDevices()?'block':'none'}" style="float:right;">
+    		                       <a routerLink="/tracker"><img src="assets/datause.png" style="margin-top:5px; width:40px; height:40px;" data-toggle="tooltip" data-placement="bottom" title="Device tracking on and using data!"/></a>
+    		                      <button class="btn btn-md btn-warning" style="margin-top:5px; margin-left:10px;" (click)="user.clearWatching()" data-toggle="tooltip" data-placement="bottom" title="Turn off all device tracking!">
+			                <span style="color:red;"  class="glyphicon glyphicon-off"></span>
+     		                    </button>
+   		                  </div>
+	                        </div>
+                         </div>
+		
+
+		
+
+
+                    </div>
+               </div>
+            </div>
+
+ 
+
+	</div>
+
+
+
+
+
+
+
+
+
 	 <div  class="col-md-4">
 
 
@@ -104,85 +193,10 @@
 	 </div>
 
 
- 	 <div  class="col-md-8">
 
 
-          <div class="panel panel-default">
-             <div class="panel-heading" (click)="openCloseDeviceAccordian()">
-                <h4 class="panel-title">
-                    <a data-toggle="collapse"><span class="glyphicon" [ngClass]="accordOpenCloseButton()"></span> Registered Devices: </a>
-                </h4>
-            </div>
-            <div  class="panel-collapse collapse" [ngClass]="accordOpenClose()">
-                  <div class="panel-body">
-                               <div class="col-xs-5">
-					<h4 style="color:#000;">Devices:</h4>
-				</div>
-                               <div class="col-xs-4">
-					<h4 style="color:#000;">Tag:</h4>
-				</div>
-				<div class="col-xs-3">
-					<h4 style="color:#000;" class="pull-right"> Status: </h4>
-				</div>
-			<div class="clr"></div>
-	 		 <div class="row"  *ngFor="let dev of user.devices" style="border-top: 1px solid #ccc;">
-	      
-				<div class="col-xs-5">
-					<p style="margin-top:5px;">Device: {{ dev.imei | truncate}} </p>
-				</div>
-				<div class="col-xs-4">
-				  
-					<div class="form-group" style="margin-top:5px;">
 
-						  <input class="form-control" (blur)="onTagChange(dev)" [(ngModel)]="dev.tag" placeholder="Tag" maxlength="10"/>
-					</div>
- 				   
-			
-				</div>
-				
-				<div class="col-xs-3">
-					<button class="btn pull-right" (click)="onTrackStatusToggle(dev)" style="margin-top:5px;" [disabled]="user.pingCredits < 1">
-					    <img [src]="trackingStatusImg(dev.watching)" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
-					</button>
-				</div>
-	 		 </div>
-		  <br />
-		  <div class="row" style="border-top: 1px solid #ccc;">
-
-				<div style="width:150px; float:right; margin-right:15px;">
-					<p>
-
-					<button class="btn pull-right" (click)="onTrackStatusToggleALL()" style="margin-top:5px; float:right;" [disabled]="user.pingCredits < 1">
-					    <img [src]="trackingAllStatusImg()" style="margin-left: auto; margin-right:auto; width:20px; display: block;"/>
-					</button>
-					   <span style="float:right;"><div style="position:relative; top:10px; padding-right:5px;">Toggle All:</div></span>
-					
-                                        </p>
-				</div>
-				<div style="width:150px; float:right;">
-				  <div [ngStyle]="{'display': user.userHasTrakingDevices()?'block':'none'}" style="float:right;">
-    		                       <a routerLink="/tracker"><img src="assets/datause.png" style="margin-top:5px; width:40px; height:40px;" data-toggle="tooltip" data-placement="bottom" title="Device tracking on and using data!"/></a>
-    		                      <button class="btn btn-md btn-warning" style="margin-top:5px; margin-left:10px;" (click)="user.clearWatching()" data-toggle="tooltip" data-placement="bottom" title="Turn off all device tracking!">
-			                <span style="color:red;"  class="glyphicon glyphicon-off"></span>
-     		                    </button>
-   		                  </div>
-	                        </div>
-                 </div>
-		
-
-		
-
-
-                  </div>
-            </div>
-          </div>
-
- 
-
-	</div>
-
-
-	</div>
+     </div>
 
 
 
