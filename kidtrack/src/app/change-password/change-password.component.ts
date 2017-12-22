@@ -6,8 +6,8 @@ import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
 
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 
 @Component({
@@ -18,7 +18,7 @@ declare var $ :any;
 export class ChangePasswordComponent implements OnInit {
 
  params: object;
- changePwError: string = '';
+ changePwError = '';
  password: string;
  password2: string;
 
@@ -54,7 +54,7 @@ export class ChangePasswordComponent implements OnInit {
 		console.log(this.user);
 		this.user.getUserFromToken();
 
-	},(err) => {
+	}, (err) => {
 
 		console.log('err on user login');
 		console.log(err);
@@ -73,7 +73,7 @@ export class ChangePasswordComponent implements OnInit {
 	console.log('PASSWORDS ');
 	console.log(this.password, this.password2);
 
-	if(this.password !== this.password2){
+	if (this.password !== this.password2){
 		return false;
 	}else{
 		return true;
@@ -87,8 +87,8 @@ export class ChangePasswordComponent implements OnInit {
         const newpassword = form.value.password;
 	console.log('new Password');
 	console.log(newpassword);
-	
-	this.user.setNewPassword(newpassword).subscribe((resp) =>{
+
+	this.user.setNewPassword(newpassword).subscribe((resp) => {
 
 		console.log('Reset password success resp');
 		console.log(resp);
@@ -99,12 +99,12 @@ export class ChangePasswordComponent implements OnInit {
 
 		$('#passwordResetModal').modal('show');
 
-	},(err) =>{
+	}, (err) => {
 		console.log('Reset Password Err');
 		console.log(err);
-		this.changePwError = "There was an error in updating your password.  You may need to get a new reset password email.";
+		this.changePwError = 'There was an error in updating your password.  You may need to get a new reset password email.';
 
-	}, () => {console.log('reset password observable complete');});
+	}, () => {console.log('reset password observable complete'); });
 
 
 

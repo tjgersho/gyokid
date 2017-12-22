@@ -13,19 +13,19 @@ export class CommentsComponent implements OnInit {
   comments: object[] = [];
 
 
-  limit:number = 50;
-  page:number = 0
-  order:string = '';
-  numPages:number = 0;
+  limit = 50;
+  page = 0;
+  order = '';
+  numPages = 0;
 
 
-  constructor(private http: Http, private user: UserService) { 
+  constructor(private http: Http, private user: UserService) {
 
-    this.setNumberOfPages().subscribe((resp) =>{
+    this.setNumberOfPages().subscribe((resp) => {
 	   console.log('setNumPages in admin user');
 	    console.log(resp);
-		 this.numPages = Math.ceil(resp.json()/this.limit);
-        },(err)=>{console.log('Setting Num Pages in admin user err'); console.log(err);}, ()=>{});
+		 this.numPages = Math.ceil(resp.json() / this.limit);
+        }, (err) => {console.log('Setting Num Pages in admin user err'); console.log(err); }, () => {});
 
 
 
@@ -36,12 +36,12 @@ export class CommentsComponent implements OnInit {
 	this.getComments();
 
   }
- 
+
   getComments(){
 
-        let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-        let options = new RequestOptions({ headers: headers });
-         let getCommentsURL = '/api/v1/admin/comments?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
+        const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+        const options = new RequestOptions({ headers: headers });
+         const getCommentsURL = '/api/v1/admin/comments?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
 
 	this.http.get(getCommentsURL, options).subscribe((resp) => {
 		console.log('Response from getting admin comments');
@@ -53,24 +53,24 @@ export class CommentsComponent implements OnInit {
 	}, (err) => {
 		console.log('Error getting comments');
 		console.log(err);
-	
-	}, () =>{});
+
+	}, () => {});
 
   }
 
    setNumberOfPages(){
 
-	       let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-               let options = new RequestOptions({ headers: headers });
+	       const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+               const options = new RequestOptions({ headers: headers });
 		return this.http.get('/api/v1/admin/commentspagecount', options);
 
    }
 
-  onPageChange(pg:number){
+  onPageChange(pg: number){
 
 	console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
 	console.log(pg);
-	
+
 	this.page = pg;
 	this.getComments();
   }
@@ -82,10 +82,10 @@ export class CommentsComponent implements OnInit {
 	console.log('Delete Comment');
 	console.log(id);
 
-                let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-        let options = new RequestOptions({ headers: headers });
+                const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+        const options = new RequestOptions({ headers: headers });
 
-	this.http.delete('/api/v1/admin/comment/'+ id, options).subscribe((resp) => {
+	this.http.delete('/api/v1/admin/comment/' + id, options).subscribe((resp) => {
 		console.log('Response from getting admin comments');
 		console.log(resp);
 		console.log(resp.json());
@@ -95,8 +95,8 @@ export class CommentsComponent implements OnInit {
 	}, (err) => {
 		console.log('Error getting comments');
 		console.log(err);
-	
-	}, () =>{});
+
+	}, () => {});
 
 
    }

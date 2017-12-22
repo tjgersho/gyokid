@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { GlobalService } from '../services/global.service';
 import { Http, Response, RequestOptions, Headers } from '@angular/http';
 
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 declare var grecaptcha: any;
 
@@ -18,17 +18,17 @@ declare var grecaptcha: any;
 })
 export class ContactComponent implements OnInit {
 
-   captchaChecked: boolean = false;
-   captchaResponse: string = '';
+   captchaChecked = false;
+   captchaResponse = '';
    captchaWidgetId: number;
    reCap: any;
-   captachErrors: string = '';
+   captachErrors = '';
 
   constructor(private http: Http) {
 
 
 	console.log('Contact us Constructor!');
-	
+
 
   }
 
@@ -48,74 +48,74 @@ export class ContactComponent implements OnInit {
 
   onSignup(form: NgForm) {
 
-	
+
 	console.log('SUbmint captcha.value');
 	console.log(this.captchaResponse);
 
-     if(this.captchaResponse.length >0){
+     if (this.captchaResponse.length > 0){
 
 	console.log(form);
 	console.log('name');
 	console.log(form.value.contact_name);
 	console.log(form.value.contact_email);
 	console.log(form.value.contact_comment);
-	
-	let data = {name: form.value.contact_name,
+
+	const data = {name: form.value.contact_name,
 		   email: form.value.contact_email,
 		   comment: form.value.contact_comment,
                     gRecaptchaResponse:  this.captchaResponse};
 
-	
-        let headers = new Headers({ 'Content-Type': 'application/json'});
-        let options = new RequestOptions({ headers: headers });
 
-	this.http.post("/api/v1/contact", data, headers).subscribe((resp: Response) => {
+        const headers = new Headers({ 'Content-Type': 'application/json'});
+        const options = new RequestOptions({ headers: headers });
 
-		console.log("Comment Response");
+	this.http.post('/api/v1/contact', data, headers).subscribe((resp: Response) => {
+
+		console.log('Comment Response');
 		console.log(resp);
 		console.log(resp.json());
                 $('#contactUsthanks').modal('toggle');
 
 		   form.reset();
 
-		
+
                    grecaptcha.reset();
-             
+
               		this.captchaChecked = false;
 
-		
 
-           
-		
+
+
+
 	}, (err) => {
-             
-		console.log("Comment Err");
+
+		console.log('Comment Err');
 		console.log(err);
-		  
+
                    grecaptcha.reset();
-                 
+
 		this.captchaChecked = false;
-		
+
 	}, () => {
 
-		console.log("Comment Complete");
-	
+		console.log('Comment Complete');
+
                    grecaptcha.reset();
-              
+
 		this.captchaChecked = false;
-		
+
 	});
 
       }else{
-	this.captachErrors = "Please check the Captcha Box to proove you're a human.";
+	this.captachErrors = 'Please check the Captcha Box to proove you\'re a human.';
 	setTimeout(function(){
 		this.captachErrors = '';
-	},3000);
+	}, 3000);
 
       }
 
 
    }
-  
+
 
 }

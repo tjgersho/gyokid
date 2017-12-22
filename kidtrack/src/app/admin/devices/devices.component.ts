@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 import { Http, RequestOptions, Headers } from '@angular/http';
 import { Device } from '../../models/device.model';
@@ -20,104 +20,104 @@ import { UserService } from '../../services/user.service';
 })
 export class DevicesComponent implements OnInit {
 
-  loading: boolean = false;
+  loading = false;
   deviceArray: Device[] = [];
   imeinumber: string;
   simnumber: string;
 
-  limit:number = 50;
-  page:number = 0
-  order:string = '';
-  numPages:number = 0;
+  limit = 50;
+  page = 0;
+  order = '';
+  numPages = 0;
 
-  constructor(private user: UserService, private http: Http) { 
-    var self = this;
+  constructor(private user: UserService, private http: Http) {
+    const self = this;
     this.loading = true;
 
 
     this.getDevices();
- 
-    
-   this.setNumberOfPages().subscribe((resp) =>{
+
+
+   this.setNumberOfPages().subscribe((resp) => {
 	   console.log('setNumPages in admin user');
 	    console.log(resp);
-		 this.numPages = Math.ceil(resp.json()/this.limit);
-        },(err)=>{console.log('Setting Num Pages in admin user err'); console.log(err);}, ()=>{});
+		 this.numPages = Math.ceil(resp.json() / this.limit);
+        }, (err) => {console.log('Setting Num Pages in admin user err'); console.log(err); }, () => {});
 
 
 
- 
+
   }
 
  ngOnInit() {}
 
- addNewDevice(imei:string = this.imeinumber, sim:string = this.simnumber){
-   
+ addNewDevice(imei: string = this.imeinumber, sim: string = this.simnumber){
+
 	this.loading = true;
 
-	var dev = {imei: imei, sim: sim};
- 
-       let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-      let options = new RequestOptions({ headers: headers });
+	const dev = {imei: imei, sim: sim};
 
-     let deviceUrl = '/api/v1/admin/device';
-  
+       const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+      const options = new RequestOptions({ headers: headers });
+
+     const deviceUrl = '/api/v1/admin/device';
+
      this.http.post(deviceUrl, dev, options).subscribe((response) => {
 
-			
+
 
 		this.getDevices();
 
  		 this.loading = false;
 
 
-	  },(err)=>{
+	  }, (err) => {
 
   		this.loading = false;
 
 	 });
-            
+
 
 
  }
-	
+
   uploadCSV(){
-       var input=document.createElement('input');
-           input.type="file";
+       const input = document.createElement('input');
+           input.type = 'file';
 	      input.style.display = 'none';
 
            $('body').append(input);
 
 	    $(input).click();
 
-	   var self = this;
+	   const self = this;
 
-     var readFile = function() {
-        var reader = new FileReader();
+     const readFile = function() {
+        const reader = new FileReader();
         reader.onload = function () {
 
 		console.log(reader.result);
 
-		var devarray = reader.result.split("\n");
-    if(devarray[devarray.length-1] === ""){
+		const devarray = reader.result.split('\n');
+    if (devarray[devarray.length - 1] === ''){
        devarray.pop();
     }
-	
+
 		console.log(devarray);
-		  for(var i=0; i<devarray.length; i++){
+		  for (let i = 0; i < devarray.length; i++){
 
-		  	  var imeiandsim = devarray[i].split(',');
+		  	  const imeiandsim = devarray[i].split(',');
 
 
-		  	   self.addNewDevice(imeiandsim[0], imeiandsim[1].replace(/(\r\n|\n|\r)/gm,""));
-			
+		  	   self.addNewDevice(imeiandsim[0], imeiandsim[1].replace(/(\r\n|\n|\r)/gm, ''));
+
 		  }
 
         };
         // start reading the file. When it is done, calls the onload event defined above.
         reader.readAsBinaryString(input.files[0]);
       };
- 	
+
 
       input.addEventListener('change', readFile);
 
@@ -132,11 +132,11 @@ export class DevicesComponent implements OnInit {
 
   this.loading = true;
 
-              let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-             let options = new RequestOptions({ headers: headers });
+              const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+             const options = new RequestOptions({ headers: headers });
 
-   let deviceUrl = '/api/v1/admin/devices?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
-  
+   const deviceUrl = '/api/v1/admin/devices?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
+
      this.http.get(deviceUrl, options).subscribe((response) => {
 
 			console.log('device array response');
@@ -145,7 +145,7 @@ export class DevicesComponent implements OnInit {
  		        this.loading = false;
 
 
-	  },(err)=>{
+	  }, (err) => {
 
 		console.log('Get Device array Err');
 		console.log(err);
@@ -153,7 +153,7 @@ export class DevicesComponent implements OnInit {
   		        this.loading = false;
 
 	 });
-            
+
 
 
  }
@@ -163,17 +163,17 @@ export class DevicesComponent implements OnInit {
 
   setNumberOfPages(){
 
-	       let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-               let options = new RequestOptions({ headers: headers });
+	       const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+               const options = new RequestOptions({ headers: headers });
 		return this.http.get('/api/v1/admin/devicespagecount', options);
 
    }
 
-  onPageChange(pg:number){
+  onPageChange(pg: number){
 
 	console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
 	console.log(pg);
-	
+
 	this.page = pg;
 	this.getDevices();
   }
@@ -190,22 +190,22 @@ export class DevicesComponent implements OnInit {
 
   this.loading = true;
 
-	
-   let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-   let options = new RequestOptions({ headers: headers });
 
-   let data = {userId: dev.userId};
+   const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+   const options = new RequestOptions({ headers: headers });
 
-     this.http.put('/api/v1/admin/device/'+dev.id, data, options).subscribe((response) => {
+   const data = {userId: dev.userId};
+
+     this.http.put('/api/v1/admin/device/' + dev.id, data, options).subscribe((response) => {
 
 			console.log('device array response');
 			console.log(response);
 		         this.getDevices();
  		        this.loading = false;
-	  },(err)=>{
+	  }, (err) => {
   		this.loading = false;
 	 });
-            
+
 
   }
 
@@ -216,22 +216,22 @@ export class DevicesComponent implements OnInit {
 
 	 this.loading = true;
 
-	
-   let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-   let options = new RequestOptions({ headers: headers });
 
-     let data = {id: id, deregister: true};
+   const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+   const options = new RequestOptions({ headers: headers });
 
-     this.http.post('/api/v1/admin/device/'+id, data, options).subscribe((response) => {
+     const data = {id: id, deregister: true};
+
+     this.http.post('/api/v1/admin/device/' + id, data, options).subscribe((response) => {
 
 			console.log('device deregister response');
 			console.log(response);
 		         this.getDevices();
  		        this.loading = false;
-	  },(err)=>{
+	  }, (err) => {
   		this.loading = false;
 	 });
-            
+
 
 
 
@@ -243,11 +243,11 @@ export class DevicesComponent implements OnInit {
 
 	this.loading = true;
 
-         let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-         let options = new RequestOptions({ headers: headers });
+         const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+         const options = new RequestOptions({ headers: headers });
 
-  
-     this.http.delete('/api/v1/admin/device/'+id,  options).subscribe((response) => {
+
+     this.http.delete('/api/v1/admin/device/' + id,  options).subscribe((response) => {
 
 			console.log('device delete response');
 			console.log(response);
@@ -255,12 +255,12 @@ export class DevicesComponent implements OnInit {
  		 this.loading = false;
 
 
-	  },(err)=>{
+	  }, (err) => {
 
   		this.loading = false;
 
 	 });
-            
+
 
 
 

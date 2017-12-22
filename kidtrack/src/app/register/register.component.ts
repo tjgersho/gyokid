@@ -11,25 +11,25 @@ import { Http } from '@angular/http';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-   
+
   params: object;
 
 
-  formCenter: number = 0;
-  username: string = "";
-  email: string = "";
-  password: string = "";
-  signupError: string = "";
-  loading: boolean = false;
+  formCenter = 0;
+  username = '';
+  email = '';
+  password = '';
+  signupError = '';
+  loading = false;
 
-  referralCode: string = '';
+  referralCode = '';
 
 
   constructor(private router: Router, private route: ActivatedRoute, private user: UserService,  private global: GlobalService) { }
 
   ngOnInit() {
 	console.log('Globals');
-	
+
 	this.formCenter = this.calculateFormCenter();
 
 	this.global.onWindowChange.subscribe((data: object) => {
@@ -49,8 +49,8 @@ export class RegisterComponent implements OnInit {
 
 	console.log('Query param... code ?');
 	console.log(params);
-       
-	if(params.hasOwnProperty('code')){
+
+	if (params.hasOwnProperty('code')){
 
    		 this.referralCode =  params['code'];
 
@@ -63,8 +63,8 @@ export class RegisterComponent implements OnInit {
   }
 
   calculateFormCenter(){
-	var offset = (this.global.screenHeight-430)/2 - 120;
-	if(offset < 0){
+	let offset = (this.global.screenHeight - 430) / 2 - 120;
+	if (offset < 0){
 		offset = 0;
          }
 	return offset;
@@ -96,20 +96,20 @@ console.log(this.email);
       console.log(resp);
       this.user.login(this.username, this.password).subscribe((resp) => {
 
-		console.log(" Nested Signup success  -- login response");
+		console.log(' Nested Signup success  -- login response');
 		console.log(resp);
                this.loading = false;
 		 this.router.navigate(['/dashboard']);
 
 	}, (err) => {
-             
-		console.log(" Nested Signup success  -- login ERR");
+
+		console.log(' Nested Signup success  -- login ERR');
 		console.log(err);
                     this.loading = false;
 	}, () => {
 
-		console.log(" Nested Signup success  -- login observable complete");
-		  this.loading = false;	
+		console.log(' Nested Signup success  -- login observable complete');
+		  this.loading = false;
 	});
 
   }, (err) => {
@@ -117,32 +117,32 @@ console.log(this.email);
     console.log('Error on signup req.');
       console.log(err);
 	console.log(err.json());
-	var error = err.json();
+	const error = err.json();
 
 
-	for (var i=0; i< error.errors.length; i++){
-	        if(i > 0){
+	for (let i = 0; i < error.errors.length; i++){
+	        if (i > 0){
 		this.signupError += '<br />';
 		}
 
 		console.log(error.errors[i].message);
 
-		if(error.errors[i].message === "email must be unique"){
-			 this.signupError += "Email already registered. Please select another or reset your password.";
+		if (error.errors[i].message === 'email must be unique'){
+			 this.signupError += 'Email already registered. Please select another or reset your password.';
 		}
 
-		if(error.errors[i].message === "username must be unique"){
-		    this.signupError += "Username already registered. Please select another or reset your password.";
+		if (error.errors[i].message === 'username must be unique'){
+		    this.signupError += 'Username already registered. Please select another or reset your password.';
 		}
-	
+
 
 	}
 
-	 setTimeout(()=>{
-		 
-			this.signupError = "";
+	 setTimeout(() => {
 
-		},3000);
+			this.signupError = '';
+
+		}, 3000);
 
            this.loading = false;
   }, () => {
@@ -152,7 +152,7 @@ console.log(this.email);
   });
 
 
- 
+
 
   }
 

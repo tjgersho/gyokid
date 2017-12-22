@@ -7,8 +7,8 @@ import { Http, RequestOptions, Headers } from '@angular/http';
 
 import { UserService } from '../services/user.service';
 
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 
 
@@ -19,27 +19,27 @@ declare var $ :any;
 })
 export class RegisterDeviceComponent implements OnInit {
 
-  
+
   newlyRegisteredDevices: Device[] = [];
-  imeinumber:string = '';
-  ktcnumber: string = ""
-  regstatustooltip: string = '';
+  imeinumber = '';
+  ktcnumber = '';
+  regstatustooltip = '';
   constructor(private router: Router, private user: UserService, private http: Http) { }
 
   ngOnInit() {
- 
+
   }
 
   setRegistrationToolTip(status){
-       if(status === 0){
+       if (status === 0){
 
-    return "Checking the registration... Please wait.";
+    return 'Checking the registration... Please wait.';
 
-  }else if(status === 1){
-     return "Registration Successfull! Device is now be available for tracking. Make sure your device is turned on.";
+  }else if (status === 1){
+     return 'Registration Successfull! Device is now be available for tracking. Make sure your device is turned on.';
 
   }else{
-     return "Registration Failed. Double check your IMEI number.  You can also only register a device once.";
+     return 'Registration Failed. Double check your IMEI number.  You can also only register a device once.';
   }
   }
 
@@ -47,14 +47,14 @@ export class RegisterDeviceComponent implements OnInit {
 	setTimeout(function(){
    		 $('[data-toggle="tooltip"]').tooltip();
 
-	},1000);
-    
+	}, 1000);
+
   }
 
 
  pushDeviceOnArrays(imei: string){
 
-   var regDev = new Device()
+   const regDev = new Device();
 	regDev.imei = imei;
 
    regDev.registrationOk = 0;
@@ -62,22 +62,22 @@ export class RegisterDeviceComponent implements OnInit {
    regDev.regstatustooltip = this.setRegistrationToolTip(0);
 
    this.newlyRegisteredDevices.push(regDev);
-   
-   return this.newlyRegisteredDevices.length-1;
+
+   return this.newlyRegisteredDevices.length - 1;
 
  }
 
 
  callServerForRegistration(imei: string, ktc: string){
 
-  var regStatus = 0;
- 	
-     var index = this.pushDeviceOnArrays(imei);
+  const regStatus = 0;
 
-     let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-     let options = new RequestOptions({ headers: headers });
+     const index = this.pushDeviceOnArrays(imei);
 
-	var data = {imei: imei, ktc: ktc};
+     const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+     const options = new RequestOptions({ headers: headers });
+
+	const data = {imei: imei, ktc: ktc};
 
 	this.http.post('/api/v1/register-device', data, options).subscribe((resp) => {
 		console.log('Device Registration Resp');
@@ -85,21 +85,21 @@ export class RegisterDeviceComponent implements OnInit {
 
 		this.newlyRegisteredDevices[index].registrationOk = 1;
 		this.newlyRegisteredDevices[index].regstatustooltip = this.setRegistrationToolTip(1);
- 	this.refreshToolTip()
+ 	this.refreshToolTip();
 
-	},(err)=>{ 
+	}, (err) => {
 
  		console.log('Device Registration Resp ERR');
 		console.log(err);
-		
+
 		this.newlyRegisteredDevices[index].registrationOk = 2;
 		this.newlyRegisteredDevices[index].regstatustooltip = this.setRegistrationToolTip(2);
-             this.refreshToolTip()
+             this.refreshToolTip();
 
-	},() => {
+	}, () => {
 
 		console.log('Device Registration DONE');
-		
+
 
 	});
 
@@ -115,28 +115,28 @@ export class RegisterDeviceComponent implements OnInit {
 
 	this.callServerForRegistration(this.imeinumber, this.ktcnumber);
 
-    
+
   }
 
 
 
 registerFormOk(){
-  var imeiNum = this.imeinumber.toString();
-  var ktcNum = this.ktcnumber.toString();
+  const imeiNum = this.imeinumber.toString();
+  const ktcNum = this.ktcnumber.toString();
  return imeiNum === '' || imeiNum.length < 15 || ktcNum.length !== 3;
 
 }
- 
-  
 
- getDevRegistrationStatusImage(dev: Device){	
 
-   
-   if(dev.registrationOk === 0){
+
+ getDevRegistrationStatusImage(dev: Device){
+
+
+   if (dev.registrationOk === 0){
 
     return 'assets/loader.gif';
 
-  }else if(dev.registrationOk === 1){
+  }else if (dev.registrationOk === 1){
      return 'assets/check.png';
 
   }else{
@@ -149,11 +149,11 @@ registerFormOk(){
 
 getDevRegistrationWordClass(dev: Device){
 
-  if(dev.registrationOk === 0){
+  if (dev.registrationOk === 0){
 
    return {'regPend': true};
 
-  }else if(dev.registrationOk === 1){
+  }else if (dev.registrationOk === 1){
     return {'regOk': true, 'regPend': false};
 
   }else{
@@ -164,35 +164,35 @@ getDevRegistrationWordClass(dev: Device){
 }
 
 
- 
 
-	
+
+
   uploadCSV(){
-       var input=document.createElement('input');
-           input.type="file";
+       const input = document.createElement('input');
+           input.type = 'file';
 	      input.style.display = 'none';
 
            $('body').append(input);
 
 	    $(input).click();
 
-	   var self = this;
+	   const self = this;
 
-     var readFile = function() {
-        var reader = new FileReader();
+     const readFile = function() {
+        const reader = new FileReader();
         reader.onload = function () {
 
 		console.log(reader.result);
 
-		var imeiarray = reader.result.split("\n");
-    if(imeiarray[imeiarray.length-1] === ""){
+		const imeiarray = reader.result.split('\n');
+    if (imeiarray[imeiarray.length - 1] === ''){
        imeiarray.pop();
     }
-	
-		console.log(imeiarray);
-		  for(var i=0; i<imeiarray.length; i++){
 
-			var imeiandktc = imeiarray[i].split(',');
+		console.log(imeiarray);
+		  for (let i = 0; i < imeiarray.length; i++){
+
+			const imeiandktc = imeiarray[i].split(',');
 			console.log('IMEI');
 			console.log(imeiandktc[0]);
 			console.log('KTC');
@@ -209,7 +209,7 @@ getDevRegistrationWordClass(dev: Device){
         // start reading the file. When it is done, calls the onload event defined above.
         reader.readAsBinaryString(input.files[0]);
       };
- 	
+
 
       input.addEventListener('change', readFile);
 

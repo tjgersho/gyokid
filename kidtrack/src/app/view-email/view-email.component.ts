@@ -11,8 +11,8 @@ export class ViewEmailComponent implements OnInit {
 
  params: any;
 
- email: string = "";
- 
+ email = '';
+
 
   constructor(private route: ActivatedRoute, private router: Router, private http: Http) { }
 
@@ -37,48 +37,48 @@ export class ViewEmailComponent implements OnInit {
 	console.log(emailId);
 
 
-	 let headers = new Headers({ 'Content-Type': 'application/json'});
-         let options = new RequestOptions({ headers: headers });
-	  this.http.post('/api/v1/email/'+emailId , {emailCode: emailCode}, options).subscribe((resp) =>{
+	 const headers = new Headers({ 'Content-Type': 'application/json'});
+         const options = new RequestOptions({ headers: headers });
+	  this.http.post('/api/v1/email/' + emailId , {emailCode: emailCode}, options).subscribe((resp) => {
 
-			
+
 			console.log('Email from server');
 			console.log(resp);
 		this.email = resp.json().email;
 		console.log(this.email);
 
-		
-	        var iframe = document.getElementById('viewEmail');
-		var iframedoc = (<HTMLIFrameElement> iframe).contentDocument || (<HTMLIFrameElement> iframe).contentWindow.document;
+
+	        const iframe = document.getElementById('viewEmail');
+		const iframedoc = (<HTMLIFrameElement> iframe).contentDocument || (<HTMLIFrameElement> iframe).contentWindow.document;
 
 
 		iframedoc.body.innerHTML = this.email;
 
 			console.log('EMAIL');
 			console.log(this.email);
-		
+
 		setTimeout(function(){
-			
-			(<HTMLInputElement> iframe).height = (iframedoc.body.scrollHeight+50).toString();
-		},200);
+
+			(<HTMLInputElement> iframe).height = (iframedoc.body.scrollHeight + 50).toString();
+		}, 200);
 
 
 
 
-		},(err)=>{
-			console.log("in the http post of get User get Email from server.. ERR");
+		}, (err) => {
+			console.log('in the http post of get User get Email from server.. ERR');
 			console.log(err);
 
-			
-			
-				
+
+
+
 	 });
 
 
  });
 
 
-	
+
   }
 
 }

@@ -14,9 +14,9 @@ export class ConfirmEmailComponent implements OnInit {
 
      params: object;
 
-     loading: boolean = true;
+     loading = true;
 
-     emailConfirmed: boolean = false;
+     emailConfirmed = false;
 
    constructor(private route: ActivatedRoute, private router: Router, private user: UserService) { }
 
@@ -51,7 +51,7 @@ export class ConfirmEmailComponent implements OnInit {
 		this.loading = false;
 		this.emailConfirmed = true;
 
-	},(err) => {
+	}, (err) => {
 
 		console.log('err on user login');
 		console.log(err);
@@ -64,6 +64,6 @@ export class ConfirmEmailComponent implements OnInit {
 
  });
 
-	
+
   }
 }

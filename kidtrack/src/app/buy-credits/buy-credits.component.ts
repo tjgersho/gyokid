@@ -13,12 +13,12 @@ declare var paypal: any;
   styleUrls: ['./buy-credits.component.css']
 })
 export class BuyCreditsComponent implements OnInit {
-buyAmount: number = 2;
-optionSelect: number = 1;
+buyAmount = 2;
+optionSelect = 1;
   constructor(private router: Router, private http: Http, public user: UserService, public global: GlobalService) { }
 
   ngOnInit() {
-var self = this;
+const self = this;
    paypal.Button.render({
 
         env: 'production', //'production', // Or 'sandbox'
@@ -32,7 +32,7 @@ var self = this;
         style: {
             color: 'blue',
             shape: 'rect',
-  	    size: 'responsive' 
+  	    size: 'responsive'
         },
 
 
@@ -44,22 +44,22 @@ var self = this;
                     transactions: [
                         {
                             amount: { total: self.buyAmount.toFixed(2), currency: 'USD' },
-			    "item_list": {
-				"items": [
+			    'item_list': {
+				'items': [
 					{
-					"quantity": 1,
- 				        "name": "item 1",
-        				"price": self.buyAmount.toFixed(2),
-        				"currency": "USD",
-        				"description": "Kidtrack GPS Ping Credits. $" + self.buyAmount.toFixed(2) + " -> Pings: " + self.buyAmount * self.global.cellCreditFactor,
-        				"tax": "0"
+					'quantity': 1,
+ 				        'name': 'item 1',
+        				'price': self.buyAmount.toFixed(2),
+        				'currency': 'USD',
+        				'description': 'Kidtrack GPS Ping Credits. $' + self.buyAmount.toFixed(2) + ' -> Pings: ' + self.buyAmount * self.global.cellCreditFactor,
+        				'tax': '0'
 					}
 				]
 
 				},
-    			    "description": "Kidtrack GPS Ping Credit purchase."
+    			    'description': 'Kidtrack GPS Ping Credit purchase.'
                         }
-			
+
                     ]
                 }
             });
@@ -73,9 +73,9 @@ var self = this;
                 // The payment is complete!
                 // You can now show a confirmation message to the customer
 
-             let headers = new Headers({ 'Content-Type': 'application/json', Auth: self.user.token});
-             let options = new RequestOptions({ headers: headers });
-		self.http.post('/api/v1/logTransaction', {transaction: payment}, options).subscribe((resp) =>{
+             const headers = new Headers({ 'Content-Type': 'application/json', Auth: self.user.token});
+             const options = new RequestOptions({ headers: headers });
+		self.http.post('/api/v1/logTransaction', {transaction: payment}, options).subscribe((resp) => {
 
 				console.log('response from logging transaction');
 				console.log(resp);
@@ -83,7 +83,7 @@ var self = this;
 
 				self.router.navigate(['/dashboard']);
 
-			},(err) => {
+			}, (err) => {
 				console.log('Response from logtransaction response Err');
 				console.log(err);
 
@@ -95,9 +95,9 @@ var self = this;
 
 
             });
-        },onError: function(err) {
+        }, onError: function(err) {
             // Show an error page here, when an error occurs
-            console.log("RESPONS FROM PAYPAL PAYEMNT SUCCESS ERR");
+            console.log('RESPONS FROM PAYPAL PAYEMNT SUCCESS ERR');
 	     console.log(err);
 
         },
@@ -108,7 +108,7 @@ var self = this;
 		console.log(actions);
         }
 
-    }, '#paypal-button');  
+    }, '#paypal-button');
 
 
 
@@ -118,19 +118,19 @@ var self = this;
 
 
 
-  changeOption(opt:number){
+  changeOption(opt: number){
 	this.optionSelect = opt;
 
-	switch(opt){
+	switch (opt){
 		case 1:
 		 this.buyAmount = 2;
 		break;
 		case 2:
 		 this.buyAmount = 5;
-		break
+		break;
 		case 3:
 		 this.buyAmount = 10;
-		break
+		break;
 		case 4:
 		 this.buyAmount = 50;
 		break;

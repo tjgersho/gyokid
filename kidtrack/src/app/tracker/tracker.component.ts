@@ -7,8 +7,8 @@ import { UserService } from '../services/user.service';
 
 
 
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 import loadTouchEvents from 'jquery-touch-events';
 
@@ -20,25 +20,25 @@ loadTouchEvents($);
   styleUrls: ['./tracker.component.css']
 })
 export class TrackerComponent implements OnInit {
-  
-  stateHover: string = ''
 
-  showDeviceSelector: boolean = true;
-  runMap: boolean = false;
-  
-  constructor(private user: UserService, private router:Router) {
+  stateHover = '';
+
+  showDeviceSelector = true;
+  runMap = false;
+
+  constructor(private user: UserService, private router: Router) {
 
 
 	console.log('Tracker constructor');
 	console.log('Tracker constructor');
 
-	if(user.devices.length < 1){
+	if (user.devices.length < 1){
  	  router.navigate(['/dashboard']);
         }
 
-	
 
-	if(user.userHasTrakingDevices()){
+
+	if (user.userHasTrakingDevices()){
 		this.showDeviceSelector = false;
 		this.runMap = true;
 		user.getAllDeviceGpsData();
@@ -48,7 +48,7 @@ export class TrackerComponent implements OnInit {
 		this.runMap = false;
 	}
 
-	
+
    }
 
   ngOnInit() {}
@@ -60,10 +60,10 @@ export class TrackerComponent implements OnInit {
 
              this.showDeviceSelector = true;
  		this.runMap = false;
-	  
+
         }
 
-      
+
 
        devicesSelected(){
 	console.log('In tracker Compoent and devicesSelected');
@@ -71,9 +71,9 @@ export class TrackerComponent implements OnInit {
          this.showDeviceSelector = false;
 	 this.runMap = true;
 
-	
+
        }
-	
+
        cancelDeviceSelection(obj){
          console.log('In tracker on cancel device select.');
 	 console.log(obj);
@@ -84,11 +84,11 @@ export class TrackerComponent implements OnInit {
 
      refreshMapComponent(){
 		 this.runMap = false;
-		setTimeout(() =>{
+		setTimeout(() => {
 
                 	 this.runMap = true;
 
-               },500);
+               }, 500);
 
 
 

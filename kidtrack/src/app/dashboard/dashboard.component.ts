@@ -21,21 +21,21 @@ import { DeviceService } from '../services/device.service';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
-  regDeviceAccordOpen: boolean = true;
-  dataCredAccordOpen: boolean = true;
+  regDeviceAccordOpen = true;
+  dataCredAccordOpen = true;
   timer: any;
-  formCenter: number = 0;
-  allWatching: boolean = false;
+  formCenter = 0;
+  allWatching = false;
 
   constructor(public user: UserService, private global: GlobalService, private deviceService: DeviceService, private router: Router) {
-		if(user.pingCredits < 1){
+		if (user.pingCredits < 1){
 			this.regDeviceAccordOpen = false;
 		}
 
-		if(user.pingCredits > 1000){
+		if (user.pingCredits > 1000){
 			 this.dataCredAccordOpen = false;
 		}
-	
+
 	 }
 
   ngOnInit() {
@@ -52,8 +52,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   calculateFormCenter(){
-	var offset = (this.global.screenHeight-300)/2 - 110;
-	if(offset < 0){
+	let offset = (this.global.screenHeight - 300) / 2 - 110;
+	if (offset < 0){
 		offset = 0;
          }
 	return offset;
@@ -76,56 +76,56 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 
  }
- 
+
  accordOpenCloseButton(){
-	if(this.regDeviceAccordOpen){
+	if (this.regDeviceAccordOpen){
 		return {'glyphicon-minus': true};
 	}else{
 		return {'glyphicon-plus': true};
-	}	
-	
+	}
+
  }
 
  accordOpenClose(){
-	
-	if(this.regDeviceAccordOpen){
+
+	if (this.regDeviceAccordOpen){
 		return {'in': true};
 	}else{
 		return {'in': false};
-	}	
+	}
  }
 
  openCloseDeviceAccordian(){
-	this.regDeviceAccordOpen?this.regDeviceAccordOpen=false:this.regDeviceAccordOpen=true;
+	this.regDeviceAccordOpen ? this.regDeviceAccordOpen = false : this.regDeviceAccordOpen = true;
   }
 
 
- 
+
  dataCredAccordOpenCloseButton(){
-	if(this.dataCredAccordOpen){
+	if (this.dataCredAccordOpen){
 		return {'glyphicon-minus': true};
 	}else{
 		return {'glyphicon-plus': true};
-	}	
-	
+	}
+
  }
 
  dataCredAccordOpenClose(){
-	
-	if(this.dataCredAccordOpen){
+
+	if (this.dataCredAccordOpen){
 		return {'in': true};
 	}else{
 		return {'in': false};
-	}	
+	}
  }
 
  dataCredOpenCloseDeviceAccordian(){
-	this.dataCredAccordOpen?this.dataCredAccordOpen=false:this.dataCredAccordOpen=true;
+	this.dataCredAccordOpen ? this.dataCredAccordOpen = false : this.dataCredAccordOpen = true;
   }
 
 
- trackingStatusImg(bool:boolean){
-	if(bool){
+ trackingStatusImg(bool: boolean){
+	if (bool){
 		return 'assets/signalon.png';
 	}else{
 		return 'assets/signaloff.png';
@@ -133,7 +133,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
  }
 
   trackingAllStatusImg(){
-	if(this.user.allDeviceWatching){
+	if (this.user.allDeviceWatching){
 		return 'assets/signalon.png';
 	}else{
 		return 'assets/signaloff.png';
@@ -146,7 +146,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	console.log(dev);
 	///Update Model////
 	this.deviceService.updateTag(dev, this.user.token);
-	
+
  }
 
  onTrackStatusToggle(dev: Device){
@@ -156,23 +156,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
  }
 
  onTrackStatusToggleALL(){
-	if(this.user.allDeviceWatching){
-		var watchingStatus = false;
+
+	let watchingStatus = false;
+	if (this.user.allDeviceWatching){
+		watchingStatus = false;
 		this.user.allDeviceWatching = false;
 
 	}else{
-		var watchingStatus = true;
+		watchingStatus = true;
 		this.user.allDeviceWatching = true;
 	}
 
-	for(var i=0; i<this.user.devices.length; i++){
+	for (let i = 0; i < this.user.devices.length; i++){
 
-		if(this.user.devices[i].watching && watchingStatus){
+		if (this.user.devices[i].watching && watchingStatus){
 
 			 this.user.devices[i].watching = false;
 		 }
 
-		 if(!this.user.devices[i].watching && !watchingStatus){
+		 if (!this.user.devices[i].watching && !watchingStatus){
 
 			 this.user.devices[i].watching = true;
 		 }
@@ -186,7 +188,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
  goToTrack(){
 
-	if(this.user.pingCredits > 0){
+	if (this.user.pingCredits > 0){
 		this.router.navigate(['/tracker']);
 	}
   }

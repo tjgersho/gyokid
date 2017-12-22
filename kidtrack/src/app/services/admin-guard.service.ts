@@ -10,17 +10,17 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AdminGuardService implements CanActivate {
- 
-  constructor(private user: UserService, private router:Router){}
+
+  constructor(private user: UserService, private router: Router){}
 
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<boolean>|Promise<boolean>|boolean{ 
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean{
 
 
 	console.log('CanActivate Admin');
 
 
-        var self = this;
+        const self = this;
 
 	return new Promise(function(resolve, reject){
 
@@ -29,8 +29,8 @@ export class AdminGuardService implements CanActivate {
 			console.log('In Can Activate.. isAdminUser Response');
 			console.log('In Can Activate.. isAdminUser Response');
 			console.log(resp);
-		
-			if(resp){
+
+			if (resp){
 
 				 resolve(true);
 			}else{
@@ -38,15 +38,15 @@ export class AdminGuardService implements CanActivate {
 	     			 resolve(false);
 
 			}
-			
-		},function(err){
+
+		}, function(err){
 			 self.router.navigate(['/']);
 			 resolve(false);
 
 	     });
-	
+
 	  });
-	
+
   }
 
 }

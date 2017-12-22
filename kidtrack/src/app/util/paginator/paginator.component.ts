@@ -22,15 +22,15 @@ export class PaginatorComponent implements OnInit {
 
 
  pagBackClass(){
-	if(this.page == 0){
+	if (this.page == 0){
 		return {disabled: true};
          }else{
 		return {};
 	}
-	  
+
  }
    pagFwdClass(){
-	if(this.page>=this.numPages-1){
+	if (this.page >= this.numPages - 1){
 		return {disabled: true};
          }else{
 		return {};
@@ -39,7 +39,7 @@ export class PaginatorComponent implements OnInit {
    }
 
   pageActivePageClass(pg: number){
-	if(pg === (this.page+1)){
+	if (pg === (this.page + 1)){
 		return {active: true};
 
 	}else{
@@ -55,9 +55,9 @@ export class PaginatorComponent implements OnInit {
 	console.log(this.page);
 	console.log(this.numPages);
 
-	if(this.page>0){
+	if (this.page > 0){
 	     console.log('Event Emit');
-		this.onPageChange.emit((this.page-1));
+		this.onPageChange.emit((this.page - 1));
          }
 
  }
@@ -68,11 +68,11 @@ export class PaginatorComponent implements OnInit {
 	console.log(this.page);
 	console.log(this.numPages);
 
-	if(this.page<this.numPages-1){
+	if (this.page < this.numPages - 1){
 	     console.log('Event Emit');
-		this.onPageChange.emit((this.page+1));
+		this.onPageChange.emit((this.page + 1));
 	}
-	
+
 
    }
 
@@ -81,14 +81,14 @@ export class PaginatorComponent implements OnInit {
 		console.log('Pag click');
 		console.log(pg);
 
-		console.log(this.page+1);
-	if(pg !== this.page+1){
+		console.log(this.page + 1);
+	if (pg !== this.page + 1){
 	     console.log('Event Emit');
 
-		this.onPageChange.emit((pg-1));
+		this.onPageChange.emit((pg - 1));
          }
 
  }
 
-	
+
 }

@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-inventoryCount: number = 0;
+inventoryCount = 0;
 
   constructor() { }
 

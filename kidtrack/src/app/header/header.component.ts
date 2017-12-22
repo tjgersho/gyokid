@@ -4,8 +4,8 @@ import { UserService } from '../services/user.service';
 import { DeviceService } from '../services/device.service';
 
 
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 
 @Component({
@@ -18,17 +18,17 @@ declare var $ :any;
 
 export class HeaderComponent implements OnInit{
 
- atIndex: boolean = true;
- atTrack: boolean = false;
- atRegister: boolean = false;
- atLogin: boolean = false;
- atDash: boolean = false;
+ atIndex = true;
+ atTrack = false;
+ atRegister = false;
+ atLogin = false;
+ atDash = false;
  navBox: HTMLElement;
- mobileNavOpen: boolean = false;
+ mobileNavOpen = false;
 
-last_known_scroll_position:number = 0;
-ticking:boolean = false;
-navAffixed:boolean = true;
+last_known_scroll_position = 0;
+ticking = false;
+navAffixed = true;
 
  constructor(private route: ActivatedRoute, public user: UserService, private router: Router, private deviceService: DeviceService){
 
@@ -37,54 +37,54 @@ navAffixed:boolean = true;
 		console.log(r);
 		this.setHeaderState();
 
-	   },(e) => {
+	   }, (e) => {
 			console.log('Route Subscribe in header ERR');
 		console.log(e);
 
-	   }, () =>{
+	   }, () => {
 		console.log('Route Subscribe in header complete');
 
 
          });
 
  }
- 
+
 
  setHeaderState(){
- 
- 	 if(this.route.snapshot.url.length > 0){
-	  
-		if(this.route.snapshot.url[0].path === 'tracker'){
+
+ 	 if (this.route.snapshot.url.length > 0){
+
+		if (this.route.snapshot.url[0].path === 'tracker'){
                    this.atTrack = true;
-	
+
                 }else{
                   this.atTrack = false;
 
                 }
 
-               	if(this.route.snapshot.url[0].path === 'dashboard'){
+               	if (this.route.snapshot.url[0].path === 'dashboard'){
                    this.atDash = true;
-	
+
                 }else{
                   this.atDash = false;
 
                 }
-                if(this.route.snapshot.url[0].path === 'login'){
+                if (this.route.snapshot.url[0].path === 'login'){
                    this.atLogin = true;
 
                 }else{
                   this.atLogin = false;
-		
-                
+
+
                 }
 
-                if(this.route.snapshot.url[0].path === 'register'){
+                if (this.route.snapshot.url[0].path === 'register'){
                    this.atRegister = true;
 
                 }else{
                   this.atRegister = false;
-		
-                
+
+
                 }
 		 this.atIndex = false;
 	}else{
@@ -99,14 +99,14 @@ ngOnInit(){
 
    this.navBox = document.getElementById('navBox');
 
-  if(this.route.snapshot.url.length > 0){
+  if (this.route.snapshot.url.length > 0){
      this.navBox.style.position = 'fixed';
       this.navAffixed = true;
     }else{
       this.navBox.style.position = 'relative';
       this.navAffixed = false;
     }
- var self = this;
+ const self = this;
  window.addEventListener('scroll', function(e) {
 
   self.last_known_scroll_position = window.scrollY;
@@ -117,11 +117,11 @@ ngOnInit(){
       self.adjustNavBox();
       self.ticking = false;
     });
-     
+
     self.ticking = true;
 
   }
-  
+
 });
 
   $('[data-toggle="tooltip"]').tooltip();
@@ -133,15 +133,15 @@ ngOnInit(){
 
 
 adjustNavBox() {
-   
+
 
   // do something with the scroll position
 
-  if(this.route.snapshot.url.length < 1 && this.last_known_scroll_position < 380){
+  if (this.route.snapshot.url.length < 1 && this.last_known_scroll_position < 380){
      this.navBox.style.position = 'relative';
      this.navAffixed = false;
     }else{
-      if(this.navBox.style.position === 'relative'){
+      if (this.navBox.style.position === 'relative'){
         this.navBox.style.position = 'fixed';
          this.navAffixed = true;
       }

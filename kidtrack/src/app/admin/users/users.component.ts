@@ -4,8 +4,8 @@ import { UserService } from '../../services/user.service';
 
 
 
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 
 @Component({
@@ -14,12 +14,12 @@ declare var $ :any;
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-users: object[] = []
+users: object[] = [];
 
-  limit:number = 50;
-  page:number = 0
-  order:string = '';
-  numPages:number = 0;
+  limit = 50;
+  page = 0;
+  order = '';
+  numPages = 0;
 
 
   constructor(private http: Http, private user: UserService) { }
@@ -27,23 +27,23 @@ users: object[] = []
   ngOnInit() {
 	this.getUsers();
 
-	this.setNumberOfPages().subscribe((resp) =>{
+	this.setNumberOfPages().subscribe((resp) => {
 			console.log('setNumPages in admin user');
 			console.log(resp);
-				this.numPages = Math.ceil(resp.json()/this.limit);
-                 },(err)=>{console.log('Setting Num Pages in admin user err'); console.log(err);}, ()=>{});
+				this.numPages = Math.ceil(resp.json() / this.limit);
+                 }, (err) => {console.log('Setting Num Pages in admin user err'); console.log(err); }, () => {});
 
 
   }
- 
+
   getUsers(){
 
 
-        let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-        let options = new RequestOptions({ headers: headers });
+        const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+        const options = new RequestOptions({ headers: headers });
 
-	let getUserUrl = '/api/v1/admin/users?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
-  
+	const getUserUrl = '/api/v1/admin/users?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
+
 
 
 	this.http.get(getUserUrl, options).subscribe((resp) => {
@@ -56,23 +56,23 @@ users: object[] = []
 	}, (err) => {
 		console.log('Error getting users');
 		console.log(err);
-	
-	}, () =>{});
+
+	}, () => {});
 
   }
 
    setNumberOfPages(){
 
-	       let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-               let options = new RequestOptions({ headers: headers });
+	       const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+               const options = new RequestOptions({ headers: headers });
 		return this.http.get('/api/v1/admin/userspagecount', options);
 
    }
 
-  onPageChange(pg:number){
+  onPageChange(pg: number){
 	console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
 	console.log(pg);
-	
+
 	this.page = pg;
 	this.getUsers();
   }
@@ -83,10 +83,10 @@ users: object[] = []
 	console.log('Delete user');
 	console.log(id);
 
-                let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-        let options = new RequestOptions({ headers: headers });
+                const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+        const options = new RequestOptions({ headers: headers });
 
-	this.http.delete('/api/v1/admin/user/'+ id, options).subscribe((resp) => {
+	this.http.delete('/api/v1/admin/user/' + id, options).subscribe((resp) => {
 		console.log('Response from getting admin users');
 		console.log(resp);
 		console.log(resp.json());
@@ -96,8 +96,8 @@ users: object[] = []
 	}, (err) => {
 		console.log('Error getting users');
 		console.log(err);
-	
-	}, () =>{});
+
+	}, () => {});
 
 
    }
@@ -106,23 +106,23 @@ users: object[] = []
 
   updateUser(id, data){
 
-	let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-        let options = new RequestOptions({ headers: headers });
+	const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+        const options = new RequestOptions({ headers: headers });
 
 	console.log('Data in ping credit update');
 
-	this.http.put('/api/v1/admin/user/'+ id, data, options).subscribe((resp) => {
+	this.http.put('/api/v1/admin/user/' + id, data, options).subscribe((resp) => {
 		console.log('Response from updating admin users');
 		console.log(resp);
 		console.log(resp.json());
-		
+
 
 
 	}, (err) => {
 		console.log('Error getting users');
 		console.log(err);
 		this.getUsers();
-	}, () =>{});
+	}, () => {});
 
   }
 
@@ -131,8 +131,8 @@ users: object[] = []
 
      	console.log('update ping credits user');
 	console.log(user);
-	
-	let data = {pingCredits: user.pingCredits};
+
+	const data = {pingCredits: user.pingCredits};
 
 	this.updateUser(user.id, data);
 
@@ -145,13 +145,13 @@ users: object[] = []
 
       	console.log('update ping credits user');
 	console.log(user);
-	
-       let data = {referralWins: user.referralWins};
+
+       const data = {referralWins: user.referralWins};
        this.updateUser(user.id, data);
-   
+
    }
 
 
-  
+
 
 }

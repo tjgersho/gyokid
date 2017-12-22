@@ -21,10 +21,10 @@ export class DeviceSelectorComponent implements OnInit {
   @Output() onTrackGo = new EventEmitter<null>();
 
 
-  formCenter: number = 0;
- 
+  formCenter = 0;
+
    editTagBooleanArray: boolean[];
-  
+
   constructor(public user: UserService, private global: GlobalService, private router: Router, private deviceService: DeviceService) { }
 
   ngOnInit() {
@@ -37,12 +37,12 @@ export class DeviceSelectorComponent implements OnInit {
 		console.log(data);
 		this.formCenter = this.calculateFormCenter();
 	});
-	
+
   }
 
    calculateFormCenter(){
-	var offset = (this.global.screenHeight-200)/2 - 70;
-	if(offset < 0){
+	let offset = (this.global.screenHeight - 200) / 2 - 70;
+	if (offset < 0){
 		offset = 0;
          }
 	return offset;
@@ -55,15 +55,15 @@ export class DeviceSelectorComponent implements OnInit {
 	  console.log(dev.tag);
 
 
-	
+
 	  this.deviceService.updateWatching(dev, this.user.token);
 
   }
 
 
   editTagClick(dev){
-	
-	if(dev.editTagBoolean){
+
+	if (dev.editTagBoolean){
 		dev.editTagBoolean = false;
 	}else{
 	  	dev.editTagBoolean = true;
@@ -77,7 +77,7 @@ export class DeviceSelectorComponent implements OnInit {
 
   removeDev(dev: Device){
         console.log('Remove device selector');
-        
+
         console.log(dev);
         //this.user.deviceWatchingUpdate(dev);
 	      this.deviceService.updateWatching(dev, this.user.token);
@@ -87,7 +87,7 @@ export class DeviceSelectorComponent implements OnInit {
 
 
   trackingAllStatusImg(){
-	if(this.user.allDeviceWatching){
+	if (this.user.allDeviceWatching){
 		return 'assets/signalon.png';
 	}else{
 		return 'assets/signaloff.png';
@@ -95,23 +95,25 @@ export class DeviceSelectorComponent implements OnInit {
    }
 
    onTrackStatusToggleALL(){
-	if(this.user.allDeviceWatching){
-		var watchingStatus = false;
+
+	let watchingStatus = false;
+	if (this.user.allDeviceWatching){
+		watchingStatus = false;
 		this.user.allDeviceWatching = false;
 
 	}else{
-		var watchingStatus = true;
+		watchingStatus = true;
 		this.user.allDeviceWatching = true;
 	}
 
-	for(var i=0; i<this.user.devices.length; i++){
+	for (let i = 0; i < this.user.devices.length; i++){
 
-		if(this.user.devices[i].watching && watchingStatus){
+		if (this.user.devices[i].watching && watchingStatus){
 
 			 this.user.devices[i].watching = false;
 		 }
 
-		 if(!this.user.devices[i].watching && !watchingStatus){
+		 if (!this.user.devices[i].watching && !watchingStatus){
 
 			 this.user.devices[i].watching = true;
 		 }

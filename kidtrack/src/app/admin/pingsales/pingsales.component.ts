@@ -14,18 +14,18 @@ export class PingsalesComponent implements OnInit {
  transactions: object[] = [];
 
 
-   limit:number = 50;
-  page:number = 0
-  order:string = '';
-  numPages:number = 0;
+   limit = 50;
+  page = 0;
+  order = '';
+  numPages = 0;
 
   constructor(private http: Http, private user: UserService, private global: GlobalService) {
 
-       this.setNumberOfPages().subscribe((resp) =>{
+       this.setNumberOfPages().subscribe((resp) => {
 	   console.log('setNumPages in admin user');
 	    console.log(resp);
-		 this.numPages = Math.ceil(resp.json()/this.limit);
-        },(err)=>{console.log('Setting Num Pages in admin user err'); console.log(err);}, ()=>{});
+		 this.numPages = Math.ceil(resp.json() / this.limit);
+        }, (err) => {console.log('Setting Num Pages in admin user err'); console.log(err); }, () => {});
 
 
 
@@ -35,15 +35,15 @@ export class PingsalesComponent implements OnInit {
 	this.getTransactions();
   }
 
- 
+
 
  getTransactions(){
 
-        let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-        let options = new RequestOptions({ headers: headers });
-	
-	 let getSalesUrl = '/api/v1/admin/pingsales?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
-  
+        const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+        const options = new RequestOptions({ headers: headers });
+
+	 const getSalesUrl = '/api/v1/admin/pingsales?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
+
 
 	this.http.get(getSalesUrl, options).subscribe((resp) => {
 		console.log('Response for ping sales..');
@@ -55,25 +55,25 @@ export class PingsalesComponent implements OnInit {
 	}, (err) => {
 		console.log('Error getting comments');
 		console.log(err);
-	
-	}, () =>{});
+
+	}, () => {});
 
   }
 
 
   setNumberOfPages(){
 
-	       let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-               let options = new RequestOptions({ headers: headers });
+	       const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+               const options = new RequestOptions({ headers: headers });
 		return this.http.get('/api/v1/admin/salespagecount', options);
 
    }
 
-  onPageChange(pg:number){
+  onPageChange(pg: number){
 
 	console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
 	console.log(pg);
-	
+
 	this.page = pg;
 	this.getTransactions();
   }
@@ -84,10 +84,10 @@ export class PingsalesComponent implements OnInit {
 	console.log('Delete Transaction');
 	console.log(id);
 
-        let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-        let options = new RequestOptions({ headers: headers });
+        const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+        const options = new RequestOptions({ headers: headers });
 
-	this.http.delete('/api/v1/admin/pingsales/'+ id, options).subscribe((resp) => {
+	this.http.delete('/api/v1/admin/pingsales/' + id, options).subscribe((resp) => {
 		console.log('Response from deleting admin transaction');
 		console.log(resp);
 		console.log(resp.json());
@@ -97,8 +97,8 @@ export class PingsalesComponent implements OnInit {
 	}, (err) => {
 		console.log('Error getting comments');
 		console.log(err);
-	
-	}, () =>{});
+
+	}, () => {});
 
 
    }

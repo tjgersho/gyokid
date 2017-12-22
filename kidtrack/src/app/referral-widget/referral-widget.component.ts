@@ -5,8 +5,8 @@ import { GlobalService } from '../services/global.service';
 import { NgForm } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 declare var twttr: any;
 
@@ -19,26 +19,26 @@ declare var twttr: any;
 export class ReferralWidgetComponent implements OnInit {
 
   mailtoBody: SafeResourceUrl;
-  facebookShareLink:SafeResourceUrl;
-  twitterURL:SafeResourceUrl;
-  referralAccordOpen: boolean = true;
+  facebookShareLink: SafeResourceUrl;
+  twitterURL: SafeResourceUrl;
+  referralAccordOpen = true;
 
-  constructor(public user: UserService, private ds: DomSanitizer) { 
+  constructor(public user: UserService, private ds: DomSanitizer) {
 
-      var bodyString = `Hey,\n\nYou should check out https://kidtrack.io, and thier GPS tracker for kids.\n
+      let bodyString = `Hey,\n\nYou should check out https://kidtrack.io, and thier GPS tracker for kids.\n
         Join using this link so I get credit for the referral:\n
          https://kidtrack.io/register?code=` + user.referralCode;
-                   
-	bodyString = "mailto:?subject=Check out Kidtrack.io&body=" + encodeURIComponent(bodyString);
 
-		
+	bodyString = 'mailto:?subject=Check out Kidtrack.io&body=' + encodeURIComponent(bodyString);
+
+
 //ds.bypassSecurityTrustResourceUrl();
 	 this.mailtoBody = bodyString;
 
 		console.log(this.mailtoBody);
 
 
-	var twtstring = "register?code=" + user.referralCode;
+	const twtstring = 'register?code=' + user.referralCode;
 
 		console.log(twtstring);
 
@@ -46,27 +46,27 @@ export class ReferralWidgetComponent implements OnInit {
 
 		console.log(this.twitterURL);
 
-         var fbstring = "https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fkidtrack.io%2Fregister%3Fcode%3D" + user.referralCode + "&layout=button_count&size=large&mobile_iframe=true&appId=162531991031337&width=84&height=28";
+         const fbstring = 'https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fkidtrack.io%2Fregister%3Fcode%3D' + user.referralCode + '&layout=button_count&size=large&mobile_iframe=true&appId=162531991031337&width=84&height=28';
 	console.log(fbstring);
 
          this.facebookShareLink = ds.bypassSecurityTrustResourceUrl(fbstring);
-	
+
 	console.log(this.facebookShareLink);
    }
 
   ngOnInit() {
-	
+
 	console.log('LAODING SHARE WIDGET!!!!');
 	console.log(twttr);
 
 
-        twttr.widgets.load( document.getElementById("twitterContainer") );
+        twttr.widgets.load( document.getElementById('twitterContainer') );
 
   }
 
 
 
-   
+
 
   progressClass(){
 
@@ -75,12 +75,12 @@ export class ReferralWidgetComponent implements OnInit {
 		case this.user.referralCount <= 2:
 			return {'progress-bar-info' : true};
 
-		
+
 
 		case this.user.referralCount > 2 && this.user.referralCount <= 5:
-			return {'progress-bar-success' : true};	
-		
-		
+			return {'progress-bar-success' : true};
+
+
                 case this.user.referralCount > 5 && this.user.referralCount <= 10:
 			return {'progress-bar-warning' : true};
 
@@ -88,7 +88,7 @@ export class ReferralWidgetComponent implements OnInit {
 
                 case this.user.referralCount > 10:
 			return {'progress-bar-danger' : true};
-	
+
 
 	}
 
@@ -98,19 +98,19 @@ export class ReferralWidgetComponent implements OnInit {
 	switch (true){
 
 		case this.user.referralCount <= 2:
-			return this.user.referralCount*25/2;
-	
+			return this.user.referralCount * 25 / 2;
+
 
 		case this.user.referralCount > 2 && this.user.referralCount <= 5:
-			return 25+(this.user.referralCount-2)*25/3;	
+			return 25 + (this.user.referralCount - 2) * 25 / 3;
 
-		
+
                 case this.user.referralCount > 5 && this.user.referralCount <= 10:
-			return 50+(this.user.referralCount-5)*25/5;	
-	
+			return 50 + (this.user.referralCount - 5) * 25 / 5;
+
 
                 case this.user.referralCount > 10:
-			return 75+(this.user.referralCount-10)*25/10;	
+			return 75 + (this.user.referralCount - 10) * 25 / 10;
 
 
          }
@@ -119,7 +119,7 @@ export class ReferralWidgetComponent implements OnInit {
 
 
   openReferralForm(){
-	$("#GetAFriendToJoinModal").modal('show');
+	$('#GetAFriendToJoinModal').modal('show');
 
 
    }
@@ -127,26 +127,26 @@ export class ReferralWidgetComponent implements OnInit {
 
   opeCloseReferralAccordian(){
 
-        this.referralAccordOpen?this.referralAccordOpen=false:this.referralAccordOpen=true;
+        this.referralAccordOpen ? this.referralAccordOpen = false : this.referralAccordOpen = true;
 
   }
 
   referralAccordOpenClose(){
-      if(this.referralAccordOpen){
+      if (this.referralAccordOpen){
 		return {'in': true};
 	}else{
 		return {'in': false};
-	}	
+	}
 
 
   }
 
   referralAccordOpenCloseButton(){
-     if(this.referralAccordOpen){
+     if (this.referralAccordOpen){
 		return {'glyphicon-minus': true};
 	}else{
 		return {'glyphicon-plus': true};
-	}	
+	}
 
 
   }

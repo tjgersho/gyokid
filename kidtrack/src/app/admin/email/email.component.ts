@@ -11,18 +11,18 @@ export class EmailComponent implements OnInit {
 
   emails: object[] = [];
 
-   limit:number = 50;
-  page:number = 0
-  order:string = '';
-  numPages:number = 0;
+   limit = 50;
+  page = 0;
+  order = '';
+  numPages = 0;
 
   constructor(private http: Http, private user: UserService) {
 
-     this.setNumberOfPages().subscribe((resp) =>{
+     this.setNumberOfPages().subscribe((resp) => {
 	   console.log('setNumPages in admin user');
 	    console.log(resp);
-		 this.numPages = Math.ceil(resp.json()/this.limit);
-        },(err)=>{console.log('Setting Num Pages in admin user err'); console.log(err);}, ()=>{});
+		 this.numPages = Math.ceil(resp.json() / this.limit);
+        }, (err) => {console.log('Setting Num Pages in admin user err'); console.log(err); }, () => {});
 
 
 
@@ -32,14 +32,14 @@ export class EmailComponent implements OnInit {
 	this.getEmails();
 
   }
- 
+
   getEmails(){
 
 
-        let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-        let options = new RequestOptions({ headers: headers });
+        const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+        const options = new RequestOptions({ headers: headers });
 
-	let getEmailURL = '/api/v1/admin/emails?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
+	const getEmailURL = '/api/v1/admin/emails?limit=' + this.limit + '&page=' + this.page + '&order=' + this.order;
 
 	this.http.get(getEmailURL, options).subscribe((resp) => {
 		console.log('Response from getting admin emails');
@@ -51,27 +51,27 @@ export class EmailComponent implements OnInit {
 	}, (err) => {
 		console.log('Error getting emails');
 		console.log(err);
-	
-	}, () =>{});
+
+	}, () => {});
 
   }
 
 
 
- 
+
   setNumberOfPages(){
 
-	       let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-               let options = new RequestOptions({ headers: headers });
+	       const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+               const options = new RequestOptions({ headers: headers });
 		return this.http.get('/api/v1/admin/emailpagecount', options);
 
    }
 
-  onPageChange(pg:number){
+  onPageChange(pg: number){
 
 	console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
 	console.log(pg);
-	
+
 	this.page = pg;
 	this.getEmails();
   }
@@ -83,10 +83,10 @@ export class EmailComponent implements OnInit {
 	console.log('Delete Email');
 	console.log(id);
 
-                let headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
-        let options = new RequestOptions({ headers: headers });
+                const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
+        const options = new RequestOptions({ headers: headers });
 
-	this.http.delete('/api/v1/admin/email/'+ id, options).subscribe((resp) => {
+	this.http.delete('/api/v1/admin/email/' + id, options).subscribe((resp) => {
 		console.log('Response from getting admin emails');
 		console.log(resp);
 		console.log(resp.json());
@@ -96,8 +96,8 @@ export class EmailComponent implements OnInit {
 	}, (err) => {
 		console.log('Error getting emails');
 		console.log(err);
-	
-	}, () =>{});
+
+	}, () => {});
 
 
    }

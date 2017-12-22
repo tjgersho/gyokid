@@ -144,22 +144,22 @@ const appRoutes: Routes = [
           {
             path: 'devices',
             component: DevicesComponent
-		
+
           },
           {
             path: 'email',
             component: EmailComponent
-    
+
           },
           {
             path: 'comments',
             component: CommentsComponent
-    
+
           },
           {
             path: 'sales',
             component: PingsalesComponent
-    
+
           }
         ]
 

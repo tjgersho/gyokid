@@ -5,12 +5,12 @@ export class Device{
  imei: string;
  sim: string;
  shortImei: string;
- tag: string = '';
- watching: boolean = false;
+ tag = '';
+ watching = false;
  gpsdata: Gps[] = [];
- registrationOk: number = 0;
- regstatustooltip: string = "Registration is good";
- alarm: boolean = false;
+ registrationOk = 0;
+ regstatustooltip = 'Registration is good';
+ alarm = false;
  constructor(){}
- editTagBoolean:boolean = false;
+ editTagBoolean = false;
 }

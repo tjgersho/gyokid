@@ -12,13 +12,13 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthPingGuardService implements CanActivate {
- 
-  constructor(private user: UserService, private router:Router){}
+
+  constructor(private user: UserService, private router: Router){}
 
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<boolean>|Promise<boolean>|boolean {
- 
-	var self = this;
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean {
+
+	const self = this;
 	console.log('In Can Activate for AuthGuardService');
 
 	return new Promise(function(resolve, reject){
@@ -27,11 +27,11 @@ export class AuthPingGuardService implements CanActivate {
 
 			console.log('In Can Activate.. isValidUser Response');
 			console.log(user);
-			
-			if(user && user.pingCredits > 0){
+
+			if (user && user.pingCredits > 0){
 
 				 resolve(true);
-			}else if(user){
+			}else if (user){
 
 				 self.router.navigate(['/dashboard']);
 	     			 resolve(false);
@@ -41,13 +41,13 @@ export class AuthPingGuardService implements CanActivate {
 	     			 resolve(false);
 
 			}
-			
-		},function(err){
+
+		}, function(err){
 			 self.router.navigate(['/']);
 			 resolve(false);
 
 	     });
-	
+
 	  });
 
   }

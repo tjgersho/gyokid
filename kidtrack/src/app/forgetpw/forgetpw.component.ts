@@ -5,8 +5,8 @@ import { UserService } from '../services/user.service';
 import { GlobalService } from '../services/global.service';
 
 
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 
 
 @Component({
@@ -16,15 +16,15 @@ declare var $ :any;
 })
 export class ForgetpwComponent implements OnInit {
 
- formCenter: number = 0;
- forgetPwError: string = '';
+ formCenter = 0;
+ forgetPwError = '';
 
   constructor(private router: Router, private userService: UserService, private global: GlobalService) { }
-		
+
   ngOnInit() {
 
 	console.log('Globals');
-	
+
 	this.formCenter = this.calculateFormCenter();
 
 	this.global.onWindowChange.subscribe((data: object) => {
@@ -35,14 +35,14 @@ export class ForgetpwComponent implements OnInit {
   }
 
   calculateFormCenter(){
-	var offset = (this.global.screenHeight-250)/2 - 70;
-	if(offset < 0){
+	let offset = (this.global.screenHeight - 250) / 2 - 70;
+	if (offset < 0){
 		offset = 0;
          }
 	return offset;
   }
 
-  
+
   forgetPwEmailSentOk(){
 
   $('#forgetPasswordModal').modal('hide');
@@ -51,7 +51,7 @@ export class ForgetpwComponent implements OnInit {
 
    }
 
-	
+
    onSubmit(form: NgForm) {
        const usernameoremail = form.value.usernameoremail;
 	console.log('Username or email');
@@ -64,10 +64,10 @@ export class ForgetpwComponent implements OnInit {
 
           }, (err) => {
 
-		this.forgetPwError = "There was an error finding your username/email in our system.";
+		this.forgetPwError = 'There was an error finding your username/email in our system.';
 		setTimeout(function(){
 			this.forgetPwError = '';
-		},3000);
+		}, 3000);
 
 
 	}, () => {
@@ -76,9 +76,9 @@ export class ForgetpwComponent implements OnInit {
 
 	});
 
-   
+
   }
-	
+
 
 
 }

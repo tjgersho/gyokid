@@ -12,23 +12,23 @@ export class AppComponent {
   title = 'KidTrack';
 
 	constructor(private global: GlobalService, private router: Router){
-			
-	   global.onWindowChange.subscribe((w)=>{
-		console.log("On window change global observable in index");
+
+	   global.onWindowChange.subscribe((w) => {
+		console.log('On window change global observable in index');
 		console.log(w);
             });
-           
+
          router.events.subscribe((evt) => {
             if (!(evt instanceof NavigationEnd)) {
                 return;
              }
-            window.scrollTo(0, 0)
+            window.scrollTo(0, 0);
           });
-		
+
 	}
 	@HostListener('window:resize', ['$event'])
 	 onResize(event) {
-  		this.global.updateWindowDimensions()
+  		this.global.updateWindowDimensions();
 	 }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit , AfterViewInit } from '@angular/core';
 
-declare var jquery:any;
-declare var $ :any;
+declare var jquery: any;
+declare var $: any;
 declare var xProduct: any;
 
 
@@ -16,9 +16,9 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
 
 
-  constructor() { 
+  constructor() {
 
-	
+
 	//global.onWindowChange.subscribe((w)=>{
 	//	console.log("On window change global observable in index");
 	//	console.log(w);
@@ -33,7 +33,7 @@ export class IndexComponent implements OnInit, AfterViewInit {
   }
 
 
-  
+
  ngAfterViewInit(){
 
 
@@ -41,5 +41,5 @@ export class IndexComponent implements OnInit, AfterViewInit {
 
 
 
-  
+
 }

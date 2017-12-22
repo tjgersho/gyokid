@@ -9,10 +9,10 @@ import { Router, Event, NavigationStart, NavigationEnd, NavigationError, Navigat
   styleUrls: ['./loader.component.css']
 })
 export class LoaderComponent implements OnInit {
- showLoader: boolean = true;
-  constructor(private router: Router) { 
+ showLoader = true;
+  constructor(private router: Router) {
 
-	 
+
       router.events.subscribe( (event: Event) => {
 
 		console.log('Router Event');
@@ -49,7 +49,7 @@ export class LoaderComponent implements OnInit {
 
 
  toggleLoader(){
-	this.showLoader ? this.showLoader = false: this.showLoader = true;
+	this.showLoader ? this.showLoader = false : this.showLoader = true;
 
  }
 
