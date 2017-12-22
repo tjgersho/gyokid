@@ -15,7 +15,7 @@ declare var paypal: any;
 export class BuyCreditsComponent implements OnInit {
 buyAmount: number = 2;
 optionSelect: number = 1;
-  constructor(private router: Router, private http: Http, private user: UserService, private global: GlobalService) { }
+  constructor(private router: Router, private http: Http, public user: UserService, public global: GlobalService) { }
 
   ngOnInit() {
 var self = this;

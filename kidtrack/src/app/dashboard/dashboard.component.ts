@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   formCenter: number = 0;
   allWatching: boolean = false;
 
-  constructor(private user: UserService, private global: GlobalService, private deviceService: DeviceService, private router: Router) {
+  constructor(public user: UserService, private global: GlobalService, private deviceService: DeviceService, private router: Router) {
 		if(user.pingCredits < 1){
 			this.regDeviceAccordOpen = false;
 		}

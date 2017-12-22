@@ -22,7 +22,7 @@ export class ChangePasswordComponent implements OnInit {
  password: string;
  password2: string;
 
-  constructor(private route: ActivatedRoute, private router: Router, private user: UserService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public user: UserService) { }
 
   ngOnInit() {
 
@@ -68,7 +68,7 @@ export class ChangePasswordComponent implements OnInit {
 
   }
 
- passwordsMatch(form: NgForm) {
+ passwordsMatch() {
 
 	console.log('PASSWORDS ');
 	console.log(this.password, this.password2);

@@ -23,7 +23,7 @@ export class ReferralWidgetComponent implements OnInit {
   twitterURL:SafeResourceUrl;
   referralAccordOpen: boolean = true;
 
-  constructor(private user: UserService, private ds: DomSanitizer) { 
+  constructor(public user: UserService, private ds: DomSanitizer) { 
 
       var bodyString = `Hey,\n\nYou should check out https://kidtrack.io, and thier GPS tracker for kids.\n
         Join using this link so I get credit for the referral:\n

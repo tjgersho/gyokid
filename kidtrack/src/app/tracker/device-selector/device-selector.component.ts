@@ -25,7 +25,7 @@ export class DeviceSelectorComponent implements OnInit {
  
    editTagBooleanArray: boolean[];
   
-  constructor(private user: UserService, private global: GlobalService, private router: Router, private deviceService: DeviceService) { }
+  constructor(public user: UserService, private global: GlobalService, private router: Router, private deviceService: DeviceService) { }
 
   ngOnInit() {
 

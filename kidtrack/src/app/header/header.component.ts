@@ -30,7 +30,7 @@ last_known_scroll_position:number = 0;
 ticking:boolean = false;
 navAffixed:boolean = true;
 
- constructor(private route: ActivatedRoute, private user: UserService, private router: Router, private deviceService: DeviceService){
+ constructor(private route: ActivatedRoute, public user: UserService, private router: Router, private deviceService: DeviceService){
 
 	route.url.subscribe((r) => {
 		console.log('Route subscribe in header Response');
