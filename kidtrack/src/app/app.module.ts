@@ -78,6 +78,7 @@ import { ReferralWidgetComponent } from './referral-widget/referral-widget.compo
 import { FaqsComponent } from './faqs/faqs.component';
 import { PaginatorComponent } from './util/paginator/paginator.component';
 import { PagearrPipe } from './util/pagearr.pipe';
+import { SafePipe } from './util/safe.pipe';
 
 
 
@@ -120,7 +121,8 @@ import { PagearrPipe } from './util/pagearr.pipe';
     ReferralWidgetComponent,
     FaqsComponent,
     PaginatorComponent,
-    PagearrPipe
+    PagearrPipe,
+    SafePipe
   ],
   imports: [
     BrowserModule,
