@@ -69,7 +69,7 @@ export class ContactComponent implements OnInit {
         const headers = new Headers({ 'Content-Type': 'application/json'});
         const options = new RequestOptions({ headers: headers });
 
-	this.http.post('/api/v1/contact', data, headers).subscribe((resp: Response) => {
+	this.http.post('/api/v1/contact', data, options).subscribe((resp: Response) => {
 
 		//console.log('Comment Response');
 		//console.log(resp);
