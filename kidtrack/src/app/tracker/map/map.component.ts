@@ -51,8 +51,8 @@ export class MapComponent implements OnInit {
         });
 
    this.initializeMap().then(function(resp){
-	console.log('Self. Timer');
-	console.log(self.timer);
+	//console.log('Self. Timer');
+	//console.log(self.timer);
 
      if (!self.timer){
 
@@ -89,8 +89,8 @@ export class MapComponent implements OnInit {
 
     }, function(err){
 
-		console.log('Err initializing map');
-		console.log(err);
+		//console.log('Err initializing map');
+		//console.log(err);
 
 	});
 
@@ -127,14 +127,14 @@ export class MapComponent implements OnInit {
 	return new Promise(function(resolve, reject){
 
 		self.deviceService.getGpsData(self.user.devices, self.user.token).then(function(resp){
-			console.log('Got GPS data.');
-			console.log(resp);
+			//console.log('Got GPS data.');
+			//console.log(resp);
 
 				resolve();
 
 		}, function(err){
-				console.log('Didnt get GPS data....');
-			console.log(err);
+				//console.log('Didnt get GPS data....');
+			//console.log(err);
 			reject();
 
 		});
@@ -159,8 +159,8 @@ export class MapComponent implements OnInit {
 	for (let i = 0; i < this.user.devices.length; i++){
 		if (this.user.devices[i].watching && this.user.devices[i].gpsdata[0]){
 
-			console.log(this.user.devices[i].tag);
-			console.log(this.user.devices[i].gpsdata[0].location.lat);
+			//console.log(this.user.devices[i].tag);
+			//console.log(this.user.devices[i].gpsdata[0].location.lat);
 
 			const loc = this.user.devices[i].gpsdata[0].location;
 
@@ -193,8 +193,8 @@ export class MapComponent implements OnInit {
 
          const viewPortDiff = (this.maxLon - this.minLon) >  (this.maxLat - this.minLat) ? (this.maxLon - this.minLon) : (this.maxLat - this.minLat);
 
-	console.log('View Port Dif');
-	console.log(viewPortDiff);
+	//console.log('View Port Dif');
+	//console.log(viewPortDiff);
 
 
       this.latAv = this.latAv / this.watchingCount;
@@ -203,49 +203,48 @@ export class MapComponent implements OnInit {
 
 	this.map.setCenter({lat: this.latAv, lng: this.lonAv});
 
-	const newZoom = 2;
-
+	var newZoom = 2;
 	switch (true) {
 
 		case (viewPortDiff >= 100): {
-			const newZoom = 3;
+			newZoom = 3;
 		     break;
 		}
 		case (viewPortDiff < 100 && viewPortDiff >= 50): {
-			const newZoom = 5;
+			newZoom = 5;
 		     break;
 		}
 		case (viewPortDiff < 50 && viewPortDiff >= 20): {
-			const newZoom = 7;
+			 newZoom = 7;
 		     break;
 		}
 		case (viewPortDiff < 20 && viewPortDiff >= 5): {
-			const newZoom = 8;
+			newZoom = 8;
 		     break;
 		}
 		case (viewPortDiff < 5 && viewPortDiff >= 1): {
-			const newZoom = 10;
+			newZoom = 10;
 		     break;
 		}
 		case (viewPortDiff < 1 && viewPortDiff >= 0.5): {
-			const newZoom = 11;
+			newZoom = 11;
 		     break;
 		}
 		case (viewPortDiff < 0.5 && viewPortDiff >= 0.1): {
-			const newZoom = 12;
+			newZoom = 12;
 		     break;
 		}
 		case (viewPortDiff < 0.1 && viewPortDiff >= 0.01): {
-			const newZoom = 13;
+			newZoom = 13;
 		     break;
 		}
 		default: {
-		    const newZoom = 15;
+		    newZoom = 15;
 		  break;
 		}
 	}
-		console.log('New Zoom');
-		console.log(newZoom);
+		//console.log('New Zoom');
+		//console.log(newZoom);
 
 	 this.map.setZoom(newZoom);
 
@@ -255,8 +254,8 @@ export class MapComponent implements OnInit {
 
    	const self = this;
 
-	console.log('Draw Markers..');
-	console.log(this);
+	//console.log('Draw Markers..');
+	//console.log(this);
 
 	for ( let i = 0; i < this.user.devices.length; i++){
 	 if (this.user.devices[i].watching && this.user.devices[i].gpsdata[0]){
@@ -366,7 +365,7 @@ export class MapComponent implements OnInit {
 
 
   gameloop(){
-	console.log('GAME LOOP');
+	//console.log('GAME LOOP');
 	const self = this;
 	const watchingArray = [];
 	for (let j = 0; j < this.user.devices.length; j++){
@@ -376,17 +375,17 @@ export class MapComponent implements OnInit {
 		}
 	}
 	this.deviceService.getGpsData(watchingArray, self.user.token).then(function(resp){
-			console.log('Got GPS data.');
-			console.log(resp);
+			//console.log('Got GPS data.');
+			//console.log(resp);
 
 		for (let k = 0; k < self.user.devices.length; k++){
 		 if (self.user.devices[k].watching){
 
 		  for (let i = 0; i < self.markers.length; i++){
-			  console.log('Markers id');
-			 console.log(self.markers[i].deviceId);
-			  console.log('self.user.devices[k].id');
-		         console.log(self.user.devices[k].id);
+			  //console.log('Markers id');
+			 //console.log(self.markers[i].deviceId);
+			  //console.log('self.user.devices[k].id');
+		         //console.log(self.user.devices[k].id);
 			    if (self.markers[i].deviceId === self.user.devices[k].id){
 
 				self.markers[i].marker.setPosition(self.user.devices[k].gpsdata[0].location);
@@ -435,8 +434,8 @@ export class MapComponent implements OnInit {
 
 
 		}, function(err){
-				console.log('Didnt get GPS data....');
-			console.log(err);
+				//console.log('Didnt get GPS data....');
+			//console.log(err);
 
 		});
 
@@ -454,15 +453,15 @@ export class MapComponent implements OnInit {
    }
 
    clearAlarm(m){
-	console.log('Clear Alarm');
-	console.log(m);
+	//console.log('Clear Alarm');
+	//console.log(m);
 	m.alarm = false;
 	this.deviceService.clearAlarm(m.deviceId, this.user.token);
 
     }
 
   ngOnDestroy(){
-	console.log('ON DESTROY MAP BABY');
+	//console.log('ON DESTROY MAP BABY');
 
     clearInterval(this.timer);
 	clearInterval(this.timertimer);

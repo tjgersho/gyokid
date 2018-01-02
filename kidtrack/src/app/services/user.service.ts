@@ -28,7 +28,7 @@ export class UserService {
 	const self = this;
 
 
-	console.log('UserService initialize');
+	//console.log('UserService initialize');
 
   	this.getUserFromToken().then(function(resp){
 
@@ -44,34 +44,36 @@ export class UserService {
 
   isAdminUser(){
 
-	console.log('CALLLING ----- IS ADMIN USER ');
+	//console.log('CALLLING ----- IS ADMIN USER ');
 
 	const self = this;
 
 	return new Promise( (resolve, reject) => {
-		console.log('Is Admin user token variable');
-		console.log(self.token);
-		console.log(this.token);
+		//console.log('Is Admin user token variable');
+		//console.log(self.token);
+		//console.log(this.token);
 
              const headers = new Headers({ 'Content-Type': 'application/json', Auth: self.token});
              const options = new RequestOptions({ headers: headers });
 		this.http.get('/api/v1/user/getAdminByToken', options).subscribe((resp) => {
 
-			console.log('user/getAdminByToken response');
-		        console.log('In the isAdmin response');
-			console.log(resp);
+			//console.log('user/getAdminByToken response');
+		        //console.log('In the isAdmin response');
+			//console.log(resp);
 
 			self.isAdmin = true;
 
 			resolve(true);
 
 		}, (err) => {
-		         console.log('In the isAdmin response ERR');
-			console.log(err);
+		         //console.log('In the isAdmin response ERR');
+			//console.log(err);
 			this.isAdmin = false;
 			resolve(false);
 
-		}, () => {console.log('Get Admin By Token Call completion'); });
+		}, () => {
+		  //console.log('Get Admin By Token Call completion');
+		 });
 	});
 
   }
@@ -90,17 +92,17 @@ export class UserService {
 	   reject(false);
 	}
 
-	console.log('Token in get user from token');
-	console.log(this.token);
+	//console.log('Token in get user from token');
+	//console.log(this.token);
 
 
         const headers = new Headers({ 'Content-Type': 'application/json'});
         const options = new RequestOptions({ headers: headers });
 	  this.http.post('/api/v1/user/findByToken', {token: this.token}).subscribe((resp) => {
 
-			console.log('in the http post of get User from token response');
-			console.log(resp);
-			console.log(resp.json());
+			//console.log('in the http post of get User from token response');
+			//console.log(resp);
+			//console.log(resp.json());
 			const user = resp.json();
 
 		      	this.initializeUser(user);
@@ -109,8 +111,8 @@ export class UserService {
 
 
 		}, (err) => {
-			console.log('in the http post of get User from token response ERR');
-			console.log(err);
+			//console.log('in the http post of get User from token response ERR');
+			//console.log(err);
 
 			reject(false);
 
@@ -124,7 +126,7 @@ export class UserService {
 
   initializeUser(userData){
 
-	console.log('INITIALIZING USER');
+	//console.log('INITIALIZING USER');
 
   	this.username = userData.username;
   	this.email = userData.email;
@@ -165,13 +167,13 @@ export class UserService {
 
 
   	this.isAdminUser().then(function(resp){
-		console.log('In initialize user isADMIN user response');
-		console.log(resp);
+		//console.log('In initialize user isADMIN user response');
+		//console.log(resp);
 
 
 	}, function(err){
-		console.log('In initialize user isADMIN user response ERR');
-		console.log(err);
+		//console.log('In initialize user isADMIN user response ERR');
+		//console.log(err);
 
 	});
 
@@ -184,10 +186,10 @@ export class UserService {
         const options = new RequestOptions({ headers: headers });
          this.http.get('/api/v1/user/devices/', options).subscribe((resp) => {
 
-			console.log('Respons get user devices');
-			console.log(resp);
+			//console.log('Respons get user devices');
+			//console.log(resp);
 			const devices = resp.json();
-			console.log(devices);
+			//console.log(devices);
 
 			this.devices = devices;
 
@@ -208,10 +210,10 @@ export class UserService {
   }
 
   getAllDeviceGpsData(){
-	console.log('Get all Device GPS data');
+	//console.log('Get all Device GPS data');
 
 
-	console.log(this.devices.length);
+	//console.log(this.devices.length);
 
 
 	this.deviceService.getGpsData(this.devices, this.token);
@@ -221,14 +223,14 @@ export class UserService {
 
 
   signup(username: string, email: string, password: string, refCode: string){
-	console.log('username');
-	console.log(username);
-        console.log('email');
-	console.log(email);
-	console.log('password');
-	console.log(password);
-	console.log('Ref Code');
-	console.log(refCode);
+	//console.log('username');
+	//console.log(username);
+        //console.log('email');
+	//console.log(email);
+	//console.log('password');
+	//console.log(password);
+	//console.log('Ref Code');
+	//console.log(refCode);
 
         const headers = new Headers({ 'Content-Type': 'application/json' });
         const options = new RequestOptions({ headers: headers });
@@ -241,10 +243,10 @@ export class UserService {
   login(usernameoremail: string, password: string){
 
 
-	console.log('usernameoremail');
-	console.log(usernameoremail);
-	console.log('password');
-	console.log(password);
+	//console.log('usernameoremail');
+	//console.log(usernameoremail);
+	//console.log('password');
+	//console.log(password);
 
 	//Submit to server to login.. get back a token.
   	const data = {email_or_username: usernameoremail, password: password};
@@ -254,30 +256,30 @@ export class UserService {
         const options = new RequestOptions({ headers: headers });
 
 	return this.http.post('/api/v1/login',   data, options).map((resp) => {
-		console.log('Login Map response');
-		console.log(resp);
+		//console.log('Login Map response');
+		//console.log(resp);
 
 		const token = resp.headers.get('auth');
-		console.log('Token from response');
-		console.log(token);
+		//console.log('Token from response');
+		//console.log(token);
                 localStorage.removeItem('token');
 		localStorage.setItem('token', token );
 
 		this.token = token;
 		this.isLoggedIn = true;
-       		console.log('Local Storage in login');
-		console.log(localStorage.token);
+       		//console.log('Local Storage in login');
+		//console.log(localStorage.token);
 
-		console.log('User Service token');
-		console.log(this);
-		console.log(this.token);
+		//console.log('User Service token');
+		//console.log(this);
+		//console.log(this.token);
 
 	        //this.initializeUser(user);
 
 		return resp;
 	}).catch((err) => {
-		console.log('Catch Error in the login..');
-		console.log(err);
+		//console.log('Catch Error in the login..');
+		//console.log(err);
 
 		return Observable.throw(err);
 
@@ -296,30 +298,30 @@ export class UserService {
       localStorage.removeItem('token');
 
        this.clearWatchingObservable().subscribe((resp) => {
- 		console.log('Logout clear watching then logout');
-		console.log(resp);
+ 		//console.log('Logout clear watching then logout');
+		//console.log(resp);
        const headers = new Headers({ 'Content-Type': 'application/json' , Auth: this.token});
        const options = new RequestOptions({ headers: headers });
 
 
 	this.http.delete('/api/v1/logout', options).subscribe((resp) => {
-		console.log('Resp from logout endpoint');
-		console.log(resp);
+		//console.log('Resp from logout endpoint');
+		//console.log(resp);
 
 		this.token = '';
 
             }, (err) => {
-		console.log('Response err from logout endpoint');
-		console.log(err);
+		//console.log('Response err from logout endpoint');
+		//console.log(err);
 
 		}, () => {
-		    console.log('logout endpoint subscribe complete');
+		    //console.log('logout endpoint subscribe complete');
 			});
 
 
      }, (err) => {
-		console.log('Logout clear watching then logoutERR');
-		console.log(err);
+		//console.log('Logout clear watching then logoutERR');
+		//console.log(err);
 
      }, () => {});
 
@@ -334,8 +336,8 @@ export class UserService {
        return this.http.post('/api/v1/forgotPW', {usernameoremail: usernameoremail}, options).map((resp) => {
 		return resp;
 	}).catch((err) => {
-		console.log('Catch Error in the login..');
-		console.log(err);
+		//console.log('Catch Error in the login..');
+		//console.log(err);
 
 		return Observable.throw(err);
 
@@ -351,8 +353,8 @@ export class UserService {
        return this.http.put('/api/v1/user/pwreset', {password: newpw}, options).map((resp) => {
 		return resp;
 	}).catch((err) => {
-		console.log('Catch Error in the login..');
-		console.log(err);
+		//console.log('Catch Error in the login..');
+		//console.log(err);
 
 		return Observable.throw(err);
 
@@ -368,8 +370,8 @@ export class UserService {
        return this.http.post('/api/v1/confirmEmail', {username: username, validcode: code}, options).map((resp) => {
 		return resp;
 	}).catch((err) => {
-		console.log('Catch Error in the login..');
-		console.log(err);
+		//console.log('Catch Error in the login..');
+		//console.log(err);
 
 		return Observable.throw(err);
 
@@ -411,8 +413,8 @@ export class UserService {
    this.allDeviceWatching = false;
 
        this.deviceService.turnOffAllWatching(this.token).subscribe((resp) => {
-		console.log('Header Clear watching');
-		console.log(resp);
+		//console.log('Header Clear watching');
+		//console.log(resp);
 			this.router.navigate(['/dashboard']);
 
 	}, (err) => {}, () => {});

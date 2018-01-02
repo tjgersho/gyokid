@@ -19,14 +19,14 @@ export class AuthGuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean {
 
 	const self = this;
-	console.log('In Can Activate for AuthGuardService');
+	//console.log('In Can Activate for AuthGuardService');
 
 	return new Promise(function(resolve, reject){
 
 		 self.user.getUserFromToken().then(function(resp){
 
-			console.log('In Can Activate.. isValidUser Response');
-			console.log(resp);
+			//console.log('In Can Activate.. isValidUser Response');
+			//console.log(resp);
 
 			if (resp){
 

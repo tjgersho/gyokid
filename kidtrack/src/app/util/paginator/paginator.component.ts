@@ -51,12 +51,12 @@ export class PaginatorComponent implements OnInit {
 
 
  pagBackButtonClick(){
-	 console.log('Pag BACK button click');
-	console.log(this.page);
-	console.log(this.numPages);
+	 //console.log('Pag BACK button click');
+	//console.log(this.page);
+	//console.log(this.numPages);
 
 	if (this.page > 0){
-	     console.log('Event Emit');
+	     //console.log('Event Emit');
 		this.onPageChange.emit((this.page - 1));
          }
 
@@ -64,12 +64,12 @@ export class PaginatorComponent implements OnInit {
 
   pagFwdButtonClick(){
 
-	console.log('Pag forward button click');
-	console.log(this.page);
-	console.log(this.numPages);
+	//console.log('Pag forward button click');
+	//console.log(this.page);
+	//console.log(this.numPages);
 
 	if (this.page < this.numPages - 1){
-	     console.log('Event Emit');
+	     //console.log('Event Emit');
 		this.onPageChange.emit((this.page + 1));
 	}
 
@@ -78,12 +78,12 @@ export class PaginatorComponent implements OnInit {
 
 
  pagButtonClick(pg: number){
-		console.log('Pag click');
-		console.log(pg);
+		//console.log('Pag click');
+		//console.log(pg);
 
-		console.log(this.page + 1);
+		//console.log(this.page + 1);
 	if (pg !== this.page + 1){
-	     console.log('Event Emit');
+	     //console.log('Event Emit');
 
 		this.onPageChange.emit((pg - 1));
          }

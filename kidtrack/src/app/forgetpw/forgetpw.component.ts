@@ -23,12 +23,12 @@ export class ForgetpwComponent implements OnInit {
 
   ngOnInit() {
 
-	console.log('Globals');
+	//console.log('Globals');
 
 	this.formCenter = this.calculateFormCenter();
 
 	this.global.onWindowChange.subscribe((data: object) => {
-		console.log(data);
+		//console.log(data);
 		this.formCenter = this.calculateFormCenter();
 	});
 
@@ -54,12 +54,12 @@ export class ForgetpwComponent implements OnInit {
 
    onSubmit(form: NgForm) {
        const usernameoremail = form.value.usernameoremail;
-	console.log('Username or email');
-	console.log(usernameoremail);
+	//console.log('Username or email');
+	//console.log(usernameoremail);
 
       this.userService.forgotPW(usernameoremail).subscribe((res) => {
-          	console.log('Response from subscribe to user server signup method');
-		console.log(res);
+          	//console.log('Response from subscribe to user server signup method');
+		//console.log(res);
                        $('#forgetPasswordModal').modal('toggle');
 
           }, (err) => {
@@ -71,7 +71,7 @@ export class ForgetpwComponent implements OnInit {
 
 
 	}, () => {
-		console.log('Subscribe finished..');
+		//console.log('Subscribe finished..');
 
 
 	});

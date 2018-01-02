@@ -28,10 +28,13 @@ users: object[] = [];
 	this.getUsers();
 
 	this.setNumberOfPages().subscribe((resp) => {
-			console.log('setNumPages in admin user');
-			console.log(resp);
+			//console.log('setNumPages in admin user');
+			//console.log(resp);
 				this.numPages = Math.ceil(resp.json() / this.limit);
-                 }, (err) => {console.log('Setting Num Pages in admin user err'); console.log(err); }, () => {});
+                 }, (err) => {
+                   //console.log('Setting Num Pages in admin user err'); 
+                   //console.log(err); 
+                 }, () => {});
 
 
   }
@@ -47,15 +50,15 @@ users: object[] = [];
 
 
 	this.http.get(getUserUrl, options).subscribe((resp) => {
-		console.log('Response from getting admin users');
-		console.log(resp);
-		console.log(resp.json());
+		//console.log('Response from getting admin users');
+		//console.log(resp);
+		//console.log(resp.json());
 		this.users = resp.json();
 
 
 	}, (err) => {
-		console.log('Error getting users');
-		console.log(err);
+		//console.log('Error getting users');
+		//console.log(err);
 
 	}, () => {});
 
@@ -70,8 +73,8 @@ users: object[] = [];
    }
 
   onPageChange(pg: number){
-	console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
-	console.log(pg);
+	//console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
+	//console.log(pg);
 
 	this.page = pg;
 	this.getUsers();
@@ -80,22 +83,22 @@ users: object[] = [];
 
   deleteUser(id: number){
 
-	console.log('Delete user');
-	console.log(id);
+	//console.log('Delete user');
+	//console.log(id);
 
                 const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
         const options = new RequestOptions({ headers: headers });
 
 	this.http.delete('/api/v1/admin/user/' + id, options).subscribe((resp) => {
-		console.log('Response from getting admin users');
-		console.log(resp);
-		console.log(resp.json());
+		//console.log('Response from getting admin users');
+		//console.log(resp);
+		//console.log(resp.json());
 		this.getUsers();
 
 
 	}, (err) => {
-		console.log('Error getting users');
-		console.log(err);
+		//console.log('Error getting users');
+		//console.log(err);
 
 	}, () => {});
 
@@ -109,18 +112,18 @@ users: object[] = [];
 	const headers = new Headers({ 'Content-Type': 'application/json', Auth: this.user.token});
         const options = new RequestOptions({ headers: headers });
 
-	console.log('Data in ping credit update');
+	//console.log('Data in ping credit update');
 
 	this.http.put('/api/v1/admin/user/' + id, data, options).subscribe((resp) => {
-		console.log('Response from updating admin users');
-		console.log(resp);
-		console.log(resp.json());
+		//console.log('Response from updating admin users');
+		//console.log(resp);
+		//console.log(resp.json());
 
 
 
 	}, (err) => {
-		console.log('Error getting users');
-		console.log(err);
+		//console.log('Error getting users');
+		//console.log(err);
 		this.getUsers();
 	}, () => {});
 
@@ -129,8 +132,8 @@ users: object[] = [];
   updateUserPingCredits(user){
 
 
-     	console.log('update ping credits user');
-	console.log(user);
+     	//console.log('update ping credits user');
+	//console.log(user);
 
 	const data = {pingCredits: user.pingCredits};
 
@@ -143,8 +146,8 @@ users: object[] = [];
   updateUserWins(user){
 
 
-      	console.log('update ping credits user');
-	console.log(user);
+      	//console.log('update ping credits user');
+	//console.log(user);
 
        const data = {referralWins: user.referralWins};
        this.updateUser(user.id, data);

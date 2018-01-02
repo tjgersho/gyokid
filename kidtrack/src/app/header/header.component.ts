@@ -33,16 +33,16 @@ navAffixed = true;
  constructor(private route: ActivatedRoute, public user: UserService, private router: Router, private deviceService: DeviceService){
 
 	route.url.subscribe((r) => {
-		console.log('Route subscribe in header Response');
-		console.log(r);
+		//console.log('Route subscribe in header Response');
+		//console.log(r);
 		this.setHeaderState();
 
 	   }, (e) => {
-			console.log('Route Subscribe in header ERR');
-		console.log(e);
+			//console.log('Route Subscribe in header ERR');
+		//console.log(e);
 
 	   }, () => {
-		console.log('Route Subscribe in header complete');
+		//console.log('Route Subscribe in header complete');
 
 
          });

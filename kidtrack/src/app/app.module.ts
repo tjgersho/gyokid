@@ -63,7 +63,7 @@ import { LoaderComponent } from './loader/loader.component';
 
 
 
-import { TruncatePipe } from './truncate.pipe';
+import { TruncatePipe } from './util/truncate.pipe';
 
 import { ResetEmailComponent } from './reset-email/reset-email.component';
 import { ViewEmailComponent } from './view-email/view-email.component';

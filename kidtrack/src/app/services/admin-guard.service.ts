@@ -17,7 +17,7 @@ export class AdminGuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|Promise<boolean>|boolean{
 
 
-	console.log('CanActivate Admin');
+	//console.log('CanActivate Admin');
 
 
         const self = this;
@@ -26,9 +26,9 @@ export class AdminGuardService implements CanActivate {
 
 		 self.user.isAdminUser().then(function(resp){
 
-			console.log('In Can Activate.. isAdminUser Response');
-			console.log('In Can Activate.. isAdminUser Response');
-			console.log(resp);
+			//console.log('In Can Activate.. isAdminUser Response');
+			//console.log('In Can Activate.. isAdminUser Response');
+			//console.log(resp);
 
 			if (resp){
 

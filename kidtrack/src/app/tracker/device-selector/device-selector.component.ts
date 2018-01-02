@@ -33,8 +33,8 @@ export class DeviceSelectorComponent implements OnInit {
    	this.formCenter = this.calculateFormCenter();
 
 	this.global.onWindowChange.subscribe((data: object) => {
-		console.log('Global on window Change  - observable subscribe');
-		console.log(data);
+		//console.log('Global on window Change  - observable subscribe');
+		//console.log(data);
 		this.formCenter = this.calculateFormCenter();
 	});
 
@@ -51,8 +51,8 @@ export class DeviceSelectorComponent implements OnInit {
 
   onDeviceSelected(dev){
 
-    console.log('onDevice Select');
-	  console.log(dev.tag);
+    //console.log('onDevice Select');
+	  //console.log(dev.tag);
 
 
 
@@ -76,9 +76,9 @@ export class DeviceSelectorComponent implements OnInit {
   }
 
   removeDev(dev: Device){
-        console.log('Remove device selector');
+        //console.log('Remove device selector');
 
-        console.log(dev);
+        //console.log(dev);
         //this.user.deviceWatchingUpdate(dev);
 	      this.deviceService.updateWatching(dev, this.user.token);
 

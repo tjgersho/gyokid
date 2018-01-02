@@ -27,19 +27,19 @@ export class ContactComponent implements OnInit {
   constructor(private http: Http) {
 
 
-	console.log('Contact us Constructor!');
+	//console.log('Contact us Constructor!');
 
 
   }
 
   ngOnInit() {
-	console.log('Contact us NGONINIT');
+	//console.log('Contact us NGONINIT');
 
   }
 
 
    resolved(captchaResponse: string) {
-        console.log(`Resolved captcha with response ${captchaResponse}:`);
+        //console.log(`Resolved captcha with response ${captchaResponse}:`);
 
 	   this.captchaChecked = true;
    	this.captchaResponse = captchaResponse;
@@ -49,16 +49,16 @@ export class ContactComponent implements OnInit {
   onSignup(form: NgForm) {
 
 
-	console.log('SUbmint captcha.value');
-	console.log(this.captchaResponse);
+	//console.log('SUbmint captcha.value');
+	//console.log(this.captchaResponse);
 
      if (this.captchaResponse.length > 0){
 
-	console.log(form);
-	console.log('name');
-	console.log(form.value.contact_name);
-	console.log(form.value.contact_email);
-	console.log(form.value.contact_comment);
+	//console.log(form);
+	//console.log('name');
+	//console.log(form.value.contact_name);
+	//console.log(form.value.contact_email);
+	//console.log(form.value.contact_comment);
 
 	const data = {name: form.value.contact_name,
 		   email: form.value.contact_email,
@@ -71,9 +71,9 @@ export class ContactComponent implements OnInit {
 
 	this.http.post('/api/v1/contact', data, headers).subscribe((resp: Response) => {
 
-		console.log('Comment Response');
-		console.log(resp);
-		console.log(resp.json());
+		//console.log('Comment Response');
+		//console.log(resp);
+		//console.log(resp.json());
                 $('#contactUsthanks').modal('toggle');
 
 		   form.reset();
@@ -89,8 +89,8 @@ export class ContactComponent implements OnInit {
 
 	}, (err) => {
 
-		console.log('Comment Err');
-		console.log(err);
+		//console.log('Comment Err');
+		//console.log(err);
 
                    grecaptcha.reset();
 
@@ -98,7 +98,7 @@ export class ContactComponent implements OnInit {
 
 	}, () => {
 
-		console.log('Comment Complete');
+		//console.log('Comment Complete');
 
                    grecaptcha.reset();
 

@@ -7,7 +7,7 @@ import { UserService } from '../services/user.service';
 
 import { GlobalService } from '../services/global.service';
 
-import { TruncatePipe } from '../truncate.pipe';
+import { TruncatePipe } from '../util/truncate.pipe';
 
 import { Device } from '../models/device.model';
 
@@ -46,7 +46,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.formCenter = this.calculateFormCenter();
 
 	this.global.onWindowChange.subscribe((data: object) => {
-		console.log(data);
+		//console.log(data);
 		this.formCenter = this.calculateFormCenter();
 	});
   }
@@ -61,16 +61,16 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 
  refreshData(){
-	console.log('Refresh data - This:');
-	console.log(this);
+	//console.log('Refresh data - This:');
+	//console.log(this);
 
 	this.user.refreshData().then((resp) => {
-		console.log('User Refresh complete');
-		console.log(resp);
+		//console.log('User Refresh complete');
+		//console.log(resp);
 
 		}, (err) => {
-		 console.log('User Refresh complete ERR');
-		 console.log(err);
+		 //console.log('User Refresh complete ERR');
+		 //console.log(err);
 
 		});
 
@@ -142,8 +142,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 
  onTagChange(dev: Device){
-	console.log('ON device tag change, input blur');
-	console.log(dev);
+	//console.log('ON device tag change, input blur');
+	//console.log(dev);
 	///Update Model////
 	this.deviceService.updateTag(dev, this.user.token);
 
@@ -194,7 +194,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-	console.log('ON DESTROY DashBoard BABY');
+	//console.log('ON DESTROY DashBoard BABY');
 
     clearInterval(this.timer);
 

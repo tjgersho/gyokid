@@ -15,8 +15,8 @@ export class LoaderComponent implements OnInit {
 
       router.events.subscribe( (event: Event) => {
 
-		console.log('Router Event');
-		console.log(event);
+		//console.log('Router Event');
+		//console.log(event);
             if (event instanceof NavigationStart) {
                 // Show loading indicator
 		this.showLoader = true;
@@ -36,7 +36,7 @@ export class LoaderComponent implements OnInit {
             if (event instanceof NavigationError) {
                 // Hide loading indicator
                 // Present error to user
-                console.log(event.error);
+                //console.log(event.error);
             }
         });
 

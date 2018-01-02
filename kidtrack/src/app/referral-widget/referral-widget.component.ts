@@ -35,29 +35,29 @@ export class ReferralWidgetComponent implements OnInit {
 //ds.bypassSecurityTrustResourceUrl();
 	 this.mailtoBody = bodyString;
 
-		console.log(this.mailtoBody);
+		//console.log(this.mailtoBody);
 
 
 	const twtstring = 'register?code=' + user.referralCode;
 
-		console.log(twtstring);
+		//console.log(twtstring);
 
          this.twitterURL = ds.bypassSecurityTrustResourceUrl(twtstring);
 
-		console.log(this.twitterURL);
+		//console.log(this.twitterURL);
 
          const fbstring = 'https://www.facebook.com/plugins/share_button.php?href=https%3A%2F%2Fkidtrack.io%2Fregister%3Fcode%3D' + user.referralCode + '&layout=button_count&size=large&mobile_iframe=true&appId=162531991031337&width=84&height=28';
-	console.log(fbstring);
+	//console.log(fbstring);
 
          this.facebookShareLink = ds.bypassSecurityTrustResourceUrl(fbstring);
 
-	console.log(this.facebookShareLink);
+	//console.log(this.facebookShareLink);
    }
 
   ngOnInit() {
 
-	console.log('LAODING SHARE WIDGET!!!!');
-	console.log(twttr);
+	//console.log('LAODING SHARE WIDGET!!!!');
+	//console.log(twttr);
 
 
         twttr.widgets.load( document.getElementById('twitterContainer') );

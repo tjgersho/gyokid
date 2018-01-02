@@ -16,13 +16,13 @@ export class ViewEmailDirective {
 
 	constructor(private elementRef: ElementRef){
 
-		console.log('Element');
+		//console.log('Element');
 
         }
 
 	ngOnInit(){
-		console.log('Element');
-		console.log(this.elementRef);
+		//console.log('Element');
+		//console.log(this.elementRef);
 
 
 	      const doc = this.elementRef.nativeElement.contentWindow.document;

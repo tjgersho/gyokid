@@ -21,13 +21,13 @@ export class ConfirmEmailComponent implements OnInit {
    constructor(private route: ActivatedRoute, private router: Router, private user: UserService) { }
 
   ngOnInit() {
-	console.log('IN confirm email');
-	console.log(this.route);
+	//console.log('IN confirm email');
+	//console.log(this.route);
 
 	this.params = this.route.snapshot.params;
 
-	console.log('URL PARAMS in confirm email');
-	console.log(this.params);
+	//console.log('URL PARAMS in confirm email');
+	//console.log(this.params);
 
 
        this.route.params.subscribe(params => {
@@ -35,26 +35,26 @@ export class ConfirmEmailComponent implements OnInit {
         const username = params['username']; // (+) converts string 'id' to a number
         const code = params['code'];
         // In a real app: dispatch action to load the details here.
-   	console.log('Params in observable');
-	console.log(params);
-	console.log('username');
-	console.log(username);
-	console.log('code');
-	console.log(code);
+   	//console.log('Params in observable');
+	//console.log(params);
+	//console.log('username');
+	//console.log(username);
+	//console.log('code');
+	//console.log(code);
 
 
 	this.user.confirmEmail(username, code).subscribe((resp) => {
-		console.log('Resp');
-		console.log(resp);
-		console.log('this.user');
-		console.log(this.user);
+		//console.log('Resp');
+		//console.log(resp);
+		//console.log('this.user');
+		//console.log(this.user);
 		this.loading = false;
 		this.emailConfirmed = true;
 
 	}, (err) => {
 
-		console.log('err on user login');
-		console.log(err);
+		//console.log('err on user login');
+		//console.log(err);
 		this.loading = false;
 		this.emailConfirmed = false;
 	}, () => {

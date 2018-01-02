@@ -22,7 +22,7 @@ export class GlobalService{
 
 	constructor(){
 
-		console.log('Globals constructor...');
+		//console.log('Globals constructor...');
 
 
 
@@ -30,9 +30,9 @@ export class GlobalService{
 		this.screenHeight = this.jqWindow.height();
 
                 this.onWindowChange = Observable.create((observer: Observer<object>) => {
-			console.log('Observer on creating observable');
+			//console.log('Observer on creating observable');
 
-			console.log(observer);
+			//console.log(observer);
 
 			this._observer = observer;
 		});
@@ -41,7 +41,7 @@ export class GlobalService{
 
 
 	updateWindowDimensions(){
-		console.log('Globals window Size Changed');
+		//console.log('Globals window Size Changed');
    		this.screenWidth = this.jqWindow.width();
 		this.screenHeight = this.jqWindow.height();
 

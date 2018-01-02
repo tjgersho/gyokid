@@ -80,8 +80,8 @@ export class RegisterDeviceComponent implements OnInit {
 	const data = {imei: imei, ktc: ktc};
 
 	this.http.post('/api/v1/register-device', data, options).subscribe((resp) => {
-		console.log('Device Registration Resp');
-		console.log(resp);
+		//console.log('Device Registration Resp');
+		//console.log(resp);
 
 		this.newlyRegisteredDevices[index].registrationOk = 1;
 		this.newlyRegisteredDevices[index].regstatustooltip = this.setRegistrationToolTip(1);
@@ -89,8 +89,8 @@ export class RegisterDeviceComponent implements OnInit {
 
 	}, (err) => {
 
- 		console.log('Device Registration Resp ERR');
-		console.log(err);
+ 		//console.log('Device Registration Resp ERR');
+		//console.log(err);
 
 		this.newlyRegisteredDevices[index].registrationOk = 2;
 		this.newlyRegisteredDevices[index].regstatustooltip = this.setRegistrationToolTip(2);
@@ -98,7 +98,7 @@ export class RegisterDeviceComponent implements OnInit {
 
 	}, () => {
 
-		console.log('Device Registration DONE');
+		//console.log('Device Registration DONE');
 
 
 	});
@@ -109,9 +109,9 @@ export class RegisterDeviceComponent implements OnInit {
 
  addToDeviceRegistration(){
 
-	console.log('imei..');
-	console.log(this.imeinumber);
-	console.log(this.ktcnumber);
+	//console.log('imei..');
+	//console.log(this.imeinumber);
+	//console.log(this.ktcnumber);
 
 	this.callServerForRegistration(this.imeinumber, this.ktcnumber);
 
@@ -182,21 +182,21 @@ getDevRegistrationWordClass(dev: Device){
         const reader = new FileReader();
         reader.onload = function () {
 
-		console.log(reader.result);
+		//console.log(reader.result);
 
 		const imeiarray = reader.result.split('\n');
     if (imeiarray[imeiarray.length - 1] === ''){
        imeiarray.pop();
     }
 
-		console.log(imeiarray);
+		//console.log(imeiarray);
 		  for (let i = 0; i < imeiarray.length; i++){
 
 			const imeiandktc = imeiarray[i].split(',');
-			console.log('IMEI');
-			console.log(imeiandktc[0]);
-			console.log('KTC');
-			console.log(imeiandktc[1]);
+			//console.log('IMEI');
+			//console.log(imeiandktc[0]);
+			//console.log('KTC');
+			//console.log(imeiandktc[1]);
 
 
 			self.callServerForRegistration(imeiandktc[0], imeiandktc[1].substring(0, 3));

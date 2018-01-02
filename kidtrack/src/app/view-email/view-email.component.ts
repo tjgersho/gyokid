@@ -17,24 +17,24 @@ export class ViewEmailComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router, private http: Http) { }
 
   ngOnInit() {
-	console.log('IN browser email init');
-	console.log(this.route);
+	//console.log('IN browser email init');
+	//console.log(this.route);
 
 	this.params = this.route.snapshot.params;
 
-	console.log('URL PARAMS');
-	console.log(this.params);
+	//console.log('URL PARAMS');
+	//console.log(this.params);
 
        this.route.params.subscribe(params => {
        const emailCode = params['emailCode']; // (+) converts string 'id' to a number
        const emailId = params['id'];
        // In a real app: dispatch action to load the details here.
-   	console.log('Params in observable');
-	console.log(params);
-	console.log('emailcode');
-	console.log(emailCode);
-	console.log('emailId');
-	console.log(emailId);
+   	//console.log('Params in observable');
+	//console.log(params);
+	//console.log('emailcode');
+	//console.log(emailCode);
+	//console.log('emailId');
+	//console.log(emailId);
 
 
 	 const headers = new Headers({ 'Content-Type': 'application/json'});
@@ -42,10 +42,10 @@ export class ViewEmailComponent implements OnInit {
 	  this.http.post('/api/v1/email/' + emailId , {emailCode: emailCode}, options).subscribe((resp) => {
 
 
-			console.log('Email from server');
-			console.log(resp);
+			//console.log('Email from server');
+			//console.log(resp);
 		this.email = resp.json().email;
-		console.log(this.email);
+		//console.log(this.email);
 
 
 	        const iframe = document.getElementById('viewEmail');
@@ -54,8 +54,8 @@ export class ViewEmailComponent implements OnInit {
 
 		iframedoc.body.innerHTML = this.email;
 
-			console.log('EMAIL');
-			console.log(this.email);
+			//console.log('EMAIL');
+			//console.log(this.email);
 
 		setTimeout(function(){
 
@@ -66,8 +66,8 @@ export class ViewEmailComponent implements OnInit {
 
 
 		}, (err) => {
-			console.log('in the http post of get User get Email from server.. ERR');
-			console.log(err);
+			//console.log('in the http post of get User get Email from server.. ERR');
+			//console.log(err);
 
 
 

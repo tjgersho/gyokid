@@ -67,9 +67,9 @@ const self = this;
 
         onAuthorize: function(data, actions) {
             return actions.payment.execute().then(function(payment) {
-		console.log('paymentComplete');
+		//console.log('paymentComplete');
 
-		console.log(payment);
+		//console.log(payment);
                 // The payment is complete!
                 // You can now show a confirmation message to the customer
 
@@ -77,35 +77,35 @@ const self = this;
              const options = new RequestOptions({ headers: headers });
 		self.http.post('/api/v1/logTransaction', {transaction: payment}, options).subscribe((resp) => {
 
-				console.log('response from logging transaction');
-				console.log(resp);
+				//console.log('response from logging transaction');
+				//console.log(resp);
 
 
 				self.router.navigate(['/dashboard']);
 
 			}, (err) => {
-				console.log('Response from logtransaction response Err');
-				console.log(err);
+				//console.log('Response from logtransaction response Err');
+				//console.log(err);
 
 
 			}, () => {
 
-			console.log('Transaction log complete');
+			//console.log('Transaction log complete');
 		 });
 
 
             });
         }, onError: function(err) {
             // Show an error page here, when an error occurs
-            console.log('RESPONS FROM PAYPAL PAYEMNT SUCCESS ERR');
-	     console.log(err);
+            //console.log('RESPONS FROM PAYPAL PAYEMNT SUCCESS ERR');
+	     //console.log(err);
 
         },
 	 onCancel: function(data, actions) {
             // Show a cancel page or return to cart
-		console.log('Cancel ');
-		console.log(data);
-		console.log(actions);
+		//console.log('Cancel ');
+		//console.log(data);
+		//console.log(actions);
         }
 
     }, '#paypal-button');

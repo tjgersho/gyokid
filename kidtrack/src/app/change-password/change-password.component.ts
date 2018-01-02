@@ -26,38 +26,38 @@ export class ChangePasswordComponent implements OnInit {
 
   ngOnInit() {
 
-         console.log('IN confirm email');
-	console.log(this.route);
+         //console.log('IN confirm email');
+	//console.log(this.route);
 
 	this.params = this.route.snapshot.params;
 
-	console.log('URL PARAMS in confirm email');
-	console.log(this.params);
+	//console.log('URL PARAMS in confirm email');
+	//console.log(this.params);
 
 
   this.route.params.subscribe(params => {
        const username = params['name']; // (+) converts string 'id' to a number
        const code = params['code'];
        // In a real app: dispatch action to load the details here.
-   	console.log('Params in observable');
-	console.log(params);
-	console.log('username');
-	console.log(username);
-	console.log('code');
-	console.log(code);
+   	//console.log('Params in observable');
+	//console.log(params);
+	//console.log('username');
+	//console.log(username);
+	//console.log('code');
+	//console.log(code);
 
 
 	this.user.login(username, code).subscribe((resp) => {
-		console.log('Resp');
-		console.log(resp);
-		console.log('this.user');
-		console.log(this.user);
+		//console.log('Resp');
+		//console.log(resp);
+		//console.log('this.user');
+		//console.log(this.user);
 		this.user.getUserFromToken();
 
 	}, (err) => {
 
-		console.log('err on user login');
-		console.log(err);
+		//console.log('err on user login');
+		//console.log(err);
 
 	}, () => {
 
@@ -70,8 +70,8 @@ export class ChangePasswordComponent implements OnInit {
 
  passwordsMatch() {
 
-	console.log('PASSWORDS ');
-	console.log(this.password, this.password2);
+	//console.log('PASSWORDS ');
+	//console.log(this.password, this.password2);
 
 	if (this.password !== this.password2){
 		return false;
@@ -85,13 +85,13 @@ export class ChangePasswordComponent implements OnInit {
   onSubmit(form: NgForm) {
 
         const newpassword = form.value.password;
-	console.log('new Password');
-	console.log(newpassword);
+	//console.log('new Password');
+	//console.log(newpassword);
 
 	this.user.setNewPassword(newpassword).subscribe((resp) => {
 
-		console.log('Reset password success resp');
-		console.log(resp);
+		//console.log('Reset password success resp');
+		//console.log(resp);
 
               $('#passwordResetModal').modal({
 		backdrop: 'static',
@@ -100,11 +100,14 @@ export class ChangePasswordComponent implements OnInit {
 		$('#passwordResetModal').modal('show');
 
 	}, (err) => {
-		console.log('Reset Password Err');
-		console.log(err);
+		//console.log('Reset Password Err');
+		//console.log(err);
 		this.changePwError = 'There was an error in updating your password.  You may need to get a new reset password email.';
 
-	}, () => {console.log('reset password observable complete'); });
+	}, () => {
+            //console.log('reset password observable complete'); 
+
+        });
 
 
 

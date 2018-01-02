@@ -18,12 +18,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
 
-	console.log('Globals');
+	//console.log('Globals');
 
 	this.formCenter = this.calculateFormCenter();
 
 	this.global.onWindowChange.subscribe((data: object) => {
-		console.log(data);
+		//console.log(data);
 		this.formCenter = this.calculateFormCenter();
 	});
 
@@ -44,19 +44,19 @@ export class LoginComponent implements OnInit {
 
       this.userService.login(usernameoremail, password).subscribe((resp) => {
 
-		console.log('-- login response');
-		console.log(resp);
+		//console.log('-- login response');
+		//console.log(resp);
 
 		 this.router.navigate(['/dashboard']);
 
 	}, (err) => {
 
-		console.log(' -- login ERR');
-		console.log(err);
+		//console.log(' -- login ERR');
+		//console.log(err);
 		 this.loginError = 'Error with login username/password combination';
 		setTimeout(() => {
-			console.log('This');
-			console.log(this);
+			//console.log('This');
+			//console.log(this);
 
 			this.loginError = '';
 
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
 
 	}, () => {
 
-		console.log(' Nested Signup success  -- login observable complete');
+		//console.log(' Nested Signup success  -- login observable complete');
 
 	});
 

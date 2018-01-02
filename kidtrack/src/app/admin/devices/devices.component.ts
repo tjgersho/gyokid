@@ -39,10 +39,13 @@ export class DevicesComponent implements OnInit {
 
 
    this.setNumberOfPages().subscribe((resp) => {
-	   console.log('setNumPages in admin user');
-	    console.log(resp);
+	   //console.log('setNumPages in admin user');
+	    //console.log(resp);
 		 this.numPages = Math.ceil(resp.json() / this.limit);
-        }, (err) => {console.log('Setting Num Pages in admin user err'); console.log(err); }, () => {});
+        }, (err) => {
+		//console.log('Setting Num Pages in admin user err');
+		 //console.log(err); 
+	}, () => {});
 
 
 
@@ -96,14 +99,14 @@ export class DevicesComponent implements OnInit {
         const reader = new FileReader();
         reader.onload = function () {
 
-		console.log(reader.result);
+		//console.log(reader.result);
 
 		const devarray = reader.result.split('\n');
     if (devarray[devarray.length - 1] === ''){
        devarray.pop();
     }
 
-		console.log(devarray);
+		//console.log(devarray);
 		  for (let i = 0; i < devarray.length; i++){
 
 		  	  const imeiandsim = devarray[i].split(',');
@@ -127,8 +130,8 @@ export class DevicesComponent implements OnInit {
  getDevices(){
 
 
-	console.log('Get Device');
-	console.log(this.user.token);
+	//console.log('Get Device');
+	//console.log(this.user.token);
 
   this.loading = true;
 
@@ -139,16 +142,16 @@ export class DevicesComponent implements OnInit {
 
      this.http.get(deviceUrl, options).subscribe((response) => {
 
-			console.log('device array response');
-			console.log(response);
+			//console.log('device array response');
+			//console.log(response);
 			this.deviceArray = response.json();
  		        this.loading = false;
 
 
 	  }, (err) => {
 
-		console.log('Get Device array Err');
-		console.log(err);
+		//console.log('Get Device array Err');
+		//console.log(err);
 
   		        this.loading = false;
 
@@ -171,8 +174,8 @@ export class DevicesComponent implements OnInit {
 
   onPageChange(pg: number){
 
-	console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
-	console.log(pg);
+	//console.log('EVENT EMITTER>>> for page change in the admin user pag cntrl');
+	//console.log(pg);
 
 	this.page = pg;
 	this.getDevices();
@@ -185,8 +188,8 @@ export class DevicesComponent implements OnInit {
  updateOwner(dev){
 
 
-	console.log('Update owner  / exactly what happens when someone registers a device.. i.e. sequelize relation hookup');
-	console.log(dev);
+	//console.log('Update owner  / exactly what happens when someone registers a device.. i.e. sequelize relation hookup');
+	//console.log(dev);
 
   this.loading = true;
 
@@ -198,8 +201,8 @@ export class DevicesComponent implements OnInit {
 
      this.http.put('/api/v1/admin/device/' + dev.id, data, options).subscribe((response) => {
 
-			console.log('device array response');
-			console.log(response);
+			//console.log('device array response');
+			//console.log(response);
 		         this.getDevices();
  		        this.loading = false;
 	  }, (err) => {
@@ -211,8 +214,8 @@ export class DevicesComponent implements OnInit {
 
  deregister(id: number){
 
-	console.log('DeRegister device -- id: ');
-	console.log(id);
+	//console.log('DeRegister device -- id: ');
+	//console.log(id);
 
 	 this.loading = true;
 
@@ -224,8 +227,8 @@ export class DevicesComponent implements OnInit {
 
      this.http.post('/api/v1/admin/device/' + id, data, options).subscribe((response) => {
 
-			console.log('device deregister response');
-			console.log(response);
+			//console.log('device deregister response');
+			//console.log(response);
 		         this.getDevices();
  		        this.loading = false;
 	  }, (err) => {
@@ -249,8 +252,8 @@ export class DevicesComponent implements OnInit {
 
      this.http.delete('/api/v1/admin/device/' + id,  options).subscribe((response) => {
 
-			console.log('device delete response');
-			console.log(response);
+			//console.log('device delete response');
+			//console.log(response);
 		       this.getDevices();
  		 this.loading = false;
 

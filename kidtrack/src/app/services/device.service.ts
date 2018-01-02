@@ -10,7 +10,7 @@ export class DeviceService {
 
 
 constructor(private http: Http){
-	console.log('INITIALIZATION OF DEVICE SERVICE');
+	//console.log('INITIALIZATION OF DEVICE SERVICE');
  }
 
 
@@ -33,16 +33,16 @@ const devIdArry = [];
 
 
 
-		console.log('Get device gps rsponse');
-		console.log(resp.json());
+		//console.log('Get device gps rsponse');
+		//console.log(resp.json());
 		const gpsData = resp.json();
-		console.log(gpsData);
+		//console.log(gpsData);
 
-		console.log('Device Array length');
-		console.log(devArry.length);
+		//console.log('Device Array length');
+		//console.log(devArry.length);
 
 		for (let j = 0; j < devArry.length; j++){
-		console.log(j);
+		//console.log(j);
 		  const gpsDataArray: Gps[]  = [];
 		   for (let i = 0; i < gpsData.length; i++){
 
@@ -55,8 +55,8 @@ const devIdArry = [];
 
 
 			   const timeStamp = moment(gpsData[i].gpsData[k].createdAt).format('MM/DD/YY LTS');
-			   console.log('TimeStamp');
-			   console.log(timeStamp);
+			   //console.log('TimeStamp');
+			   //console.log(timeStamp);
 
 
 			   gpsDataArray.push(new Gps(timeStamp, {lat: parseFloat(gpsData[i].gpsData[k].lat), lng:  parseFloat(gpsData[i].gpsData[k].lon)}));
@@ -67,11 +67,11 @@ const devIdArry = [];
 
                         }
 		   }
-		   console.log('GPS Data Array');
-		   console.log(gpsDataArray);
+		   //console.log('GPS Data Array');
+		   //console.log(gpsDataArray);
 		   devArry[j].gpsdata = gpsDataArray;
-		   console.log('this Device');
-		  console.log(devArry[j]);
+		   //console.log('this Device');
+		  //console.log(devArry[j]);
 		}
 
 
@@ -79,8 +79,8 @@ const devIdArry = [];
 
 	 }, (err) => {
 
-		console.log('Get device gps rsponse ERR');
-		console.log(err);
+		//console.log('Get device gps rsponse ERR');
+		//console.log(err);
 		reject('DIDNt Get GPS DATA for device');
 
 
@@ -95,8 +95,8 @@ const devIdArry = [];
 
  updateTag(dev, token){
 
-	console.log('Update Device Tag METHOD');
-	console.log(dev.tag);
+	//console.log('Update Device Tag METHOD');
+	//console.log(dev.tag);
 
         const headers = new Headers({ 'Content-Type': 'application/json', auth: token });
         const options = new RequestOptions({ headers: headers });
@@ -104,8 +104,8 @@ const devIdArry = [];
 
 	this.http.put('/api/v1/device/' + dev.id, {tag: dev.tag}, options).subscribe((response) => {
 
-		console.log('Update Response');
-		console.log(response);
+		//console.log('Update Response');
+		//console.log(response);
 
 	});
 
@@ -122,7 +122,7 @@ const devIdArry = [];
 
  turnOffAllWatching(token){
 
-      console.log('TURN OFF ALL WATCHING');
+      //console.log('TURN OFF ALL WATCHING');
 
         const headers = new Headers({ 'Content-Type': 'application/json', auth: token });
         const options = new RequestOptions({ headers: headers });
@@ -134,13 +134,13 @@ const devIdArry = [];
  }
 
  updateWatching(dev, token){
-	console.log('Device update watching');
-	console.log(dev);
-	console.log(dev.watching);
+	//console.log('Device update watching');
+	//console.log(dev);
+	//console.log(dev.watching);
 
 	dev.watching = !dev.watching;
 
-   console.log(dev.watching);
+   //console.log(dev.watching);
 
 
         const headers = new Headers({ 'Content-Type': 'application/json', auth: token });
@@ -149,8 +149,8 @@ const devIdArry = [];
 
 	this.http.put('/api/v1/device/' + dev.id, {watching: dev.watching}, options).subscribe((response) => {
 
-		console.log('Update Response');
-		console.log(response);
+		//console.log('Update Response');
+		//console.log(response);
 
 	});
 
@@ -173,13 +173,13 @@ clearAlarm(devId, token){
 
 	this.http.put('/api/v1/device/' + devId, {alarm: false}, options).subscribe((response) => {
 
-		console.log('CLEAR ALARM RESPONSE!!!!');
-		console.log(response);
+		//console.log('CLEAR ALARM RESPONSE!!!!');
+		//console.log(response);
 
 	},
 	 (err) => {
-		console.log('ERR clearing alarm.');
-		console.log(err);
+		//console.log('ERR clearing alarm.');
+		//console.log(err);
           },
 	 () => {});
 

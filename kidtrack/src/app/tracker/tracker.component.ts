@@ -29,8 +29,8 @@ export class TrackerComponent implements OnInit {
   constructor(private user: UserService, private router: Router) {
 
 
-	console.log('Tracker constructor');
-	console.log('Tracker constructor');
+	//console.log('Tracker constructor');
+	//console.log('Tracker constructor');
 
 	if (user.devices.length < 1){
  	  router.navigate(['/dashboard']);
@@ -54,7 +54,7 @@ export class TrackerComponent implements OnInit {
   ngOnInit() {}
 
  	resetDeviceList(){
-	   console.log('Reset Device list');
+	   //console.log('Reset Device list');
 
              //this.deviceTrackerList = [];
 
@@ -66,7 +66,7 @@ export class TrackerComponent implements OnInit {
 
 
        devicesSelected(){
-	console.log('In tracker Compoent and devicesSelected');
+	//console.log('In tracker Compoent and devicesSelected');
 
          this.showDeviceSelector = false;
 	 this.runMap = true;
@@ -75,8 +75,8 @@ export class TrackerComponent implements OnInit {
        }
 
        cancelDeviceSelection(obj){
-         console.log('In tracker on cancel device select.');
-	 console.log(obj);
+         //console.log('In tracker on cancel device select.');
+	 //console.log(obj);
           this.showDeviceSelector = false;
 	   this.runMap = false;
 

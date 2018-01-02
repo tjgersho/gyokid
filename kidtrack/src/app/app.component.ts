@@ -14,8 +14,8 @@ export class AppComponent {
 	constructor(private global: GlobalService, private router: Router){
 
 	   global.onWindowChange.subscribe((w) => {
-		console.log('On window change global observable in index');
-		console.log(w);
+		//console.log('On window change global observable in index');
+		//console.log(w);
             });
 
          router.events.subscribe((evt) => {
